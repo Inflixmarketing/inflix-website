@@ -37,7 +37,7 @@ export const Hero = () => {
         {/* Main Headline Container */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           
-          {/* Row 1: Outline Pill (#EDB403 Border & Text) + Next-Gen */}
+          {/* Row 1: Outline Pill + Arrow + Main Title */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -72,29 +72,6 @@ export const Hero = () => {
               </span>
             </div>
 
-            {/* Next-Gen / Creative Text */}
-            <span style={{
-              fontFamily: "'Ancola', 'Tenor Sans', serif",
-              fontSize: 'clamp(2rem, 5.5vw, 4.8rem)',
-              fontWeight: 400,
-              color: '#ffffff',
-              lineHeight: 1.08,
-              letterSpacing: '0.01em',
-              wordBreak: 'break-word'
-            }}>
-              Next-Gen
-            </span>
-          </div>
-
-          {/* Row 2: Gold Arrow Button + Main Title Text */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            flexWrap: 'wrap',
-            marginTop: '0.25rem'
-          }} className="agatha-hero-row">
-            
             {/* Circular Arrow Button in Gold */}
             <a 
               href="#portfolio" 
@@ -117,6 +94,7 @@ export const Hero = () => {
               <ArrowUp size={28} style={{ transform: 'rotate(45deg)', color: '#173765', strokeWidth: 2.5 }} />
             </a>
 
+            {/* Main Headline Title rendered dynamically from CMS */}
             <h1 style={{
               fontFamily: "'Ancola', 'Tenor Sans', serif",
               fontSize: 'clamp(2rem, 5.5vw, 4.8rem)',
@@ -129,7 +107,7 @@ export const Hero = () => {
               wordBreak: 'break-word',
               overflowWrap: 'break-word'
             }}>
-              Digital Marketing & Creative Agency
+              {hero.titleMain || "Next-Gen Digital Marketing & Creative Agency"}
             </h1>
           </div>
 

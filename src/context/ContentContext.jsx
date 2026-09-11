@@ -39,6 +39,36 @@ export const ContentProvider = ({ children }) => {
     return sessionStorage.getItem('inflix_admin_auth') === 'true';
   });
 
+  // Fetch live CMS data from Hostinger backend on initial load
+  useEffect(() => {
+    fetch('/api/content.php')
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('No remote API');
+      })
+      .then(remoteData => {
+        if (remoteData && !remoteData.error && remoteData.status !== 'default') {
+          setContent(prev => {
+            const merged = {
+              ...defaultData,
+              ...prev,
+              ...remoteData,
+              brand: { ...defaultData.brand, ...(prev.brand || {}), ...(remoteData.brand || {}) },
+              hero: { ...defaultData.hero, ...(prev.hero || {}), ...(remoteData.hero || {}) },
+              about: { ...defaultData.about, ...(prev.about || {}), ...(remoteData.about || {}) }
+            };
+            try {
+              localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(merged));
+            } catch (e) {}
+            return merged;
+          });
+        }
+      })
+      .catch(err => {
+        console.log('CMS using local/cached content state');
+      });
+  }, []);
+
   // Sync CSS properties and SEO Metadata
   useEffect(() => {
     if (!content || !content.brand) return;
@@ -78,15 +108,25 @@ export const ContentProvider = ({ children }) => {
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newContent));
     } catch (e) {
-      console.error('Error saving content', e);
+      console.error('Error saving content locally', e);
     }
 
-    // Sync to Hostinger live PHP/MySQL API if available
+    // Sync to Hostinger live PHP server backend (api/content.php)
     fetch('/api/content.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify(newContent)
-    }).catch(() => {});
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('Hostinger CMS sync success:', data);
+    })
+    .catch(err => {
+      console.warn('Hostinger CMS sync fallback to local storage:', err);
+    });
   };
 
   // View Navigation
