@@ -2,15 +2,14 @@
   RewriteEngine On
   RewriteBase /
 
-  # Redirect any legacy/cached asset requests to the current fixed production bundle
-  RewriteRule ^assets/index-.*\.js$ assets/app.js [L]
-  RewriteRule ^assets/index-.*\.css$ assets/app.css [L]
+  # Direct asset serving without SPA fallback rewriting
+  RewriteRule ^assets/(.*)$ assets/$1 [L]
 
   # Allow direct access to existing files, directories, or api scripts
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Rewrite all other requests (such as /admin, /services) to index.html
+  # Rewrite all other routes to index.html
   RewriteRule ^ index.html [L]
 </IfModule>
