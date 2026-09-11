@@ -3,7 +3,7 @@ import defaultData from '../data/defaultContent.json';
 
 const ContentContext = createContext();
 
-const LOCAL_STORAGE_KEY = 'inflix_website_data_v7';
+const LOCAL_STORAGE_KEY = 'inflix_website_data_v8';
 
 export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(() => {
@@ -39,7 +39,7 @@ export const ContentProvider = ({ children }) => {
     return sessionStorage.getItem('inflix_admin_auth') === 'true';
   });
 
-  // Sync CSS properties
+  // Sync CSS properties and SEO Metadata
   useEffect(() => {
     if (!content || !content.brand) return;
     const root = document.documentElement;
@@ -54,6 +54,22 @@ export const ContentProvider = ({ children }) => {
     root.style.setProperty('--color-body-text', '#E5E7EB');
     root.style.setProperty('--font-heading', `'Ancola', 'Tenor Sans', serif`);
     root.style.setProperty('--font-body', `'Poppins', sans-serif`);
+
+    // Sync SEO Document Title & Meta
+    if (content.seoSettings) {
+      if (content.seoSettings.metaTitle) {
+        document.title = content.seoSettings.metaTitle;
+      }
+      if (content.seoSettings.faviconUrl) {
+        let link = document.querySelector("link[rel*='icon']");
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'shortcut icon';
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+        link.href = content.seoSettings.faviconUrl;
+      }
+    }
   }, [content]);
 
   // General Saver

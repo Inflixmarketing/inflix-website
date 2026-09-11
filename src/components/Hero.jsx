@@ -13,10 +13,10 @@ export const Hero = () => {
   return (
     <section id="home" className="agatha-grid-bg" style={{
       position: 'relative',
-      paddingTop: '6.5rem',
-      paddingBottom: '6.5rem',
+      paddingTop: '6rem',
+      paddingBottom: '5.5rem',
       overflow: 'hidden',
-      minHeight: '88vh',
+      minHeight: '85vh',
       display: 'flex',
       alignItems: 'center'
     }}>
@@ -25,8 +25,8 @@ export const Hero = () => {
         position: 'absolute',
         top: '-10%',
         right: '0%',
-        width: '650px',
-        height: '650px',
+        width: '550px',
+        height: '550px',
         background: `radial-gradient(circle, rgba(237, 180, 3, 0.22) 0%, rgba(11, 19, 43, 0) 70%)`,
         pointerEvents: 'none',
         filter: 'blur(50px)'
@@ -41,7 +41,7 @@ export const Hero = () => {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '1.25rem',
+            gap: '1rem',
             flexWrap: 'wrap'
           }} className="agatha-hero-row">
             
@@ -50,21 +50,23 @@ export const Hero = () => {
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '0.5rem 2.4rem',
+              padding: '0.45rem 1.8rem',
               border: '1.5px solid #EDB403',
               borderRadius: '9999px',
               background: 'rgba(237, 180, 3, 0.05)',
               backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              maxWidth: '100%'
             }} className="agatha-hero-pill-outline">
               <span style={{
                 fontFamily: "'Ancola', Georgia, serif",
                 fontStyle: 'italic',
-                fontSize: 'clamp(2.2rem, 4.5vw, 4.2rem)',
+                fontSize: 'clamp(1.2rem, 3.2vw, 2.5rem)',
                 fontWeight: 300,
                 color: '#EDB403',
                 lineHeight: 1.1,
-                letterSpacing: '0.01em'
+                letterSpacing: '0.01em',
+                whiteSpace: 'nowrap'
               }}>
                 {outlineText}
               </span>
@@ -73,11 +75,12 @@ export const Hero = () => {
             {/* Next-Gen / Creative Text */}
             <span style={{
               fontFamily: "'Ancola', 'Tenor Sans', serif",
-              fontSize: 'clamp(3.2rem, 7.5vw, 6.2rem)',
+              fontSize: 'clamp(2rem, 5.5vw, 4.8rem)',
               fontWeight: 400,
               color: '#ffffff',
-              lineHeight: 1.05,
-              letterSpacing: '0.01em'
+              lineHeight: 1.08,
+              letterSpacing: '0.01em',
+              wordBreak: 'break-word'
             }}>
               Next-Gen
             </span>
@@ -87,7 +90,7 @@ export const Hero = () => {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '1.25rem',
+            gap: '1rem',
             flexWrap: 'wrap',
             marginTop: '0.25rem'
           }} className="agatha-hero-row">
@@ -96,8 +99,8 @@ export const Hero = () => {
             <a 
               href="#portfolio" 
               style={{
-                width: '74px',
-                height: '74px',
+                width: 'clamp(48px, 8vw, 68px)',
+                height: 'clamp(48px, 8vw, 68px)',
                 borderRadius: '50%',
                 backgroundColor: '#EDB403',
                 display: 'inline-flex',
@@ -111,18 +114,20 @@ export const Hero = () => {
               className="agatha-hero-arrow-btn"
               aria-label="Explore Portfolio"
             >
-              <ArrowUp size={34} style={{ transform: 'rotate(45deg)', color: '#173765', strokeWidth: 2.5 }} />
+              <ArrowUp size={28} style={{ transform: 'rotate(45deg)', color: '#173765', strokeWidth: 2.5 }} />
             </a>
 
             <h1 style={{
               fontFamily: "'Ancola', 'Tenor Sans', serif",
-              fontSize: 'clamp(3.2rem, 7.5vw, 6.2rem)',
+              fontSize: 'clamp(2rem, 5.5vw, 4.8rem)',
               fontWeight: 400,
               color: '#ffffff',
-              lineHeight: 1.05,
+              lineHeight: 1.08,
               letterSpacing: '0.01em',
               margin: 0,
-              display: 'inline'
+              display: 'inline',
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word'
             }}>
               Digital Marketing & Creative Agency
             </h1>
@@ -135,15 +140,15 @@ export const Hero = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
-          gap: '2.5rem',
+          gap: '2rem',
           flexWrap: 'wrap',
-          marginTop: '3.5rem'
+          marginTop: '3rem'
         }} className="agatha-hero-bottom">
           
           {/* Subheading / Description */}
           <div style={{ maxWidth: '480px' }}>
             <p style={{
-              fontSize: '1.05rem',
+              fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
               color: '#E5E7EB',
               lineHeight: 1.65,
               margin: 0
@@ -158,25 +163,27 @@ export const Hero = () => {
             style={{
               backgroundColor: '#EDB403',
               color: '#173765',
-              padding: '1.1rem 3.4rem',
+              padding: '0.9rem 2.8rem',
               borderRadius: '9999px',
               boxShadow: '0 15px 35px rgba(237, 180, 3, 0.4)',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               textDecoration: 'none',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              maxWidth: '100%'
             }} 
             className="agatha-hero-pill-solid"
           >
             <span style={{
               fontFamily: "'Ancola', Georgia, serif",
               fontStyle: 'italic',
-              fontSize: 'clamp(1.8rem, 3.8vw, 3rem)',
+              fontSize: 'clamp(1.25rem, 3.5vw, 2.4rem)',
               fontWeight: 700,
               color: '#173765',
               lineHeight: 1,
-              letterSpacing: '0.01em'
+              letterSpacing: '0.01em',
+              textAlign: 'center'
             }}>
               {solidText}
             </span>
@@ -188,32 +195,28 @@ export const Hero = () => {
 
       <style>{`
         .agatha-hero-arrow-btn:hover {
-          transform: scale(1.1) rotate(10deg) !important;
+          transform: scale(1.08) rotate(10deg) !important;
           background-color: #fcd34d !important;
           box-shadow: 0 15px 40px rgba(237, 180, 3, 0.6) !important;
         }
         .agatha-hero-pill-solid:hover {
-          transform: translateY(-4px) scale(1.02) !important;
+          transform: translateY(-3px) scale(1.02) !important;
           background-color: #fcd34d !important;
           box-shadow: 0 20px 45px rgba(237, 180, 3, 0.6) !important;
         }
         @media (max-width: 768px) {
           .agatha-hero-row {
-            gap: 0.75rem !important;
+            gap: 0.65rem !important;
           }
           .agatha-hero-pill-outline {
-            padding: 0.35rem 1.4rem !important;
-          }
-          .agatha-hero-arrow-btn {
-            width: 54px !important;
-            height: 54px !important;
+            padding: 0.35rem 1.2rem !important;
           }
           .agatha-hero-pill-solid {
-            padding: 0.85rem 2rem !important;
+            padding: 0.75rem 1.5rem !important;
             width: 100% !important;
           }
           .agatha-hero-bottom {
-            margin-top: 2rem !important;
+            margin-top: 1.75rem !important;
           }
         }
       `}</style>

@@ -18,20 +18,103 @@ import {
   Trash2,
   Copy,
   Eye,
-  EyeOff,
-  Star,
   Search,
   Upload,
   Image as ImageIcon,
   Key,
   Globe,
-  Activity,
   Layers,
   Menu,
-  ChevronRight,
   Shield,
-  Clock
+  Check
 } from 'lucide-react';
+
+// Reusable Image Uploader with File Picker, URL input, Replace, Delete & Live Preview
+const ImageUploader = ({ label, value, onChange, placeholder = "Paste Image URL or Upload File" }) => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onChange(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div style={{ marginBottom: '1.25rem' }}>
+      {label && <label style={adminLabelStyle}>{label}</label>}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        {value && (
+          <div style={{
+            position: 'relative',
+            width: '100%',
+            maxHeight: '160px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            border: '1px solid rgba(237, 180, 3, 0.35)',
+            background: '#0B132B',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0.5rem'
+          }}>
+            <img src={value} alt="Preview" style={{ maxHeight: '140px', maxWidth: '100%', objectFit: 'contain' }} />
+          </div>
+        )}
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <input 
+            type="text" 
+            value={value || ''} 
+            onChange={(e) => onChange(e.target.value)} 
+            placeholder={placeholder}
+            style={{ ...adminInputStyle, flex: 1, minWidth: '180px' }}
+          />
+          <label style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            padding: '0.65rem 1rem',
+            background: '#173765',
+            color: '#EDB403',
+            border: '1px solid #EDB403',
+            borderRadius: '8px',
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            whiteSpace: 'nowrap'
+          }}>
+            <Upload size={14} />
+            <span>{value ? 'Replace Image' : 'Upload Image'}</span>
+            <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
+          </label>
+          {value && (
+            <button 
+              type="button" 
+              onClick={() => onChange('')} 
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                padding: '0.65rem 0.85rem',
+                background: 'rgba(239, 68, 68, 0.15)',
+                color: '#f87171',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              <Trash2 size={14} /> Delete
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const AdminPanel = () => {
   const { 
@@ -70,11 +153,11 @@ export const AdminPanel = () => {
     deleteBlog,
     toggleBlogStatus,
     addMediaAsset,
-    deleteMediaAsset,
-    navigateToView
+    deleteMediaAsset
   } = useContent();
 
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // Default active tab is 'hero' (Hero Section) as requested
+  const [activeTab, setActiveTab] = useState('hero');
   const [saveNotification, setSaveNotification] = useState(false);
   const [localContent, setLocalContent] = useState(content);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -121,50 +204,22 @@ export const AdminPanel = () => {
     }
   };
 
-  const handleChangePassSubmit = (e) => {
-    e.preventDefault();
-    const res = changePassword(oldPassInput, newPassInput);
-    if (res.success) {
-      setPassChangeStatus('Password successfully updated!');
-      setOldPassInput('');
-      setNewPassInput('');
-      setTimeout(() => setPassChangeStatus(''), 3000);
-    } else {
-      setPassChangeStatus(`Error: ${res.error}`);
-    }
-  };
-
   const handleSaveAll = () => {
     saveContent(localContent);
     setSaveNotification(true);
-    setTimeout(() => setSaveNotification(false), 2500);
+    setTimeout(() => setSaveNotification(false), 3000);
   };
 
-  const handleFileUpload = (e, callback) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const base64Url = ev.target.result;
-      callback(base64Url, file.name);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const updateLocalSectionField = (sectionKey, fieldKey, value) => {
+  const updateLocalSection = (sectionKey, updatedSection) => {
     const updated = {
       ...localContent,
-      [sectionKey]: {
-        ...localContent[sectionKey],
-        [fieldKey]: value
-      }
+      [sectionKey]: updatedSection
     };
     setLocalContent(updated);
-    saveContent(updated);
   };
 
   /* ==========================================================================
-     1. AUTHENTICATION LOCK & FORGOT PASSWORD MODALS
+     1. AUTHENTICATION LOCK SCREEN
      ========================================================================== */
   if (!isAuthenticated) {
     return (
@@ -175,25 +230,28 @@ export const AdminPanel = () => {
           </button>
 
           <div style={lockIconCircleStyle}>
-            <Lock size={26} />
+            <Lock size={32} style={{ color: '#EDB403' }} />
           </div>
 
-          <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.5rem', marginBottom: '0.4rem', color: '#ffffff' }}>
-            Agatha CMS Admin Login
-          </h3>
+          <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.75rem', fontWeight: 400, color: '#ffffff', marginBottom: '0.35rem' }}>
+            Inflix Marketing Solution
+          </h2>
           <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: '1.75rem' }}>
-            Enter your password to access your live website dashboard.
+            Website Management System Authentication
           </p>
 
           <form onSubmit={handleLoginSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <input 
-              type="password" 
-              placeholder="Enter Admin Password" 
-              value={passwordInput}
-              onChange={(e) => setPasswordInput(e.target.value)}
-              style={authInputStyle}
-              autoFocus
-            />
+            <div>
+              <label style={adminLabelStyle}>ADMIN PASSWORD</label>
+              <input 
+                type="password"
+                placeholder="Enter password (default: inflix2026)"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                style={authInputStyle}
+                autoFocus
+              />
+            </div>
 
             {authError && (
               <span style={{ fontSize: '0.8rem', color: '#f87171', fontWeight: 600 }}>
@@ -201,7 +259,7 @@ export const AdminPanel = () => {
               </span>
             )}
 
-            <button type="submit" className="btn-agatha-purple" style={{ width: '100%', marginTop: '0.5rem' }}>
+            <button type="submit" className="btn-agatha-gold" style={{ width: '100%', marginTop: '0.5rem' }}>
               UNLOCK DASHBOARD
             </button>
           </form>
@@ -226,7 +284,7 @@ export const AdminPanel = () => {
               </button>
 
               <div style={lockIconCircleStyle}>
-                <Key size={26} />
+                <Key size={26} style={{ color: '#EDB403' }} />
               </div>
 
               <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.4rem', marginBottom: '0.5rem', color: '#ffffff' }}>
@@ -251,7 +309,7 @@ export const AdminPanel = () => {
                   </span>
                 )}
 
-                <button type="submit" className="btn-agatha-purple" style={{ width: '100%' }}>
+                <button type="submit" className="btn-agatha-gold" style={{ width: '100%' }}>
                   RESET PASSWORD
                 </button>
               </form>
@@ -266,7 +324,7 @@ export const AdminPanel = () => {
      2. FULL CMS DASHBOARD WORKSPACE
      ========================================================================== */
   const sidebarNavItems = [
-    { id: 'dashboard', label: 'Dashboard Overview', icon: Activity },
+    { id: 'logo', label: 'Logo & Brand Identity', icon: Palette },
     { id: 'hero', label: 'Hero Section', icon: Layout },
     { id: 'about', label: 'About Section', icon: FileText },
     { id: 'services', label: `Services (${localContent.services?.length || 0})`, icon: Briefcase },
@@ -279,6 +337,11 @@ export const AdminPanel = () => {
     { id: 'seo', label: 'SEO & Meta Settings', icon: Globe },
     { id: 'settings', label: 'Security & Settings', icon: Key }
   ];
+
+  const handleTabSelect = (tabId) => {
+    setActiveTab(tabId);
+    setMobileSidebarOpen(false); // Automatically closes drawer on mobile selection
+  };
 
   return (
     <div style={modalOverlayStyle}>
@@ -296,228 +359,303 @@ export const AdminPanel = () => {
             </button>
 
             <div style={headerLogoSquareStyle}>
-              <Palette size={20} />
+              <Palette size={20} style={{ color: '#173765' }} />
             </div>
 
             <div>
-              <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.25rem', color: '#ffffff', margin: 0 }}>
-                Agatha CMS Suite
+              <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.25rem', fontWeight: 400, color: '#ffffff', lineHeight: 1 }}>
+                Inflix Marketing Solution
               </h2>
-              <span style={{ fontSize: '0.725rem', color: '#94a3b8' }}>
-                Full Site Control Panel
+              <span style={{ fontSize: '0.65rem', color: '#EDB403', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+                Website Management System
               </span>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             {saveNotification && (
-              <span style={{ color: '#10b981', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                <CheckCircle size={15} /> Saved Live!
+              <span style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
+                <CheckCircle size={15} /> SAVED LIVE!
               </span>
             )}
 
-            <button 
-              onClick={() => { resetToDefaults(); setSaveNotification(true); setTimeout(() => setSaveNotification(false), 2000); }}
-              style={resetButtonStyle}
-            >
-              <RefreshCw size={14} /> Reset Defaults
+            <button onClick={handleSaveAll} className="btn-agatha-gold" style={{ padding: '0.55rem 1.4rem', fontSize: '0.785rem' }}>
+              <Save size={15} /> SAVE ALL CHANGES
             </button>
 
-            <button onClick={handleSaveAll} className="btn-agatha-purple" style={{ padding: '0.5rem 1.1rem', fontSize: '0.8rem' }}>
-              <Save size={15} />
-              <span>SAVE ALL</span>
+            <button onClick={logout} style={logoutIconButtonStyle} title="Lock Admin Session">
+              <LogOut size={16} />
             </button>
 
-            <button onClick={logout} style={logoutButtonStyle}>
-              <LogOut size={14} /> Logout
-            </button>
-
-            <button onClick={() => setIsAdminOpen(false)} style={{ color: '#ffffff', padding: '0.35rem' }}>
-              <X size={22} />
+            <button onClick={() => setIsAdminOpen(false)} style={closeIconButtonStyle}>
+              <X size={20} />
             </button>
           </div>
         </div>
 
-        {/* Dashboard Workspace */}
+        {/* Dashboard Main Workspace (Sidebar Drawer + Content Area) */}
         <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
           
-          {/* Sidebar Navigation */}
-          <div className={`admin-sidebar ${mobileSidebarOpen ? 'sidebar-open' : ''}`} style={sidebarContainerStyle}>
+          {/* Mobile Overlay Background */}
+          {mobileSidebarOpen && (
+            <div 
+              onClick={() => setMobileSidebarOpen(false)} 
+              className="admin-mobile-overlay"
+            />
+          )}
+
+          {/* Left Sidebar Drawer */}
+          <aside className={`admin-sidebar-drawer ${mobileSidebarOpen ? 'open' : ''}`} style={sidebarContainerStyle}>
             {sidebarNavItems.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
+
               return (
                 <button
                   key={tab.id}
-                  onClick={() => { setActiveTab(tab.id); setMobileSidebarOpen(false); }}
+                  onClick={() => handleTabSelect(tab.id)}
                   style={{
                     ...sidebarNavButtonStyle,
-                    background: isActive ? 'rgba(103, 82, 236, 0.2)' : 'transparent',
-                    color: isActive ? '#EDB403' : '#94a3b8',
-                    border: isActive ? '1px solid rgba(103, 82, 236, 0.4)' : '1px solid transparent'
+                    background: isActive ? '#EDB403' : 'transparent',
+                    color: isActive ? '#173765' : '#E5E7EB',
+                    fontWeight: isActive ? 700 : 500,
+                    borderLeft: isActive ? '4px solid #ffffff' : '4px solid transparent'
                   }}
                 >
-                  <Icon size={17} style={{ color: isActive ? '#EDB403' : '#64748b' }} />
+                  <Icon size={17} style={{ color: isActive ? '#173765' : '#EDB403' }} />
                   <span>{tab.label}</span>
                 </button>
               );
             })}
-          </div>
 
-          {/* Main Editor Body */}
-          <div style={{ flex: 1, padding: '1.75rem', overflowY: 'auto', background: '#0c0a1d' }}>
+            <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(237, 180, 3, 0.2)' }}>
+              <button 
+                onClick={resetToDefaults}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  color: '#f87171',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  padding: '0.5rem',
+                  width: '100%'
+                }}
+              >
+                <RefreshCw size={14} /> Reset System Defaults
+              </button>
+            </div>
+          </aside>
+
+          {/* Right Main Content Scrollable Workspace */}
+          <main style={mainContentAreaStyle}>
             
-            {/* ===================================================================
-               1. DASHBOARD OVERVIEW TAB
-               =================================================================== */}
-            {activeTab === 'dashboard' && (
+            {/* 1. BRAND & LOGO MANAGEMENT */}
+            {activeTab === 'logo' && (
               <div>
-                <h3 style={tabHeaderTitleStyle}>Website Performance & Content Overview</h3>
+                <h2 style={tabHeaderTitleStyle}>Logo & Brand Identity Management</h2>
+                
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <ImageUploader 
+                    label="Website Header & Footer Logo Image"
+                    value={localContent.brand?.logoUrl || ''}
+                    onChange={(url) => updateLocalSection('brand', { ...localContent.brand, logoUrl: url })}
+                    placeholder="Paste Logo URL or Upload File"
+                  />
 
-                {/* Counter Metric Cards */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
-                  {[
-                    { label: 'Total Projects', count: localContent.portfolio?.length || 0, color: '#EDB403', icon: Layers },
-                    { label: 'Total Services', count: localContent.services?.length || 0, color: '#EDB403', icon: Briefcase },
-                    { label: 'Testimonials', count: localContent.testimonials?.length || 0, color: '#10b981', icon: MessageSquare },
-                    { label: 'Blog Posts', count: localContent.blogs?.length || 0, color: '#f59e0b', icon: FileText },
-                    { label: 'FAQs', count: localContent.faqs?.length || 0, color: '#ec4899', icon: HelpCircle }
-                  ].map((stat, i) => {
-                    const StatIcon = stat.icon;
-                    return (
-                      <div key={i} className="card-glass" style={{ padding: '1.25rem', borderLeft: `4px solid ${stat.color}` }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{stat.label}</span>
-                          <StatIcon size={18} style={{ color: stat.color }} />
-                        </div>
-                        <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '2rem', color: '#ffffff', display: 'block', marginTop: '0.5rem' }}>
-                          {stat.count}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Quick Actions & Website Status */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }} className="dashboard-grid-split">
-                  <div className="card-glass" style={{ padding: '1.5rem' }}>
-                    <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
-                      Quick Actions
-                    </h4>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                      <button onClick={() => { addService({ title: 'New Service' }); setActiveTab('services'); }} style={quickActionBtnStyle}>
-                        <Plus size={16} /> Add New Service Page
-                      </button>
-                      <button onClick={() => { addPortfolio({ title: 'New Project' }); setActiveTab('portfolio'); }} style={quickActionBtnStyle}>
-                        <Plus size={16} /> Add Portfolio Project
-                      </button>
-                      <button onClick={() => { addBlog({ title: 'New Article' }); setActiveTab('blogs'); }} style={quickActionBtnStyle}>
-                        <Plus size={16} /> Draft New Blog Article
-                      </button>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={adminLabelStyle}>SITE NAME</label>
+                      <input 
+                        type="text" 
+                        value={localContent.brand?.siteName || ''} 
+                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, siteName: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>TAGLINE / SLOGAN</label>
+                      <input 
+                        type="text" 
+                        value={localContent.brand?.tagline || ''} 
+                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, tagline: e.target.value })}
+                        style={adminInputStyle}
+                      />
                     </div>
                   </div>
+                </div>
 
-                  <div className="card-glass" style={{ padding: '1.5rem' }}>
-                    <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
-                      Website System Status
-                    </h4>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }} />
-                        <span style={{ fontSize: '0.9rem', color: '#ffffff' }}>System Online & Synchronized</span>
-                      </div>
-                      <div style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.6 }}>
-                        Current Theme: <strong style={{ color: '#EDB403' }}>Agatha Creative Portfolio</strong><br />
-                        Heading Font: <strong style={{ color: '#EDB403' }}>Ancola Regular/Italic</strong><br />
-                        Data Version: <strong style={{ color: '#EDB403' }}>v5 Dynamic Store</strong>
-                      </div>
+                <div className="card-glass">
+                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
+                    Brand Colors & Contact Details
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={adminLabelStyle}>PRIMARY COLOR (GOLD)</label>
+                      <input 
+                        type="color" 
+                        value={localContent.brand?.primaryColor || '#EDB403'} 
+                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, primaryColor: e.target.value })}
+                        style={{ ...adminInputStyle, height: '42px', padding: '0.2rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>SECONDARY COLOR (NAVY)</label>
+                      <input 
+                        type="color" 
+                        value={localContent.brand?.secondaryColor || '#173765'} 
+                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, secondaryColor: e.target.value })}
+                        style={{ ...adminInputStyle, height: '42px', padding: '0.2rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>CONTACT EMAIL</label>
+                      <input 
+                        type="text" 
+                        value={localContent.brand?.contactEmail || ''} 
+                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, contactEmail: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>CONTACT PHONE</label>
+                      <input 
+                        type="text" 
+                        value={localContent.brand?.contactPhone || ''} 
+                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, contactPhone: e.target.value })}
+                        style={adminInputStyle}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* ===================================================================
-               2. HERO MANAGER TAB
-               =================================================================== */}
+            {/* 2. HERO SECTION */}
             {activeTab === 'hero' && (
               <div>
-                <h3 style={tabHeaderTitleStyle}>Hero Section Manager</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                  <div>
-                    <label style={adminLabelStyle}>Top Badge Capsule</label>
-                    <input type="text" value={localContent.hero?.capsuleOutline || ''} onChange={(e) => updateLocalSectionField('hero', 'capsuleOutline', e.target.value)} style={adminInputStyle} />
+                <h2 style={tabHeaderTitleStyle}>Hero Section CMS</h2>
+
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                    <div>
+                      <label style={adminLabelStyle}>TOP OUTLINE PILL TEXT</label>
+                      <input 
+                        type="text" 
+                        value={localContent.hero?.capsuleOutline || ''} 
+                        onChange={(e) => updateLocalSection('hero', { ...localContent.hero, capsuleOutline: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={adminLabelStyle}>BOTTOM SOLID PILL TEXT</label>
+                      <input 
+                        type="text" 
+                        value={localContent.hero?.capsuleSolid || ''} 
+                        onChange={(e) => updateLocalSection('hero', { ...localContent.hero, capsuleSolid: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label style={adminLabelStyle}>Main Title Headline</label>
-                    <input type="text" value={localContent.hero?.titleMain || ''} onChange={(e) => updateLocalSectionField('hero', 'titleMain', e.target.value)} style={adminInputStyle} />
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>MAIN TITLE HEADLINE</label>
+                    <input 
+                      type="text" 
+                      value={localContent.hero?.titleMain || ''} 
+                      onChange={(e) => updateLocalSection('hero', { ...localContent.hero, titleMain: e.target.value })}
+                      style={adminInputStyle}
+                    />
                   </div>
-                  <div style={{ gridColumn: '1 / -1' }}>
-                    <label style={adminLabelStyle}>Description Paragraph</label>
-                    <textarea rows={3} value={localContent.hero?.description || ''} onChange={(e) => updateLocalSectionField('hero', 'description', e.target.value)} style={adminInputStyle} />
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>SUBHEADING DESCRIPTION</label>
+                    <textarea 
+                      rows={3} 
+                      value={localContent.hero?.description || ''} 
+                      onChange={(e) => updateLocalSection('hero', { ...localContent.hero, description: e.target.value })}
+                      style={adminInputStyle}
+                    />
                   </div>
-                  <div>
-                    <label style={adminLabelStyle}>Primary CTA Text</label>
-                    <input type="text" value={localContent.hero?.primaryCta || ''} onChange={(e) => updateLocalSectionField('hero', 'primaryCta', e.target.value)} style={adminInputStyle} />
-                  </div>
-                  <div>
-                    <label style={adminLabelStyle}>Secondary CTA Text</label>
-                    <input type="text" value={localContent.hero?.secondaryCta || ''} onChange={(e) => updateLocalSectionField('hero', 'secondaryCta', e.target.value)} style={adminInputStyle} />
-                  </div>
+
+                  <ImageUploader 
+                    label="Hero Background Image (Optional Overlay)"
+                    value={localContent.hero?.heroBgImage || ''}
+                    onChange={(url) => updateLocalSection('hero', { ...localContent.hero, heroBgImage: url })}
+                  />
                 </div>
               </div>
             )}
 
-            {/* ===================================================================
-               3. ABOUT MANAGER TAB
-               =================================================================== */}
+            {/* 3. ABOUT SECTION */}
             {activeTab === 'about' && (
               <div>
-                <h3 style={tabHeaderTitleStyle}>About Section Manager</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                  <div>
-                    <label style={adminLabelStyle}>Category Badge</label>
-                    <input type="text" value={localContent.about?.category || ''} onChange={(e) => updateLocalSectionField('about', 'category', e.target.value)} style={adminInputStyle} />
+                <h2 style={tabHeaderTitleStyle}>About Section CMS</h2>
+
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <ImageUploader 
+                    label="About Section Feature Image"
+                    value={localContent.about?.aboutImage || ''}
+                    onChange={(url) => updateLocalSection('about', { ...localContent.about, aboutImage: url })}
+                  />
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                    <div>
+                      <label style={adminLabelStyle}>CATEGORY LABEL</label>
+                      <input 
+                        type="text" 
+                        value={localContent.about?.category || ''} 
+                        onChange={(e) => updateLocalSection('about', { ...localContent.about, category: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={adminLabelStyle}>MAIN HEADLINE</label>
+                      <input 
+                        type="text" 
+                        value={localContent.about?.headline || ''} 
+                        onChange={(e) => updateLocalSection('about', { ...localContent.about, headline: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label style={adminLabelStyle}>Headline</label>
-                    <input type="text" value={localContent.about?.headline || ''} onChange={(e) => updateLocalSectionField('about', 'headline', e.target.value)} style={adminInputStyle} />
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>HIGHLIGHTED TEXT</label>
+                    <textarea 
+                      rows={2} 
+                      value={localContent.about?.highlight || ''} 
+                      onChange={(e) => updateLocalSection('about', { ...localContent.about, highlight: e.target.value })}
+                      style={adminInputStyle}
+                    />
                   </div>
-                  <div style={{ gridColumn: '1 / -1' }}>
-                    <label style={adminLabelStyle}>Highlight Paragraph</label>
-                    <textarea rows={3} value={localContent.about?.highlight || ''} onChange={(e) => updateLocalSectionField('about', 'highlight', e.target.value)} style={adminInputStyle} />
-                  </div>
-                  <div style={{ gridColumn: '1 / -1' }}>
-                    <label style={adminLabelStyle}>Body Narrative</label>
-                    <textarea rows={3} value={localContent.about?.body || ''} onChange={(e) => updateLocalSectionField('about', 'body', e.target.value)} style={adminInputStyle} />
-                  </div>
-                  <div>
-                    <label style={adminLabelStyle}>Philosophy Section</label>
-                    <textarea rows={3} value={localContent.about?.philosophy || ''} onChange={(e) => updateLocalSectionField('about', 'philosophy', e.target.value)} style={adminInputStyle} />
-                  </div>
-                  <div>
-                    <label style={adminLabelStyle}>Goals Section</label>
-                    <textarea rows={3} value={localContent.about?.goals || ''} onChange={(e) => updateLocalSectionField('about', 'goals', e.target.value)} style={adminInputStyle} />
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>BODY PARAGRAPH</label>
+                    <textarea 
+                      rows={3} 
+                      value={localContent.about?.body || ''} 
+                      onChange={(e) => updateLocalSection('about', { ...localContent.about, body: e.target.value })}
+                      style={adminInputStyle}
+                    />
                   </div>
                 </div>
               </div>
             )}
 
-            {/* ===================================================================
-               4. SERVICES MANAGER (Full CRUD + Duplicate + Reorder)
-               =================================================================== */}
+            {/* 4. SERVICES CMS */}
             {activeTab === 'services' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h3 style={{ ...tabHeaderTitleStyle, margin: 0 }}>
-                    Services Management ({localContent.services?.length || 0})
-                  </h3>
-                  <button onClick={() => addService({ title: 'New Service' })} style={addButtonHeaderStyle}>
+                  <h2 style={tabHeaderTitleStyle}>Services Management ({localContent.services?.length || 0})</h2>
+                  <button onClick={() => addService({ title: 'New Growth Service' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add New Service
                   </button>
                 </div>
 
-                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   {(localContent.services || []).map((serv, index) => (
                     <div key={serv.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
@@ -532,22 +670,30 @@ export const AdminPanel = () => {
                         </div>
                       </div>
 
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                      <ImageUploader 
+                        label="Service Cover Image / Icon"
+                        value={serv.imageUrl || ''}
+                        onChange={(url) => updateService(index, { imageUrl: url })}
+                      />
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
                         <div>
-                          <label style={adminLabelStyle}>Title</label>
-                          <input type="text" value={serv.title} onChange={(e) => updateService(index, { title: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>SERVICE TITLE</label>
+                          <input 
+                            type="text" 
+                            value={serv.title || ''} 
+                            onChange={(e) => updateService(index, { title: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
                         <div>
-                          <label style={adminLabelStyle}>Slug</label>
-                          <input type="text" value={serv.slug || ''} onChange={(e) => updateService(index, { slug: e.target.value })} style={adminInputStyle} />
-                        </div>
-                        <div style={{ gridColumn: '1 / -1' }}>
-                          <label style={adminLabelStyle}>Short Description</label>
-                          <input type="text" value={serv.shortDesc} onChange={(e) => updateService(index, { shortDesc: e.target.value })} style={adminInputStyle} />
-                        </div>
-                        <div style={{ gridColumn: '1 / -1' }}>
-                          <label style={adminLabelStyle}>Overview Strategy Content</label>
-                          <textarea rows={3} value={serv.overviewContent || ''} onChange={(e) => updateService(index, { overviewContent: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>SHORT SUMMARY</label>
+                          <input 
+                            type="text" 
+                            value={serv.shortDesc || ''} 
+                            onChange={(e) => updateService(index, { shortDesc: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
                       </div>
                     </div>
@@ -556,21 +702,17 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* ===================================================================
-               5. PORTFOLIO MANAGER (Full CRUD + Multi-Image + Featured Toggle)
-               =================================================================== */}
+            {/* 5. PORTFOLIO CMS */}
             {activeTab === 'portfolio' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h3 style={{ ...tabHeaderTitleStyle, margin: 0 }}>
-                    Portfolio Projects ({localContent.portfolio?.length || 0})
-                  </h3>
-                  <button onClick={() => addPortfolio({ title: 'New Creative Project' })} style={addButtonHeaderStyle}>
-                    <Plus size={16} /> Add Portfolio Project
+                  <h2 style={tabHeaderTitleStyle}>Portfolio Project Manager ({localContent.portfolio?.length || 0})</h2>
+                  <button onClick={() => addPortfolio({ title: 'New Portfolio Project' })} style={addButtonHeaderStyle}>
+                    <Plus size={16} /> Add Portfolio Item
                   </button>
                 </div>
 
-                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   {(localContent.portfolio || []).map((port, index) => (
                     <div key={port.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
@@ -580,14 +722,10 @@ export const AdminPanel = () => {
                             onClick={() => toggleFeaturedPortfolio(index)} 
                             style={{
                               ...actionIconBtnStyle,
-                              background: port.featured ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255,255,255,0.05)',
-                              color: port.featured ? '#f59e0b' : '#94a3b8'
+                              color: port.featured ? '#EDB403' : '#94a3b8'
                             }}
                           >
-                            <Star size={14} fill={port.featured ? '#f59e0b' : 'none'} /> {port.featured ? 'Featured' : 'Standard'}
-                          </button>
-                          <button onClick={() => duplicatePortfolio(index)} style={actionIconBtnStyle}>
-                            <Copy size={15} /> Duplicate
+                            <Eye size={15} /> {port.featured ? 'Featured' : 'Standard'}
                           </button>
                           <button onClick={() => deletePortfolio(index)} style={deleteButtonStyle}>
                             <Trash2 size={15} /> Delete
@@ -595,20 +733,31 @@ export const AdminPanel = () => {
                         </div>
                       </div>
 
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                        <div>
-                          <label style={adminLabelStyle}>Category</label>
-                          <input type="text" value={port.category} onChange={(e) => updatePortfolio(index, { category: e.target.value })} style={adminInputStyle} />
-                        </div>
-                        <div>
-                          <label style={adminLabelStyle}>Project Title</label>
-                          <input type="text" value={port.title} onChange={(e) => updatePortfolio(index, { title: e.target.value })} style={adminInputStyle} />
-                        </div>
-                      </div>
+                      <ImageUploader 
+                        label="Portfolio Project Image"
+                        value={port.imageUrl || ''}
+                        onChange={(url) => updatePortfolio(index, { imageUrl: url })}
+                      />
 
-                      <div>
-                        <label style={adminLabelStyle}>Image URL</label>
-                        <input type="text" value={port.imageUrl || ''} onChange={(e) => updatePortfolio(index, { imageUrl: e.target.value })} style={adminInputStyle} />
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                        <div>
+                          <label style={adminLabelStyle}>PROJECT TITLE</label>
+                          <input 
+                            type="text" 
+                            value={port.title || ''} 
+                            onChange={(e) => updatePortfolio(index, { title: e.target.value })}
+                            style={adminInputStyle}
+                          />
+                        </div>
+                        <div>
+                          <label style={adminLabelStyle}>CATEGORY</label>
+                          <input 
+                            type="text" 
+                            value={port.category || ''} 
+                            onChange={(e) => updatePortfolio(index, { category: e.target.value })}
+                            style={adminInputStyle}
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -616,21 +765,17 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* ===================================================================
-               6. CLIENTS MANAGER (Full CRUD + Reorder)
-               =================================================================== */}
+            {/* 6. CLIENTS CMS */}
             {activeTab === 'clients' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h3 style={{ ...tabHeaderTitleStyle, margin: 0 }}>
-                    Client Brands ({localContent.clients?.length || 0})
-                  </h3>
+                  <h2 style={tabHeaderTitleStyle}>Client Brands Manager ({localContent.clients?.length || 0})</h2>
                   <button onClick={() => addClient({ name: 'New Client Brand' })} style={addButtonHeaderStyle}>
-                    <Plus size={16} /> Add New Client
+                    <Plus size={16} /> Add Client Card
                   </button>
                 </div>
 
-                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   {(localContent.clients || []).map((cli, index) => (
                     <div key={cli.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
@@ -640,19 +785,31 @@ export const AdminPanel = () => {
                         </button>
                       </div>
 
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                      <ImageUploader 
+                        label="Client Logo Image"
+                        value={cli.logoUrl || ''}
+                        onChange={(url) => updateClient(index, { logoUrl: url })}
+                      />
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
                         <div>
-                          <label style={adminLabelStyle}>Brand Name</label>
-                          <input type="text" value={cli.name} onChange={(e) => updateClient(index, { name: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>BRAND NAME</label>
+                          <input 
+                            type="text" 
+                            value={cli.name || ''} 
+                            onChange={(e) => updateClient(index, { name: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
                         <div>
-                          <label style={adminLabelStyle}>Industry Category</label>
-                          <input type="text" value={cli.category} onChange={(e) => updateClient(index, { category: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>CASE DESCRIPTION</label>
+                          <input 
+                            type="text" 
+                            value={cli.desc || ''} 
+                            onChange={(e) => updateClient(index, { desc: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
-                      </div>
-                      <div>
-                        <label style={adminLabelStyle}>Case Study Highlight</label>
-                        <textarea rows={2} value={cli.desc} onChange={(e) => updateClient(index, { desc: e.target.value })} style={adminInputStyle} />
                       </div>
                     </div>
                   ))}
@@ -660,55 +817,61 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* ===================================================================
-               7. TESTIMONIALS MANAGER (Full CRUD + Show/Hide Toggle)
-               =================================================================== */}
+            {/* 7. TESTIMONIALS CMS */}
             {activeTab === 'testimonials' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h3 style={{ ...tabHeaderTitleStyle, margin: 0 }}>
-                    Testimonials ({localContent.testimonials?.length || 0})
-                  </h3>
-                  <button onClick={() => addTestimonial({ name: 'Client Review' })} style={addButtonHeaderStyle}>
+                  <h2 style={tabHeaderTitleStyle}>Client Reviews & Testimonials ({localContent.testimonials?.length || 0})</h2>
+                  <button onClick={() => addTestimonial({ name: 'New Reviewer' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add Testimonial
                   </button>
                 </div>
 
-                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   {(localContent.testimonials || []).map((t, index) => (
                     <div key={t.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>{t.name} ({t.title})</div>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button 
-                            onClick={() => toggleTestimonialVisibility(index)}
-                            style={{
-                              ...actionIconBtnStyle,
-                              color: t.visible !== false ? '#10b981' : '#94a3b8'
-                            }}
-                          >
-                            {t.visible !== false ? <Eye size={14} /> : <EyeOff size={14} />} {t.visible !== false ? 'Visible' : 'Hidden'}
-                          </button>
-                          <button onClick={() => deleteTestimonial(index)} style={deleteButtonStyle}>
-                            <Trash2 size={15} /> Delete
-                          </button>
-                        </div>
+                        <button onClick={() => deleteTestimonial(index)} style={deleteButtonStyle}>
+                          <Trash2 size={15} /> Delete
+                        </button>
                       </div>
 
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                      <ImageUploader 
+                        label="Testimonial Avatar Image"
+                        value={t.avatarUrl || ''}
+                        onChange={(url) => updateTestimonial(index, { avatarUrl: url })}
+                      />
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
                         <div>
-                          <label style={adminLabelStyle}>Client Name</label>
-                          <input type="text" value={t.name} onChange={(e) => updateTestimonial(index, { name: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>NAME</label>
+                          <input 
+                            type="text" 
+                            value={t.name || ''} 
+                            onChange={(e) => updateTestimonial(index, { name: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
                         <div>
-                          <label style={adminLabelStyle}>Designation / Title</label>
-                          <input type="text" value={t.title} onChange={(e) => updateTestimonial(index, { title: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>ROLE / CLINIC TITLE</label>
+                          <input 
+                            type="text" 
+                            value={t.title || ''} 
+                            onChange={(e) => updateTestimonial(index, { title: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
                       </div>
 
                       <div>
-                        <label style={adminLabelStyle}>Review Quote</label>
-                        <textarea rows={2} value={t.quote} onChange={(e) => updateTestimonial(index, { quote: e.target.value })} style={adminInputStyle} />
+                        <label style={adminLabelStyle}>QUOTE CONTENT</label>
+                        <textarea 
+                          rows={2} 
+                          value={t.quote || ''} 
+                          onChange={(e) => updateTestimonial(index, { quote: e.target.value })}
+                          style={adminInputStyle}
+                        />
                       </div>
                     </div>
                   ))}
@@ -716,21 +879,17 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* ===================================================================
-               8. FAQ MANAGER (Full CRUD + Category)
-               =================================================================== */}
+            {/* 8. FAQS CMS */}
             {activeTab === 'faqs' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h3 style={{ ...tabHeaderTitleStyle, margin: 0 }}>
-                    Frequently Asked Questions ({localContent.faqs?.length || 0})
-                  </h3>
+                  <h2 style={tabHeaderTitleStyle}>FAQs Manager ({localContent.faqs?.length || 0})</h2>
                   <button onClick={() => addFaq({ question: 'New Question?' })} style={addButtonHeaderStyle}>
-                    <Plus size={16} /> Add New FAQ
+                    <Plus size={16} /> Add FAQ Item
                   </button>
                 </div>
 
-                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   {(localContent.faqs || []).map((f, index) => (
                     <div key={f.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
@@ -740,13 +899,24 @@ export const AdminPanel = () => {
                         </button>
                       </div>
 
-                      <div style={{ marginBottom: '0.75rem' }}>
-                        <label style={adminLabelStyle}>Question</label>
-                        <input type="text" value={f.question} onChange={(e) => updateFaq(index, { question: e.target.value })} style={adminInputStyle} />
+                      <div style={{ marginBottom: '1rem' }}>
+                        <label style={adminLabelStyle}>QUESTION</label>
+                        <input 
+                          type="text" 
+                          value={f.question || ''} 
+                          onChange={(e) => updateFaq(index, { question: e.target.value })}
+                          style={adminInputStyle}
+                        />
                       </div>
+
                       <div>
-                        <label style={adminLabelStyle}>Answer</label>
-                        <textarea rows={2} value={f.answer} onChange={(e) => updateFaq(index, { answer: e.target.value })} style={adminInputStyle} />
+                        <label style={adminLabelStyle}>ANSWER</label>
+                        <textarea 
+                          rows={2} 
+                          value={f.answer || ''} 
+                          onChange={(e) => updateFaq(index, { answer: e.target.value })}
+                          style={adminInputStyle}
+                        />
                       </div>
                     </div>
                   ))}
@@ -754,60 +924,61 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* ===================================================================
-               9. BLOG MANAGER (Full CRUD + Draft/Publish)
-               =================================================================== */}
+            {/* 9. BLOGS CMS */}
             {activeTab === 'blogs' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h3 style={{ ...tabHeaderTitleStyle, margin: 0 }}>
-                    Blog Posts & Insights ({localContent.blogs?.length || 0})
-                  </h3>
-                  <button onClick={() => addBlog({ title: 'New Article' })} style={addButtonHeaderStyle}>
-                    <Plus size={16} /> Add New Article
+                  <h2 style={tabHeaderTitleStyle}>Blog Posts Manager ({localContent.blogs?.length || 0})</h2>
+                  <button onClick={() => addBlog({ title: 'New Marketing Article' })} style={addButtonHeaderStyle}>
+                    <Plus size={16} /> Add New Blog Post
                   </button>
                 </div>
 
-                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   {(localContent.blogs || []).map((b, index) => (
                     <div key={b.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>{b.title}</div>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button 
-                            onClick={() => toggleBlogStatus(index)}
-                            style={{
-                              ...actionIconBtnStyle,
-                              color: b.status === 'Published' ? '#10b981' : '#f59e0b'
-                            }}
-                          >
-                            {b.status === 'Published' ? 'Published' : 'Draft'}
-                          </button>
-                          <button onClick={() => deleteBlog(index)} style={deleteButtonStyle}>
-                            <Trash2 size={15} /> Delete
-                          </button>
-                        </div>
+                        <button onClick={() => deleteBlog(index)} style={deleteButtonStyle}>
+                          <Trash2 size={15} /> Delete
+                        </button>
                       </div>
 
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                      <ImageUploader 
+                        label="Blog Featured Image"
+                        value={b.imageUrl || ''}
+                        onChange={(url) => updateBlog(index, { imageUrl: url })}
+                      />
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
                         <div>
-                          <label style={adminLabelStyle}>Title</label>
-                          <input type="text" value={b.title} onChange={(e) => updateBlog(index, { title: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>ARTICLE TITLE</label>
+                          <input 
+                            type="text" 
+                            value={b.title || ''} 
+                            onChange={(e) => updateBlog(index, { title: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
                         <div>
-                          <label style={adminLabelStyle}>Category</label>
-                          <input type="text" value={b.category} onChange={(e) => updateBlog(index, { category: e.target.value })} style={adminInputStyle} />
+                          <label style={adminLabelStyle}>PUBLISH DATE</label>
+                          <input 
+                            type="text" 
+                            value={b.date || ''} 
+                            onChange={(e) => updateBlog(index, { date: e.target.value })}
+                            style={adminInputStyle}
+                          />
                         </div>
                       </div>
 
-                      <div style={{ marginBottom: '0.75rem' }}>
-                        <label style={adminLabelStyle}>Image URL</label>
-                        <input type="text" value={b.imageUrl || ''} onChange={(e) => updateBlog(index, { imageUrl: e.target.value })} style={adminInputStyle} />
-                      </div>
-
-                      <div>
-                        <label style={adminLabelStyle}>Full Article Content</label>
-                        <textarea rows={4} value={b.content || b.excerpt || ''} onChange={(e) => updateBlog(index, { content: e.target.value })} style={adminInputStyle} />
+                      <div style={{ marginBottom: '1rem' }}>
+                        <label style={adminLabelStyle}>EXCERPT SUMMARY</label>
+                        <textarea 
+                          rows={2} 
+                          value={b.excerpt || ''} 
+                          onChange={(e) => updateBlog(index, { excerpt: e.target.value })}
+                          style={adminInputStyle}
+                        />
                       </div>
                     </div>
                   ))}
@@ -815,96 +986,188 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* ===================================================================
-               10. MEDIA LIBRARY TAB
-               =================================================================== */}
+            {/* 10. MEDIA LIBRARY */}
             {activeTab === 'media' && (
               <div>
-                <div style={tabHeaderRowStyle}>
-                  <h3 style={{ ...tabHeaderTitleStyle, margin: 0 }}>Centralized Media Library</h3>
-                  
-                  <label style={{ ...addButtonHeaderStyle, cursor: 'pointer' }}>
-                    <Upload size={16} /> Upload New Asset
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      style={{ display: 'none' }}
-                      onChange={(e) => handleFileUpload(e, (url, name) => addMediaAsset({ url, name }))}
-                    />
-                  </label>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem' }}>
-                  {(localContent.mediaLibrary || []).map((m, index) => (
-                    <div key={m.id || index} style={{ ...itemCardContainerStyle, padding: '1rem', textAlign: 'center' }}>
-                      <img src={m.url} alt={m.name} style={{ width: '100%', height: '140px', objectFit: 'cover', borderRadius: '8px', marginBottom: '0.75rem' }} />
-                      <div style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {m.name}
-                      </div>
-                      <button onClick={() => deleteMediaAsset(index)} style={{ ...deleteButtonStyle, marginTop: '0.5rem', width: '100%', justifyContent: 'center' }}>
-                        <Trash2 size={14} /> Remove
-                      </button>
-                    </div>
-                  ))}
+                <h2 style={tabHeaderTitleStyle}>Media Asset Library</h2>
+                
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <ImageUploader 
+                    label="Upload New Media Asset to Library"
+                    value=""
+                    onChange={(url) => {
+                      if (url) addMediaAsset({ name: `Asset-${Date.now()}`, url });
+                    }}
+                  />
                 </div>
               </div>
             )}
 
-            {/* ===================================================================
-               11. SEO & META SETTINGS TAB
-               =================================================================== */}
+            {/* 11. SEO & META SETTINGS */}
             {activeTab === 'seo' && (
               <div>
-                <h3 style={tabHeaderTitleStyle}>SEO Manager & Metadata Settings</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                  <div style={{ gridColumn: '1 / -1' }}>
-                    <label style={adminLabelStyle}>Global Meta Title</label>
-                    <input type="text" value={localContent.seoSettings?.metaTitle || ''} onChange={(e) => updateLocalSectionField('seoSettings', 'metaTitle', e.target.value)} style={adminInputStyle} />
+                <h2 style={tabHeaderTitleStyle}>SEO & Meta Settings</h2>
+
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
+                    Google Search Engine Meta
+                  </h3>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>META TITLE</label>
+                    <input 
+                      type="text" 
+                      value={localContent.seoSettings?.metaTitle || ''} 
+                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, metaTitle: e.target.value })}
+                      style={adminInputStyle}
+                      placeholder="e.g. Inflix Marketing Solutions | Performance Digital Agency"
+                    />
                   </div>
-                  <div style={{ gridColumn: '1 / -1' }}>
-                    <label style={adminLabelStyle}>Global Meta Description</label>
-                    <textarea rows={3} value={localContent.seoSettings?.metaDescription || ''} onChange={(e) => updateLocalSectionField('seoSettings', 'metaDescription', e.target.value)} style={adminInputStyle} />
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>META DESCRIPTION</label>
+                    <textarea 
+                      rows={3} 
+                      value={localContent.seoSettings?.metaDescription || ''} 
+                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, metaDescription: e.target.value })}
+                      style={adminInputStyle}
+                      placeholder="Summary describing your business for search results."
+                    />
                   </div>
-                  <div>
-                    <label style={adminLabelStyle}>Canonical URL</label>
-                    <input type="text" value={localContent.seoSettings?.canonicalUrl || ''} onChange={(e) => updateLocalSectionField('seoSettings', 'canonicalUrl', e.target.value)} style={adminInputStyle} />
-                  </div>
-                  <div>
-                    <label style={adminLabelStyle}>Open Graph Image URL</label>
-                    <input type="text" value={localContent.seoSettings?.ogImage || ''} onChange={(e) => updateLocalSectionField('seoSettings', 'ogImage', e.target.value)} style={adminInputStyle} />
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>KEYWORDS (COMMA SEPARATED)</label>
+                    <input 
+                      type="text" 
+                      value={localContent.seoSettings?.keywords || ''} 
+                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, keywords: e.target.value })}
+                      style={adminInputStyle}
+                      placeholder="digital marketing, performance ads, SEO, branding"
+                    />
                   </div>
                 </div>
+
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
+                    Social Sharing Cards (Open Graph & Twitter)
+                  </h3>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>OPEN GRAPH TITLE</label>
+                    <input 
+                      type="text" 
+                      value={localContent.seoSettings?.ogTitle || ''} 
+                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, ogTitle: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>OPEN GRAPH DESCRIPTION</label>
+                    <textarea 
+                      rows={2} 
+                      value={localContent.seoSettings?.ogDescription || ''} 
+                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, ogDescription: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <ImageUploader 
+                    label="Open Graph Share Image (Facebook / WhatsApp / LinkedIn)"
+                    value={localContent.seoSettings?.ogImage || ''}
+                    onChange={(url) => updateLocalSection('seoSettings', { ...localContent.seoSettings, ogImage: url })}
+                  />
+
+                  <ImageUploader 
+                    label="Twitter Card Image"
+                    value={localContent.seoSettings?.twitterImage || ''}
+                    onChange={(url) => updateLocalSection('seoSettings', { ...localContent.seoSettings, twitterImage: url })}
+                  />
+
+                  <ImageUploader 
+                    label="Browser Favicon Icon (.png / .ico)"
+                    value={localContent.seoSettings?.faviconUrl || ''}
+                    onChange={(url) => updateLocalSection('seoSettings', { ...localContent.seoSettings, faviconUrl: url })}
+                  />
+                </div>
+
+                {/* Live Preview Card */}
+                <div className="card-glass">
+                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.1rem', color: '#EDB403', marginBottom: '0.75rem' }}>
+                    Live Search Result Preview
+                  </h3>
+                  <div style={{
+                    background: '#0B132B',
+                    padding: '1.25rem',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(237, 180, 3, 0.2)'
+                  }}>
+                    <div style={{ fontSize: '0.8rem', color: '#10b981', marginBottom: '0.2rem' }}>
+                      https://inflixmarketing.in
+                    </div>
+                    <div style={{ fontSize: '1.15rem', color: '#60a5fa', fontWeight: 600, marginBottom: '0.35rem', cursor: 'pointer' }}>
+                      {localContent.seoSettings?.metaTitle || 'Inflix Marketing Solutions'}
+                    </div>
+                    <div style={{ fontSize: '0.875rem', color: '#cbd5e1', lineHeight: 1.5 }}>
+                      {localContent.seoSettings?.metaDescription || 'We help ambitious brands scale faster through data-driven performance marketing...'}
+                    </div>
+                  </div>
+                </div>
+
               </div>
             )}
 
-            {/* ===================================================================
-               12. SECURITY & SETTINGS TAB
-               =================================================================== */}
+            {/* 12. SECURITY & SETTINGS */}
             {activeTab === 'settings' && (
               <div>
-                <h3 style={tabHeaderTitleStyle}>Admin Security & Password Management</h3>
-                <div className="card-glass" style={{ padding: '1.75rem', maxWidth: '500px' }}>
-                  <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1.25rem' }}>
-                    Change Admin Password
-                  </h4>
+                <h2 style={tabHeaderTitleStyle}>Security & Password Settings</h2>
 
-                  <form onSubmit={handleChangePassSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div>
-                      <label style={adminLabelStyle}>Current Password</label>
-                      <input type="password" value={oldPassInput} onChange={(e) => setOldPassInput(e.target.value)} style={adminInputStyle} required />
+                <div className="card-glass" style={{ maxWidth: '500px' }}>
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    const res = changePassword(oldPassInput, newPassInput);
+                    if (res.success) {
+                      setPassChangeStatus('Password updated successfully!');
+                      setOldPassInput('');
+                      setNewPassInput('');
+                    } else {
+                      setPassChangeStatus(res.error);
+                    }
+                  }}>
+                    <div style={{ marginBottom: '1.25rem' }}>
+                      <label style={adminLabelStyle}>CURRENT PASSWORD</label>
+                      <input 
+                        type="password" 
+                        value={oldPassInput} 
+                        onChange={(e) => setOldPassInput(e.target.value)}
+                        style={adminInputStyle}
+                        placeholder="Current password"
+                      />
                     </div>
-                    <div>
-                      <label style={adminLabelStyle}>New Password</label>
-                      <input type="password" value={newPassInput} onChange={(e) => setNewPassInput(e.target.value)} style={adminInputStyle} required />
+
+                    <div style={{ marginBottom: '1.5rem' }}>
+                      <label style={adminLabelStyle}>NEW PASSWORD</label>
+                      <input 
+                        type="password" 
+                        value={newPassInput} 
+                        onChange={(e) => setNewPassInput(e.target.value)}
+                        style={adminInputStyle}
+                        placeholder="New admin password"
+                      />
                     </div>
 
                     {passChangeStatus && (
-                      <span style={{ fontSize: '0.825rem', color: passChangeStatus.includes('successfully') ? '#10b981' : '#f87171', fontWeight: 600 }}>
+                      <div style={{
+                        fontSize: '0.85rem',
+                        marginBottom: '1rem',
+                        color: passChangeStatus.includes('successfully') ? '#10b981' : '#f87171',
+                        fontWeight: 600
+                      }}>
                         {passChangeStatus}
-                      </span>
+                      </div>
                     )}
 
-                    <button type="submit" className="btn-agatha-purple" style={{ marginTop: '0.5rem' }}>
+                    <button type="submit" className="btn-agatha-gold">
                       UPDATE PASSWORD
                     </button>
                   </form>
@@ -912,7 +1175,8 @@ export const AdminPanel = () => {
               </div>
             )}
 
-          </div>
+          </main>
+
         </div>
 
       </div>
@@ -920,93 +1184,106 @@ export const AdminPanel = () => {
   );
 };
 
-/* Styles */
+/* ==========================================================================
+   STYLING OBJECTS FOR ADMIN CMS
+   ========================================================================== */
 const modalOverlayStyle = {
   position: 'fixed',
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundColor: 'rgba(2, 1, 12, 0.94)',
+  backgroundColor: 'rgba(11, 19, 43, 0.95)',
   backdropFilter: 'blur(16px)',
   zIndex: 3000,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '1rem'
+  padding: '0'
 };
 
 const authModalCardStyle = {
-  background: '#0c0a1d',
-  border: '1px solid rgba(103, 82, 236, 0.35)',
-  borderRadius: '20px',
-  maxWidth: '420px',
-  width: '100%',
-  padding: '2.5rem 2rem',
-  color: '#ffffff',
-  textAlign: 'center',
-  boxShadow: '0 25px 50px rgba(0, 0, 0, 0.8)',
-  position: 'relative'
+  background: '#173765',
+  border: '1px solid rgba(237, 180, 3, 0.35)',
+  borderRadius: '24px',
+  maxWidth: '440px',
+  width: '90%',
+  padding: '2.5rem',
+  position: 'relative',
+  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
+  textAlign: 'center'
+};
+
+const lockIconCircleStyle = {
+  width: '68px',
+  height: '68px',
+  borderRadius: '50%',
+  background: 'rgba(237, 180, 3, 0.15)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  margin: '0 auto 1.5rem auto',
+  border: '1px solid rgba(237, 180, 3, 0.35)'
 };
 
 const closeIconButtonStyle = {
   position: 'absolute',
-  top: '1rem',
-  right: '1rem',
-  color: '#94a3b8',
-  background: 'none',
-  border: 'none',
-  cursor: 'pointer'
-};
-
-const lockIconCircleStyle = {
-  width: '54px',
-  height: '54px',
+  top: '1.25rem',
+  right: '1.25rem',
+  color: '#ffffff',
+  background: 'rgba(255, 255, 255, 0.08)',
   borderRadius: '50%',
-  background: 'rgba(103, 82, 236, 0.15)',
-  color: '#EDB403',
+  width: '36px',
+  height: '36px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  margin: '0 auto 1.25rem auto',
-  border: '1px solid rgba(103, 82, 236, 0.3)'
+  cursor: 'pointer'
+};
+
+const logoutIconButtonStyle = {
+  color: '#ffffff',
+  background: 'rgba(239, 68, 68, 0.2)',
+  border: '1px solid rgba(239, 68, 68, 0.4)',
+  borderRadius: '8px',
+  width: '36px',
+  height: '36px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer'
 };
 
 const authInputStyle = {
   width: '100%',
-  padding: '0.8rem 1rem',
+  padding: '0.75rem 1rem',
   borderRadius: '10px',
-  border: '1px solid rgba(103, 82, 236, 0.3)',
-  background: 'rgba(0, 0, 0, 0.3)',
+  border: '1px solid rgba(237, 180, 3, 0.3)',
+  background: 'rgba(11, 19, 43, 0.7)',
   color: '#ffffff',
-  fontSize: '0.95rem',
-  textAlign: 'center',
-  letterSpacing: '0.1em'
+  fontSize: '0.9rem',
+  outline: 'none',
+  boxSizing: 'border-box'
 };
 
 const dashboardContainerStyle = {
-  background: '#0c0a1d',
-  color: '#ffffff',
-  borderRadius: '16px',
   width: '100%',
-  maxWidth: '1280px',
-  height: '92vh',
+  height: '100vh',
+  background: '#0B132B',
   display: 'flex',
   flexDirection: 'column',
-  boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7)',
-  overflow: 'hidden',
-  border: '1px solid rgba(103, 82, 236, 0.35)'
+  overflow: 'hidden'
 };
 
 const topNavbarStyle = {
-  padding: '1rem 1.5rem',
-  background: '#02010c',
-  borderBottom: '1px solid rgba(103, 82, 236, 0.2)',
+  height: '65px',
+  background: '#173765',
+  borderBottom: '1px solid rgba(237, 180, 3, 0.2)',
+  padding: '0 1.25rem',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  flexWrap: 'wrap',
-  gap: '1rem'
+  flexShrink: 0
 };
 
 const headerLogoSquareStyle = {
@@ -1017,41 +1294,13 @@ const headerLogoSquareStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: '#ffffff'
-};
-
-const resetButtonStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.3rem',
-  padding: '0.5rem 0.85rem',
-  background: 'rgba(239, 68, 68, 0.15)',
-  color: '#f87171',
-  border: '1px solid rgba(239, 68, 68, 0.3)',
-  borderRadius: '8px',
-  fontSize: '0.8rem',
-  fontWeight: 600,
-  cursor: 'pointer'
-};
-
-const logoutButtonStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.3rem',
-  padding: '0.5rem 0.85rem',
-  background: 'rgba(255, 255, 255, 0.08)',
-  color: '#94a3b8',
-  borderRadius: '8px',
-  fontSize: '0.8rem',
-  fontWeight: 600,
-  border: 'none',
-  cursor: 'pointer'
+  color: '#173765'
 };
 
 const sidebarContainerStyle = {
   width: '240px',
-  background: '#02010c',
-  borderRight: '1px solid rgba(103, 82, 236, 0.2)',
+  background: '#173765',
+  borderRight: '1px solid rgba(237, 180, 3, 0.2)',
   padding: '1.25rem 0.85rem',
   display: 'flex',
   flexDirection: 'column',
@@ -1068,7 +1317,16 @@ const sidebarNavButtonStyle = {
   fontSize: '0.825rem',
   textAlign: 'left',
   cursor: 'pointer',
-  transition: 'all 0.2s ease'
+  transition: 'all 0.2s ease',
+  width: '100%'
+};
+
+const mainContentAreaStyle = {
+  flex: 1,
+  padding: '2rem',
+  overflowY: 'auto',
+  boxSizing: 'border-box',
+  width: '100%'
 };
 
 const tabHeaderTitleStyle = {
@@ -1100,11 +1358,12 @@ const adminInputStyle = {
   width: '100%',
   padding: '0.65rem 0.85rem',
   borderRadius: '8px',
-  border: '1px solid rgba(103, 82, 236, 0.25)',
-  background: 'rgba(0, 0, 0, 0.3)',
+  border: '1px solid rgba(237, 180, 3, 0.25)',
+  background: 'rgba(11, 19, 43, 0.6)',
   color: '#ffffff',
   fontSize: '0.875rem',
-  fontFamily: 'inherit'
+  fontFamily: 'inherit',
+  boxSizing: 'border-box'
 };
 
 const addButtonHeaderStyle = {
@@ -1113,13 +1372,13 @@ const addButtonHeaderStyle = {
   gap: '0.4rem',
   padding: '0.55rem 1.1rem',
   background: '#EDB403',
-  color: '#ffffff',
+  color: '#173765',
   borderRadius: '8px',
   fontSize: '0.825rem',
-  fontWeight: 600,
+  fontWeight: 700,
   cursor: 'pointer',
   transition: 'all 0.2s ease',
-  boxShadow: '0 4px 15px rgba(103, 82, 236, 0.3)',
+  boxShadow: '0 4px 15px rgba(237, 180, 3, 0.35)',
   border: 'none'
 };
 
@@ -1143,7 +1402,7 @@ const actionIconBtnStyle = {
   gap: '0.3rem',
   padding: '0.35rem 0.75rem',
   background: 'rgba(255, 255, 255, 0.05)',
-  color: '#cbd5e1',
+  color: '#E5E7EB',
   border: '1px solid rgba(255, 255, 255, 0.1)',
   borderRadius: '6px',
   fontSize: '0.785rem',
@@ -1152,10 +1411,12 @@ const actionIconBtnStyle = {
 };
 
 const itemCardContainerStyle = {
-  border: '1px solid rgba(103, 82, 236, 0.25)',
+  border: '1px solid rgba(237, 180, 3, 0.25)',
   borderRadius: '12px',
   padding: '1.25rem',
-  background: 'rgba(255,255,255,0.02)'
+  background: 'rgba(23, 55, 101, 0.3)',
+  boxSizing: 'border-box',
+  width: '100%'
 };
 
 const itemCardHeaderRowStyle = {
@@ -1165,19 +1426,4 @@ const itemCardHeaderRowStyle = {
   marginBottom: '0.85rem',
   flexWrap: 'wrap',
   gap: '0.5rem'
-};
-
-const quickActionBtnStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  padding: '0.7rem 1rem',
-  background: 'rgba(103, 82, 236, 0.15)',
-  color: '#ffffff',
-  border: '1px solid rgba(103, 82, 236, 0.3)',
-  borderRadius: '8px',
-  fontSize: '0.85rem',
-  fontWeight: 600,
-  cursor: 'pointer',
-  textAlign: 'left'
 };

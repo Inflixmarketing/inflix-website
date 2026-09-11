@@ -488,5 +488,15 @@
       "excerpt": "A deep dive comparison for healthcare practices and local businesses aiming for consistent patient consults.",
       "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
     }
-  ]
+  ],
+  "seoSettings": {
+    "metaTitle": "Inflix Marketing Solutions | Performance Digital Agency",
+    "metaDescription": "We help ambitious brands scale faster through data-driven performance marketing, high-converting content, SEO, and strategic brand positioning.",
+    "keywords": "digital marketing, performance ads, SEO, branding, web development, growth agency, Inflix Marketing",
+    "ogTitle": "Inflix Marketing Solutions | Growth & Performance Agency",
+    "ogDescription": "Data-driven digital marketing, brand identity, and scalable acquisition campaigns.",
+    "ogImage": "",
+    "twitterImage": "",
+    "faviconUrl": ""
+  }
 }
