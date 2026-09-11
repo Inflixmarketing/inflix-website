@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useContent } from '../context/ContentContext';
 import { 
   X, 
   RotateCcw, 
-  Download, 
-  Upload, 
   Palette, 
   Layout, 
   Briefcase, 
@@ -15,27 +13,25 @@ import {
   FileText,
   Save,
   Image as ImageIcon,
-  Sun,
-  Moon
+  RefreshCw
 } from 'lucide-react';
 
 export const AdminPanel = () => {
   const { 
     content, 
     saveContent,
-    updateBrand, 
-    updateSection, 
     resetToDefaults, 
-    exportConfig, 
-    importConfig, 
     isAdminOpen, 
     setIsAdminOpen 
   } = useContent();
 
   const [activeTab, setActiveTab] = useState('brand');
   const [saveNotification, setSaveNotification] = useState(false);
-  const [importJsonText, setImportJsonText] = useState('');
   const [localContent, setLocalContent] = useState(content);
+
+  useEffect(() => {
+    setLocalContent(content);
+  }, [content]);
 
   if (!isAdminOpen) return null;
 
@@ -51,7 +47,7 @@ export const AdminPanel = () => {
         body: JSON.stringify(localContent)
       });
     } catch (err) {
-      console.log('Local save completed (Backend sync optional)');
+      console.log('Local save completed');
     }
 
     setTimeout(() => setSaveNotification(false), 2500);
@@ -73,33 +69,6 @@ export const AdminPanel = () => {
     reader.readAsDataURL(file);
   };
 
-  const handleThemeToggle = (mode) => {
-    let updated;
-    if (mode === 'bright') {
-      updated = {
-        ...localContent,
-        brand: {
-          ...localContent.brand,
-          darkBg: '#f8fafc',
-          surfaceBg: '#ffffff',
-          secondaryColor: '#0f172a'
-        }
-      };
-    } else {
-      updated = {
-        ...localContent,
-        brand: {
-          ...localContent.brand,
-          darkBg: '#0b0c10',
-          surfaceBg: '#173765',
-          secondaryColor: '#173765'
-        }
-      };
-    }
-    setLocalContent(updated);
-    saveContent(updated);
-  };
-
   const updateLocalSection = (sectionKey, fieldKey, value) => {
     const updated = {
       ...localContent,
@@ -109,6 +78,7 @@ export const AdminPanel = () => {
       }
     };
     setLocalContent(updated);
+    saveContent(updated);
   };
 
   const updateLocalBrand = (fieldKey, value) => {
@@ -120,6 +90,7 @@ export const AdminPanel = () => {
       }
     };
     setLocalContent(updated);
+    saveContent(updated);
   };
 
   return (
@@ -129,7 +100,7 @@ export const AdminPanel = () => {
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(15, 23, 42, 0.85)',
+      backgroundColor: 'rgba(9, 13, 22, 0.9)',
       backdropFilter: 'blur(16px)',
       zIndex: 3000,
       display: 'flex',
@@ -138,24 +109,24 @@ export const AdminPanel = () => {
       padding: '1rem'
     }}>
       <div style={{
-        background: '#ffffff',
-        color: '#0f172a',
+        background: '#0f172a',
+        color: '#ffffff',
         borderRadius: '16px',
         width: '100%',
         maxWidth: '1200px',
         height: '90vh',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.3)',
+        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.6)',
         overflow: 'hidden',
-        border: '1px solid rgba(0, 0, 0, 0.1)'
+        border: '1px solid rgba(237, 180, 3, 0.3)'
       }}>
         
         {/* Admin Header */}
         <div style={{
           padding: '1.25rem 1.75rem',
-          background: '#0f172a',
-          color: '#ffffff',
+          background: '#090d16',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -171,7 +142,7 @@ export const AdminPanel = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#0f172a'
+              color: '#090d16'
             }}>
               <Palette size={20} />
             </div>
@@ -180,7 +151,7 @@ export const AdminPanel = () => {
                 Inflix Live Admin Panel
               </h2>
               <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-                Full Customization & Real-Time Website Editor
+                Real-Time Website & Brand Editor
               </span>
             </div>
           </div>
@@ -188,64 +159,37 @@ export const AdminPanel = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             {saveNotification && (
               <span style={{ color: '#10b981', fontSize: '0.85rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                <CheckCircle size={16} /> Changes Saved Live!
+                <CheckCircle size={16} /> Reflected Live!
               </span>
             )}
 
-            {/* Bright / Dark Mode Toggle */}
-            <div style={{ display: 'flex', background: 'rgba(255,255,255,0.1)', padding: '0.25rem', borderRadius: '8px', gap: '0.25rem' }}>
-              <button 
-                onClick={() => handleThemeToggle('bright')}
-                style={{
-                  padding: '0.35rem 0.75rem',
-                  borderRadius: '6px',
-                  background: localContent.brand?.darkBg === '#f8fafc' ? '#edb403' : 'transparent',
-                  color: localContent.brand?.darkBg === '#f8fafc' ? '#0f172a' : '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '0.75rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.3rem'
-                }}
-              >
-                <Sun size={14} /> Bright Mode
-              </button>
-              <button 
-                onClick={() => handleThemeToggle('dark')}
-                style={{
-                  padding: '0.35rem 0.75rem',
-                  borderRadius: '6px',
-                  background: localContent.brand?.darkBg === '#0b0c10' ? '#edb403' : 'transparent',
-                  color: localContent.brand?.darkBg === '#0b0c10' ? '#0f172a' : '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '0.75rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.3rem'
-                }}
-              >
-                <Moon size={14} /> Dark Mode
-              </button>
-            </div>
-
-            {/* Save All Changes Button */}
+            {/* Reset Defaults Button */}
             <button 
-              onClick={handleSaveAll}
+              onClick={() => { resetToDefaults(); setSaveNotification(true); setTimeout(() => setSaveNotification(false), 2000); }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.55rem 1.25rem',
-                background: '#edb403',
-                color: '#0f172a',
+                gap: '0.3rem',
+                padding: '0.5rem 0.85rem',
+                background: 'rgba(239, 68, 68, 0.15)',
+                color: '#f87171',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
                 borderRadius: '8px',
-                fontSize: '0.85rem',
-                fontWeight: 700,
-                boxShadow: '0 4px 15px rgba(237, 180, 3, 0.4)'
+                fontSize: '0.8rem',
+                fontWeight: 600
               }}
             >
+              <RefreshCw size={14} /> Reset Defaults
+            </button>
+
+            {/* Save All Button */}
+            <button 
+              onClick={handleSaveAll}
+              className="btn-agatha-gold"
+              style={{ padding: '0.55rem 1.25rem', fontSize: '0.85rem' }}
+            >
               <Save size={16} />
-              <span>SAVE CHANGES</span>
+              <span>SAVE & APPLY LIVE</span>
             </button>
 
             <button 
@@ -263,8 +207,8 @@ export const AdminPanel = () => {
           {/* Navigation Sidebar */}
           <div style={{
             width: '240px',
-            background: '#f8fafc',
-            borderRight: '1px solid #e2e8f0',
+            background: '#090d16',
+            borderRight: '1px solid rgba(255, 255, 255, 0.08)',
             padding: '1.25rem 0.85rem',
             display: 'flex',
             flexDirection: 'column',
@@ -292,12 +236,12 @@ export const AdminPanel = () => {
                     gap: '0.75rem',
                     padding: '0.75rem 1rem',
                     borderRadius: '8px',
-                    background: isActive ? '#0f172a' : 'transparent',
-                    color: isActive ? '#ffffff' : '#475569',
+                    background: isActive ? 'rgba(237, 180, 3, 0.15)' : 'transparent',
+                    color: isActive ? '#edb403' : '#94a3b8',
                     fontWeight: isActive ? 700 : 600,
                     fontSize: '0.85rem',
                     textAlign: 'left',
-                    transition: 'all 0.2s ease'
+                    border: isActive ? '1px solid rgba(237, 180, 3, 0.3)' : '1px solid transparent'
                   }}
                 >
                   <Icon size={18} style={{ color: isActive ? '#edb403' : '#64748b' }} />
@@ -308,23 +252,23 @@ export const AdminPanel = () => {
           </div>
 
           {/* Editor Form View */}
-          <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', background: '#ffffff' }}>
+          <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', background: '#0f172a' }}>
             
             {/* BRAND & LOGO TAB */}
             {activeTab === 'brand' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>
                   Brand Identity & Uploadable Logo
                 </h3>
                 
                 {/* Uploadable Logo Section */}
-                <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '12px', marginBottom: '2rem', background: '#f8fafc' }}>
-                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>Website Logo Image</label>
+                <div style={{ padding: '1.5rem', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', marginBottom: '2rem', background: 'rgba(255,255,255,0.03)' }}>
+                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem', color: '#edb403' }}>Upload Custom Website Logo</label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
                     {localContent.brand?.logoUrl ? (
-                      <img src={localContent.brand.logoUrl} alt="Logo Preview" style={{ height: '50px', objectFit: 'contain', border: '1px solid #cbd5e1', padding: '4px', borderRadius: '6px', background: '#ffffff' }} />
+                      <img src={localContent.brand.logoUrl} alt="Logo Preview" style={{ height: '50px', objectFit: 'contain', border: '1px solid rgba(255,255,255,0.2)', padding: '4px', borderRadius: '6px', background: '#ffffff' }} />
                     ) : (
-                      <div style={{ padding: '0.5rem 1rem', background: '#e2e8f0', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Text Mark Active</div>
+                      <div style={{ padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.08)', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Default Text Mark Active</div>
                     )}
                     
                     <input 
@@ -334,66 +278,37 @@ export const AdminPanel = () => {
                       style={{ fontSize: '0.85rem' }} 
                     />
                   </div>
-                  <small style={{ color: '#64748b', display: 'block', marginTop: '0.5rem' }}>Upload any PNG/SVG/JPG logo from your computer. It will update live across the header, footer, and brand touchpoints.</small>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
                   <div>
-                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Site Name</label>
-                    <input 
-                      type="text" 
-                      value={localContent.brand?.siteName || ''} 
-                      onChange={(e) => updateLocalBrand('siteName', e.target.value)}
-                      style={adminInputStyle} 
-                    />
+                    <label style={adminLabelStyle}>Site Name</label>
+                    <input type="text" value={localContent.brand?.siteName || ''} onChange={(e) => updateLocalBrand('siteName', e.target.value)} style={adminInputStyle} />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Tagline</label>
-                    <input 
-                      type="text" 
-                      value={localContent.brand?.tagline || ''} 
-                      onChange={(e) => updateLocalBrand('tagline', e.target.value)}
-                      style={adminInputStyle} 
-                    />
+                    <label style={adminLabelStyle}>Tagline</label>
+                    <input type="text" value={localContent.brand?.tagline || ''} onChange={(e) => updateLocalBrand('tagline', e.target.value)} style={adminInputStyle} />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Contact Email</label>
-                    <input 
-                      type="text" 
-                      value={localContent.brand?.contactEmail || ''} 
-                      onChange={(e) => updateLocalBrand('contactEmail', e.target.value)}
-                      style={adminInputStyle} 
-                    />
+                    <label style={adminLabelStyle}>Contact Email</label>
+                    <input type="text" value={localContent.brand?.contactEmail || ''} onChange={(e) => updateLocalBrand('contactEmail', e.target.value)} style={adminInputStyle} />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Contact Phone</label>
-                    <input 
-                      type="text" 
-                      value={localContent.brand?.contactPhone || ''} 
-                      onChange={(e) => updateLocalBrand('contactPhone', e.target.value)}
-                      style={adminInputStyle} 
-                    />
+                    <label style={adminLabelStyle}>Contact Phone</label>
+                    <input type="text" value={localContent.brand?.contactPhone || ''} onChange={(e) => updateLocalBrand('contactPhone', e.target.value)} style={adminInputStyle} />
                   </div>
                 </div>
-
-                <button onClick={handleSaveAll} style={saveBtnStyle}>
-                  <Save size={16} /> Save Brand Settings
-                </button>
               </div>
             )}
 
             {/* HERO TAB */}
             {activeTab === 'hero' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Hero Banner Settings</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>Hero Banner Settings</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                  <div>
-                    <label style={adminLabelStyle}>Capsule Outline Pill</label>
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={adminLabelStyle}>Badge Pill Text</label>
                     <input type="text" value={localContent.hero?.capsuleOutline || ''} onChange={(e) => updateLocalSection('hero', 'capsuleOutline', e.target.value)} style={adminInputStyle} />
-                  </div>
-                  <div>
-                    <label style={adminLabelStyle}>Capsule Solid Pill</label>
-                    <input type="text" value={localContent.hero?.capsuleSolid || ''} onChange={(e) => updateLocalSection('hero', 'capsuleSolid', e.target.value)} style={adminInputStyle} />
                   </div>
                   <div style={{ gridColumn: '1 / -1' }}>
                     <label style={adminLabelStyle}>Main Title Headline</label>
@@ -412,14 +327,13 @@ export const AdminPanel = () => {
                     <input type="text" value={localContent.hero?.secondaryCta || ''} onChange={(e) => updateLocalSection('hero', 'secondaryCta', e.target.value)} style={adminInputStyle} />
                   </div>
                 </div>
-                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Hero Changes</button>
               </div>
             )}
 
             {/* ABOUT US TAB */}
             {activeTab === 'about' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>About Us Section</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>About Us Section</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
                   <div>
                     <label style={adminLabelStyle}>Section Category</label>
@@ -446,17 +360,16 @@ export const AdminPanel = () => {
                     <textarea rows={3} value={localContent.about?.goals || ''} onChange={(e) => updateLocalSection('about', 'goals', e.target.value)} style={adminInputStyle} />
                   </div>
                 </div>
-                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save About Us Changes</button>
               </div>
             )}
 
             {/* SERVICES TAB */}
             {activeTab === 'services' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Services Cards Management (8 Services)</h3>
-                <div style={{ display: 'grid', gap: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>Services Cards Management (8 Services)</h3>
+                <div style={{ display: 'grid', gap: '1.25rem' }}>
                   {(localContent.services || []).map((serv, index) => (
-                    <div key={serv.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.25rem', background: '#f8fafc' }}>
+                    <div key={serv.id} style={{ border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1.25rem', background: 'rgba(255,255,255,0.03)' }}>
                       <div style={{ fontWeight: 800, marginBottom: '0.5rem', color: '#edb403' }}>Service #{index + 1}: {serv.title}</div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                         <div>
@@ -464,7 +377,9 @@ export const AdminPanel = () => {
                           <input type="text" value={serv.title} onChange={(e) => {
                             const updatedServices = [...localContent.services];
                             updatedServices[index].title = e.target.value;
-                            setLocalContent({ ...localContent, services: updatedServices });
+                            const newCont = { ...localContent, services: updatedServices };
+                            setLocalContent(newCont);
+                            saveContent(newCont);
                           }} style={adminInputStyle} />
                         </div>
                         <div>
@@ -472,119 +387,132 @@ export const AdminPanel = () => {
                           <input type="text" value={serv.shortDesc} onChange={(e) => {
                             const updatedServices = [...localContent.services];
                             updatedServices[index].shortDesc = e.target.value;
-                            setLocalContent({ ...localContent, services: updatedServices });
+                            const newCont = { ...localContent, services: updatedServices };
+                            setLocalContent(newCont);
+                            saveContent(newCont);
                           }} style={adminInputStyle} />
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save All Services</button>
               </div>
             )}
 
             {/* PORTFOLIO TAB */}
             {activeTab === 'portfolio' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Portfolio Projects (9 Projects)</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>Portfolio Projects (9 Projects)</h3>
                 <div style={{ display: 'grid', gap: '1.25rem' }}>
                   {(localContent.portfolio || []).map((port, index) => (
-                    <div key={port.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
-                      <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>{port.category}: {port.title}</div>
+                    <div key={port.id} style={{ border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem', background: 'rgba(255,255,255,0.03)' }}>
+                      <div style={{ fontWeight: 800, color: '#edb403', marginBottom: '0.4rem' }}>{port.category}: {port.title}</div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '0.75rem' }}>
                         <input type="text" placeholder="Category" value={port.category} onChange={(e) => {
                           const updated = [...localContent.portfolio];
                           updated[index].category = e.target.value;
-                          setLocalContent({ ...localContent, portfolio: updated });
+                          const newCont = { ...localContent, portfolio: updated };
+                          setLocalContent(newCont);
+                          saveContent(newCont);
                         }} style={adminInputStyle} />
                         <input type="text" placeholder="Title" value={port.title} onChange={(e) => {
                           const updated = [...localContent.portfolio];
                           updated[index].title = e.target.value;
-                          setLocalContent({ ...localContent, portfolio: updated });
+                          const newCont = { ...localContent, portfolio: updated };
+                          setLocalContent(newCont);
+                          saveContent(newCont);
                         }} style={adminInputStyle} />
                       </div>
                     </div>
                   ))}
                 </div>
-                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Portfolio Changes</button>
               </div>
             )}
 
             {/* CLIENTS TAB */}
             {activeTab === 'clients' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Client Brands & Case Studies (8 Clients)</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>Client Brands & Case Studies</h3>
                 <div style={{ display: 'grid', gap: '1.25rem' }}>
                   {(localContent.clients || []).map((cli, index) => (
-                    <div key={cli.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
-                      <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>Brand: {cli.name}</div>
+                    <div key={cli.id} style={{ border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem', background: 'rgba(255,255,255,0.03)' }}>
+                      <div style={{ fontWeight: 800, color: '#edb403', marginBottom: '0.4rem' }}>Brand: {cli.name}</div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.5rem' }}>
                         <input type="text" placeholder="Brand Name" value={cli.name} onChange={(e) => {
                           const updated = [...localContent.clients];
                           updated[index].name = e.target.value;
-                          setLocalContent({ ...localContent, clients: updated });
+                          const newCont = { ...localContent, clients: updated };
+                          setLocalContent(newCont);
+                          saveContent(newCont);
                         }} style={adminInputStyle} />
                         <input type="text" placeholder="Category" value={cli.category} onChange={(e) => {
                           const updated = [...localContent.clients];
                           updated[index].category = e.target.value;
-                          setLocalContent({ ...localContent, clients: updated });
+                          const newCont = { ...localContent, clients: updated };
+                          setLocalContent(newCont);
+                          saveContent(newCont);
                         }} style={adminInputStyle} />
                       </div>
                       <textarea rows={2} placeholder="Description" value={cli.desc} onChange={(e) => {
                         const updated = [...localContent.clients];
                         updated[index].desc = e.target.value;
-                        setLocalContent({ ...localContent, clients: updated });
+                        const newCont = { ...localContent, clients: updated };
+                        setLocalContent(newCont);
+                        saveContent(newCont);
                       }} style={adminInputStyle} />
                     </div>
                   ))}
                 </div>
-                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Clients Changes</button>
               </div>
             )}
 
             {/* TESTIMONIALS TAB */}
             {activeTab === 'testimonials' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Testimonials Reviews (5 Reviews)</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>Testimonials Reviews</h3>
                 <div style={{ display: 'grid', gap: '1.25rem' }}>
                   {(localContent.testimonials || []).map((t, index) => (
-                    <div key={t.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
-                      <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>{t.name} ({t.title})</div>
+                    <div key={t.id} style={{ border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem', background: 'rgba(255,255,255,0.03)' }}>
+                      <div style={{ fontWeight: 800, color: '#edb403', marginBottom: '0.4rem' }}>{t.name} ({t.title})</div>
                       <textarea rows={2} value={t.quote} onChange={(e) => {
                         const updated = [...localContent.testimonials];
                         updated[index].quote = e.target.value;
-                        setLocalContent({ ...localContent, testimonials: updated });
+                        const newCont = { ...localContent, testimonials: updated };
+                        setLocalContent(newCont);
+                        saveContent(newCont);
                       }} style={adminInputStyle} />
                     </div>
                   ))}
                 </div>
-                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Testimonials</button>
               </div>
             )}
 
             {/* FAQS TAB */}
             {activeTab === 'faqs' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Frequently Asked Questions</h3>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#ffffff' }}>Frequently Asked Questions</h3>
                 <div style={{ display: 'grid', gap: '1.25rem' }}>
                   {(localContent.faqs || []).map((f, index) => (
-                    <div key={f.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
+                    <div key={f.id} style={{ border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '12px', padding: '1rem', background: 'rgba(255,255,255,0.03)' }}>
                       <label style={adminLabelStyle}>Q{index + 1}: Question</label>
                       <input type="text" value={f.question} onChange={(e) => {
                         const updated = [...localContent.faqs];
                         updated[index].question = e.target.value;
-                        setLocalContent({ ...localContent, faqs: updated });
+                        const newCont = { ...localContent, faqs: updated };
+                        setLocalContent(newCont);
+                        saveContent(newCont);
                       }} style={{ ...adminInputStyle, marginBottom: '0.5rem' }} />
                       <label style={adminLabelStyle}>Answer</label>
                       <textarea rows={2} value={f.answer} onChange={(e) => {
                         const updated = [...localContent.faqs];
                         updated[index].answer = e.target.value;
-                        setLocalContent({ ...localContent, faqs: updated });
+                        const newCont = { ...localContent, faqs: updated };
+                        setLocalContent(newCont);
+                        saveContent(newCont);
                       }} style={adminInputStyle} />
                     </div>
                   ))}
                 </div>
-                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save FAQs</button>
               </div>
             )}
 
@@ -601,30 +529,16 @@ const adminLabelStyle = {
   fontWeight: 700,
   fontSize: '0.85rem',
   marginBottom: '0.35rem',
-  color: '#0f172a'
+  color: '#edb403'
 };
 
 const adminInputStyle = {
   width: '100%',
   padding: '0.65rem 0.85rem',
   borderRadius: '8px',
-  border: '1px solid #cbd5e1',
-  background: '#ffffff',
-  color: '#0f172a',
+  border: '1px solid rgba(255, 255, 255, 0.15)',
+  background: 'rgba(0, 0, 0, 0.25)',
+  color: '#ffffff',
   fontSize: '0.9rem',
   fontFamily: 'inherit'
-};
-
-const saveBtnStyle = {
-  marginTop: '1.5rem',
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  padding: '0.75rem 1.5rem',
-  background: '#edb403',
-  color: '#0f172a',
-  fontWeight: 700,
-  fontSize: '0.85rem',
-  borderRadius: '8px',
-  boxShadow: '0 4px 15px rgba(237, 180, 3, 0.4)'
 };

@@ -3,14 +3,22 @@ import defaultData from '../data/defaultContent.json';
 
 const ContentContext = createContext();
 
-const LOCAL_STORAGE_KEY = 'inflix_website_data_v2';
+const LOCAL_STORAGE_KEY = 'inflix_website_data_v3';
 
 export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Deep merge saved content with defaultData so new fields are always present
+        return {
+          ...defaultData,
+          ...parsed,
+          brand: { ...defaultData.brand, ...(parsed.brand || {}) },
+          hero: { ...defaultData.hero, ...(parsed.hero || {}) },
+          about: { ...defaultData.about, ...(parsed.about || {}) }
+        };
       }
     } catch (e) {
       console.error('Error loading saved content', e);
@@ -22,24 +30,24 @@ export const ContentProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedService, setSelectedService] = useState(null);
 
-  // Sync primary color (#edb403), secondary color (#173765), and Ancola font to CSS Custom Properties
+  // Sync primary color (#edb403), secondary color (#0f172a), and fonts to CSS Custom Properties
   useEffect(() => {
     if (!content || !content.brand) return;
     const root = document.documentElement;
     const primary = content.brand.primaryColor || '#edb403';
-    const secondary = content.brand.secondaryColor || '#173765';
+    const secondary = content.brand.secondaryColor || '#0f172a';
     const accent = content.brand.accentColor || '#edb403';
 
     root.style.setProperty('--color-primary', primary);
     root.style.setProperty('--color-secondary', secondary);
     root.style.setProperty('--color-accent', accent);
-    root.style.setProperty('--color-dark-bg', content.brand.darkBg || '#0b0c10');
-    root.style.setProperty('--color-surface', secondary);
-    root.style.setProperty('--font-heading', `'Ancola', 'Outfit', 'Syne', sans-serif`);
-    root.style.setProperty('--font-body', `'${content.brand.bodyFont || 'Poppins'}', 'Inter', sans-serif`);
+    root.style.setProperty('--color-heading-text', '#ffffff');
+    root.style.setProperty('--color-body-text', '#cbd5e1');
+    root.style.setProperty('--font-heading', `'Syne', 'Plus Jakarta Sans', sans-serif`);
+    root.style.setProperty('--font-body', `'Plus Jakarta Sans', sans-serif`);
   }, [content]);
 
-  // Save changes to localStorage
+  // Save changes to state & localStorage & sync to API if available
   const saveContent = (newContent) => {
     setContent(newContent);
     try {
@@ -69,6 +77,9 @@ export const ContentProvider = ({ children }) => {
   };
 
   const resetToDefaults = () => {
+    try {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    } catch (e) {}
     saveContent(defaultData);
   };
 
