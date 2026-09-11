@@ -37,6 +37,16 @@
     "goals": "Our goal is to empower ambitious brands to scale seamlessly by providing high-impact digital strategies, driving qualified traffic, and maximizing overall campaign conversion rates.",
     "aboutImage": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
   },
+  "aboutPageBanner": {
+    "title": "About Us",
+    "subDescription": "Empowering brands through strategic digital marketing, data-driven growth campaigns, and high-impact visual positioning.",
+    "category": "About Us",
+    "headline": "We Use Our Experience To Get Clients Results",
+    "highlightText": "We Are A Performance Digital Marketing Agency That Specializes In Paid Acquisition, Brand Identity, SEO, And Strategic Social Media Growth. Our Experienced Team Works Closely With Clients To Deliver Customized Growth Engines That Scalably Lower Customer Acquisition Costs.",
+    "subParagraph": "At Inflix Marketing Solutions, we bridge the gap between creative execution and quantifiable revenue. From medical clinics to eco-tech enterprises, we craft bespoke strategies designed to convert impressions into loyal, long-term clients.",
+    "philosophy": "We believe marketing should be transparent, data-led, and obsessively focused on ROI—combining bold creative strategy with actionable metrics to deliver sustained business growth.",
+    "goals": "Our goal is to empower ambitious brands to scale seamlessly by executing targeted performance ads, maximizing conversions, and building dominant online market presence."
+  },
   "whyUs": {
     "category": "Why Us ?",
     "headline": "Because We Are The Best Creative Agency!",
@@ -66,6 +76,13 @@
     "category": "Services",
     "headline": "What Services We Offer You ?",
     "paragraph": "We provide growth-driven digital marketing solutions to scale your business online. From target audience acquisition to maximum campaign conversions, we craft data-backed strategies that deliver measurable results."
+  },
+  "servicesPageBanner": {
+    "title": "Services",
+    "subDescription": "Comprehensive digital marketing solutions engineered to accelerate brand visibility, drive qualified leads, and maximize long-term business ROI.",
+    "category": "Services",
+    "headline": "What Services We Offer You ?",
+    "paragraph": "At Inflix Marketing Solutions, we deliver end-to-end performance marketing and strategic digital management. We build customized, multi-channel growth systems that lower customer acquisition costs."
   },
   "services": [
     {
@@ -202,6 +219,13 @@
     "headline": "Check Out Our Latest Projects",
     "paragraph": "Explore how we combine strategy, design, and performance marketing to deliver measurable growth, strong brand identities, and high-converting digital assets."
   },
+  "portfolioPageBanner": {
+    "title": "Portfolio",
+    "subDescription": "Explore our collection of performance campaigns, brand transformations, web builds, and creative visual projects delivered for our clients.",
+    "category": "Portfolio",
+    "headline": "Check Out Our Latest Projects",
+    "paragraph": "Explore how we combine strategy, design, and performance marketing to deliver measurable growth, strong brand identities, and high-converting digital assets."
+  },
   "portfolio": [
     {
       "id": "p1",
@@ -228,7 +252,7 @@
       "id": "p4",
       "category": "Brand Strategy",
       "title": "Tech Startup – Complete Brand Identity & Positioning",
-      "desc": "Comprehensive visual branding, logo mark identity, and market messaging framework.",
+      "desc": "Data-driven ad campaigns optimized continuously to ensure highest lead quality and transparent performance tracking.",
       "imageUrl": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80"
     },
     {

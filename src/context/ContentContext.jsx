@@ -3,7 +3,7 @@ import defaultData from '../data/defaultContent.json';
 
 const ContentContext = createContext();
 
-const LOCAL_STORAGE_KEY = 'inflix_website_data_v5';
+const LOCAL_STORAGE_KEY = 'inflix_website_data_v6';
 
 export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(() => {

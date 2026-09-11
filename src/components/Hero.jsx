@@ -1,128 +1,218 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
-import { ArrowUpRight, TrendingUp, Award, Sparkles } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 export const Hero = () => {
   const { content } = useContent();
   const hero = content.hero || {};
-  const brand = content.brand || {};
-  const primaryColor = brand.primaryColor || '#edb403';
+
+  const outlineText = hero.capsuleOutline || "Driven by Strategy.";
+  const solidText = hero.capsuleSolid || "Powered by Creativity.";
+  const titleMain = hero.titleMain || "Next-Gen Digital Marketing & Creative Agency";
+  const description = hero.description || "We help ambitious brands scale faster through data-driven performance marketing, high-converting content, and strategic brand positioning.";
 
   return (
     <section id="home" className="agatha-grid-bg" style={{
       position: 'relative',
-      paddingTop: '4rem',
-      paddingBottom: '5rem',
-      overflow: 'hidden'
+      paddingTop: '6rem',
+      paddingBottom: '6rem',
+      overflow: 'hidden',
+      minHeight: '88vh',
+      display: 'flex',
+      alignItems: 'center'
     }}>
-      {/* Glow Orbs */}
+      {/* Top Right Glowing Ambient Light */}
       <div style={{
         position: 'absolute',
-        top: '5%',
-        right: '10%',
-        width: '500px',
-        height: '500px',
-        background: `radial-gradient(circle, rgba(103, 82, 236, 0.25) 0%, transparent 70%)`,
+        top: '-10%',
+        right: '0%',
+        width: '650px',
+        height: '650px',
+        background: `radial-gradient(circle, rgba(103, 82, 236, 0.22) 0%, rgba(2, 1, 12, 0) 70%)`,
         pointerEvents: 'none',
         filter: 'blur(50px)'
       }} />
 
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
         
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          gap: '3rem',
-          alignItems: 'center'
-        }} className="hero-main-grid">
+        {/* Main Headline Container */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           
-          {/* Left Hero Column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          {/* Row 1: Outline Pill + First Heading Text */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1.25rem',
+            flexWrap: 'wrap'
+          }} className="agatha-hero-row">
             
-            {/* Top Category Badge Pill */}
-            <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <span className="section-category">
-                <Sparkles size={14} style={{ color: '#a394ff' }} />
-                <span>Creative Portfolio & Agency</span>
+            {/* Outline Capsule Pill */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '0.5rem 2.4rem',
+              border: '1.5px solid rgba(255, 255, 255, 0.35)',
+              borderRadius: '9999px',
+              background: 'rgba(255, 255, 255, 0.02)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease'
+            }} className="agatha-hero-pill-outline">
+              <span style={{
+                fontFamily: "'Ancola', Georgia, serif",
+                fontStyle: 'italic',
+                fontSize: 'clamp(2.2rem, 4.5vw, 4.2rem)',
+                fontWeight: 300,
+                color: '#ffffff',
+                lineHeight: 1.1,
+                letterSpacing: '0.01em'
+              }}>
+                {outlineText}
               </span>
             </div>
 
-            {/* Hero Main Headline */}
-            <h1 style={{
+            {/* Next-Gen / Creative Text */}
+            <span style={{
               fontFamily: "'Ancola', 'Tenor Sans', serif",
-              fontSize: 'clamp(2.5rem, 6vw, 4.8rem)',
+              fontSize: 'clamp(3.2rem, 7.5vw, 6.2rem)',
               fontWeight: 400,
-              lineHeight: 1.1,
               color: '#ffffff',
+              lineHeight: 1.05,
               letterSpacing: '0.01em'
             }}>
-              Creative Portfolio <br /> & <span className="text-purple-gradient">Digital Agency</span>
-            </h1>
-
-            {/* Description Paragraph */}
-            <p style={{
-              fontSize: '1.15rem',
-              color: '#cbd5e1',
-              lineHeight: 1.7,
-              maxWidth: '640px'
-            }}>
-              {hero.description || 'We craft high-impact brand identities, converting digital experiences, and strategic marketing campaigns that elevate ambitious companies.'}
-            </p>
-
-            {/* Primary & Secondary Action Buttons */}
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', paddingTop: '0.5rem' }} className="hero-btn-group">
-              <a href="#contact" className="btn-agatha-purple">
-                <span>GET STARTED NOW</span>
-                <ArrowUpRight size={18} />
-              </a>
-              <a href="#portfolio" className="btn-agatha-outline">
-                <span>VIEW PORTFOLIO</span>
-              </a>
-            </div>
-
-            {/* Social Proof Badges */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '2rem',
-              paddingTop: '1.5rem',
-              borderTop: '1px solid rgba(103, 82, 236, 0.2)',
-              flexWrap: 'wrap'
-            }}>
-              <div>
-                <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', color: '#ffffff', display: 'block', lineHeight: 1 }}>+340%</span>
-                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>Avg. ROAS Growth</span>
-              </div>
-              <div style={{ width: '1px', height: '30px', background: 'rgba(103, 82, 236, 0.3)' }} />
-              <div>
-                <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', color: '#a394ff', display: 'block', lineHeight: 1 }}>4.9 / 5</span>
-                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>Client Satisfaction</span>
-              </div>
-              <div style={{ width: '1px', height: '30px', background: 'rgba(103, 82, 236, 0.3)' }} />
-              <div>
-                <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', color: '#ffffff', display: 'block', lineHeight: 1 }}>100+</span>
-                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>Projects Delivered</span>
-              </div>
-            </div>
-
+              Next-Gen
+            </span>
           </div>
+
+          {/* Row 2: Circle Arrow Button + Main Title Text */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1.25rem',
+            flexWrap: 'wrap',
+            marginTop: '0.25rem'
+          }} className="agatha-hero-row">
+            
+            {/* Circular Arrow Button */}
+            <a 
+              href="#portfolio" 
+              style={{
+                width: '74px',
+                height: '74px',
+                borderRadius: '50%',
+                backgroundColor: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#02010c',
+                flexShrink: 0,
+                boxShadow: '0 10px 25px rgba(255, 255, 255, 0.2)',
+                transition: 'transform 0.3s ease, background-color 0.3s ease'
+              }}
+              className="agatha-hero-arrow-btn"
+              aria-label="Explore Portfolio"
+            >
+              <ArrowUp size={34} style={{ transform: 'rotate(45deg)', color: '#02010c', strokeWidth: 2.2 }} />
+            </a>
+
+            <h1 style={{
+              fontFamily: "'Ancola', 'Tenor Sans', serif",
+              fontSize: 'clamp(3.2rem, 7.5vw, 6.2rem)',
+              fontWeight: 400,
+              color: '#ffffff',
+              lineHeight: 1.05,
+              letterSpacing: '0.01em',
+              margin: 0,
+              display: 'inline'
+            }}>
+              Digital Marketing & Creative Agency
+            </h1>
+          </div>
+
+        </div>
+
+        {/* Row 3: Sub-description on Left, Solid White Pill on Right */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          gap: '2.5rem',
+          flexWrap: 'wrap',
+          marginTop: '3.5rem'
+        }} className="agatha-hero-bottom">
+          
+          {/* Subheading / Description */}
+          <div style={{ maxWidth: '480px' }}>
+            <p style={{
+              fontSize: '1.05rem',
+              color: '#cbd5e1',
+              lineHeight: 1.65,
+              margin: 0
+            }}>
+              {description}
+            </p>
+          </div>
+
+          {/* Solid White Pill Badge */}
+          <a 
+            href="#contact"
+            style={{
+              backgroundColor: '#ffffff',
+              color: '#02010c',
+              padding: '1.1rem 3.4rem',
+              borderRadius: '9999px',
+              boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+            }} 
+            className="agatha-hero-pill-solid"
+          >
+            <span style={{
+              fontFamily: "'Ancola', Georgia, serif",
+              fontStyle: 'italic',
+              fontSize: 'clamp(1.8rem, 3.8vw, 3rem)',
+              fontWeight: 400,
+              color: '#02010c',
+              lineHeight: 1,
+              letterSpacing: '0.01em'
+            }}>
+              {solidText}
+            </span>
+          </a>
 
         </div>
 
       </div>
 
       <style>{`
-        @media (min-width: 992px) {
-          .hero-main-grid {
-            grid-template-columns: 1.3fr 1fr !important;
-          }
+        .agatha-hero-arrow-btn:hover {
+          transform: scale(1.1) rotate(10deg) !important;
+          background-color: #a394ff !important;
         }
-        @media (max-width: 767px) {
-          .hero-btn-group {
-            flex-direction: column !important;
+        .agatha-hero-pill-solid:hover {
+          transform: translateY(-4px) !important;
+          box-shadow: 0 20px 45px rgba(103, 82, 236, 0.4) !important;
+        }
+        @media (max-width: 768px) {
+          .agatha-hero-row {
+            gap: 0.75rem !important;
           }
-          .hero-btn-group a {
+          .agatha-hero-pill-outline {
+            padding: 0.35rem 1.4rem !important;
+          }
+          .agatha-hero-arrow-btn {
+            width: 54px !important;
+            height: 54px !important;
+          }
+          .agatha-hero-pill-solid {
+            padding: 0.85rem 2rem !important;
             width: 100% !important;
+          }
+          .agatha-hero-bottom {
+            margin-top: 2rem !important;
           }
         }
       `}</style>

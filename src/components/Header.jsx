@@ -174,13 +174,24 @@ export const Header = () => {
             <span>Admin</span>
           </button>
 
-          {/* Desktop Only CTA (Hidden on Mobile view to avoid clutter) */}
+          {/* Desktop Only CTA - Agatha White Pill Button */}
           <a 
             href="#contact" 
-            className="btn-agatha-purple desktop-cta"
-            style={{ padding: '0.65rem 1.6rem', fontSize: '0.8rem' }}
+            className="desktop-cta"
+            style={{
+              padding: '0.65rem 1.6rem',
+              fontSize: '0.8rem',
+              fontWeight: 700,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              backgroundColor: '#ffffff',
+              color: '#02010c',
+              borderRadius: '9999px',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)'
+            }}
           >
-            <span>GET STARTED →</span>
+            <span>LET'S TALK →</span>
           </a>
 
           {/* Mobile Menu Toggle */}
