@@ -20,100 +20,6 @@ import { BlogDetailPage } from './components/BlogDetailPage';
 function MainAppContent() {
   const { activeView } = useContent();
 
-  const isAdminRoute = activeView === 'admin' || window.location.pathname.startsWith('/admin') || window.location.hash === '#admin';
-
-  if (isAdminRoute) {
-    return <AdminPanel />;
-  }
-
-  if (activeView === 'about') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <AboutSection />
-          <WhyUsSection />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (activeView === 'services') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <ServicesSection />
-        </main>
-        <Footer />
-        <ServiceModal />
-      </div>
-    );
-  }
-
-  if (activeView === 'portfolio') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <PortfolioSection />
-          <ClientsSection />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (activeView === 'process') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <ProcessSection />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (activeView === 'testimonials') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <TestimonialsSection />
-          <FaqSection />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (activeView === 'blog') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <BlogSection />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (activeView === 'contact') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <FaqSection />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
   if (activeView === 'service-detail') {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -122,7 +28,7 @@ function MainAppContent() {
           <ServiceDetailPage />
         </main>
         <Footer />
-        <ServiceModal />
+        <AdminPanel />
       </div>
     );
   }
@@ -135,11 +41,11 @@ function MainAppContent() {
           <BlogDetailPage />
         </main>
         <Footer />
+        <AdminPanel />
       </div>
     );
   }
 
-  // Home Page View: Full agency landing page experience
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <Header />
@@ -159,76 +65,18 @@ function MainAppContent() {
 
       {/* Dynamic Service Breakdown Modal */}
       <ServiceModal />
+
+      {/* Live SaaS Admin Panel Dashboard */}
+      <AdminPanel />
     </div>
   );
 }
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error('App Runtime Error:', error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{
-          minHeight: '100vh',
-          backgroundColor: '#0F172A',
-          color: '#ffffff',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem',
-          textAlign: 'center',
-          fontFamily: "'Poppins', sans-serif"
-        }}>
-          <h1 style={{ color: '#EDB403', fontSize: '2rem', marginBottom: '1rem' }}>
-            Inflix Marketing Solutions
-          </h1>
-          <p style={{ color: '#94A3B8', marginBottom: '1.5rem', maxWidth: '500px' }}>
-            Something went wrong while rendering the site content. Please refresh the page or reset content cache.
-          </p>
-          <button
-            onClick={() => {
-              localStorage.clear();
-              window.location.reload();
-            }}
-            style={{
-              padding: '12px 28px',
-              backgroundColor: '#EDB403',
-              color: '#0F172A',
-              fontWeight: '700',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer'
-            }}
-          >
-            Clear Cache & Reload Site
-          </button>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
-
 export function App() {
   return (
-    <ErrorBoundary>
-      <ContentProvider>
-        <MainAppContent />
-      </ContentProvider>
-    </ErrorBoundary>
+    <ContentProvider>
+      <MainAppContent />
+    </ContentProvider>
   );
 }
 

@@ -2,15 +2,15 @@
   RewriteEngine On
   RewriteBase /
 
-  # Redirect any legacy/cached asset requests to static app.js and app.css
-  RewriteRule ^assets/index-.*\.js$ assets/app.js [L]
-  RewriteRule ^assets/index-.*\.css$ assets/app.css [L]
-
-  # Allow direct access to existing files, directories, or api scripts
+  # 1. Allow direct access to existing files, directories, or api scripts
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Rewrite all other routes to index.html
+  # 2. Rewrite legacy cached asset requests to standard app.js / app.css
+  RewriteRule ^assets/index-.*\.js$ assets/app.js [L]
+  RewriteRule ^assets/index-.*\.css$ assets/app.css [L]
+
+  # 3. Rewrite all other requests to index.html for SPA routing
   RewriteRule ^ index.html [L]
 </IfModule>

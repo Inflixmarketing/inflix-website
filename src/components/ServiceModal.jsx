@@ -125,7 +125,7 @@ export const ServiceModal = () => {
                     alignItems: 'flex-start',
                     gap: '0.75rem'
                   }}>
-                    <CheckCircle2 size={20} style={{ color: '#EDB403', flexShrink: 0, marginTop: '2px' }} />
+                    <CheckCircle2 size={20} style={{ color: '#EDB403', shrink: 0, marginTop: '2px' }} />
                     <span style={{ fontSize: '0.925rem', color: '#ffffff', lineHeight: 1.5 }}>
                       {item}
                     </span>

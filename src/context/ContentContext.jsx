@@ -9,19 +9,17 @@ export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved && saved !== 'null' && saved !== 'undefined') {
+      if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed && typeof parsed === 'object') {
-          return {
-            ...defaultData,
-            ...parsed,
-            brand: { ...defaultData.brand, ...(parsed?.brand || {}) },
-            hero: { ...defaultData.hero, ...(parsed?.hero || {}) },
-            about: { ...defaultData.about, ...(parsed?.about || {}) },
-            companyInfo: { ...defaultData.companyInfo, ...(parsed?.companyInfo || {}) },
-            seoSettings: { ...defaultData.seoSettings, ...(parsed?.seoSettings || {}) }
-          };
-        }
+        return {
+          ...defaultData,
+          ...parsed,
+          brand: { ...defaultData.brand, ...(parsed.brand || {}) },
+          hero: { ...defaultData.hero, ...(parsed.hero || {}) },
+          about: { ...defaultData.about, ...(parsed.about || {}) },
+          companyInfo: { ...defaultData.companyInfo, ...(parsed.companyInfo || {}) },
+          seoSettings: { ...defaultData.seoSettings, ...(parsed.seoSettings || {}) }
+        };
       }
     } catch (e) {
       console.error('Error loading saved content', e);
@@ -29,73 +27,12 @@ export const ContentProvider = ({ children }) => {
     return defaultData;
   });
 
-  const [isAdminOpen, setIsAdminOpen] = useState(() => {
-    return window.location.pathname.startsWith('/admin') || window.location.hash === '#admin';
-  });
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
-  const [activeView, setActiveView] = useState(() => {
-    const raw = window.location.pathname.toLowerCase();
-    const path = raw.endsWith('/index.html') ? '/' : raw.replace(/\/$/, '');
-    if (path === '/admin' || window.location.hash === '#admin') return 'admin';
-    if (path === '/about') return 'about';
-    if (path === '/services') return 'services';
-    if (path === '/portfolio') return 'portfolio';
-    if (path === '/process') return 'process';
-    if (path === '/testimonials' || path === '/reviews') return 'testimonials';
-    if (path === '/blog') return 'blog';
-    if (path === '/contact') return 'contact';
-    if (path.startsWith('/service/')) return 'service-detail';
-    if (path.startsWith('/blog/')) return 'blog-detail';
-    return 'home';
-  });
+  const [activeView, setActiveView] = useState('home'); // 'home', 'service-detail', 'blog-detail'
   const [activeSlug, setActiveSlug] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
-
-  // Sync URL route changes
-  useEffect(() => {
-    const syncRoute = () => {
-      const raw = window.location.pathname.toLowerCase();
-      const path = raw.endsWith('/index.html') ? '/' : raw.replace(/\/$/, '');
-      if (path === '/admin' || window.location.hash === '#admin') {
-        setIsAdminOpen(true);
-        setActiveView('admin');
-      } else if (path === '/about') {
-        setIsAdminOpen(false);
-        setActiveView('about');
-      } else if (path === '/services') {
-        setIsAdminOpen(false);
-        setActiveView('services');
-      } else if (path === '/portfolio') {
-        setIsAdminOpen(false);
-        setActiveView('portfolio');
-      } else if (path === '/process') {
-        setIsAdminOpen(false);
-        setActiveView('process');
-      } else if (path === '/testimonials' || path === '/reviews') {
-        setIsAdminOpen(false);
-        setActiveView('testimonials');
-      } else if (path === '/blog') {
-        setIsAdminOpen(false);
-        setActiveView('blog');
-      } else if (path === '/contact') {
-        setIsAdminOpen(false);
-        setActiveView('contact');
-      } else if (path.startsWith('/service/')) {
-        setIsAdminOpen(false);
-        setActiveView('service-detail');
-      } else if (path.startsWith('/blog/')) {
-        setIsAdminOpen(false);
-        setActiveView('blog-detail');
-      } else {
-        setIsAdminOpen(false);
-        setActiveView('home');
-      }
-    };
-    syncRoute();
-    window.addEventListener('popstate', syncRoute);
-    return () => window.removeEventListener('popstate', syncRoute);
-  }, []);
 
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -104,10 +41,14 @@ export const ContentProvider = ({ children }) => {
 
   // Fetch live CMS data from Hostinger backend on initial load
   useEffect(() => {
-    fetch('/api/content.php')
+    const apiPath = window.location.pathname.endsWith('/') 
+      ? `${window.location.pathname}api/content.php`
+      : '/api/content.php';
+
+    fetch(apiPath)
       .then(res => {
         if (res.ok) return res.json();
-        throw new Error('No remote API');
+        return fetch('/api/content.php').then(r => r.json());
       })
       .then(remoteData => {
         if (remoteData && typeof remoteData === 'object' && !remoteData.error && remoteData.status !== 'default') {
@@ -175,7 +116,11 @@ export const ContentProvider = ({ children }) => {
     }
 
     // Sync to Hostinger live PHP server backend (api/content.php)
-    fetch('/api/content.php', {
+    const apiPath = window.location.pathname.endsWith('/') 
+      ? `${window.location.pathname}api/content.php`
+      : '/api/content.php';
+
+    fetch(apiPath, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -196,32 +141,12 @@ export const ContentProvider = ({ children }) => {
   const navigateToView = (view, slug = null) => {
     setActiveView(view);
     setActiveSlug(slug);
-    
-    let path = '/';
-    if (view === 'admin') {
-      setIsAdminOpen(true);
-      path = '/admin';
-    } else {
-      setIsAdminOpen(false);
-      if (view === 'about') path = '/about';
-      else if (view === 'services') path = '/services';
-      else if (view === 'portfolio') path = '/portfolio';
-      else if (view === 'process') path = '/process';
-      else if (view === 'testimonials') path = '/testimonials';
-      else if (view === 'blog') path = '/blog';
-      else if (view === 'contact') path = '/contact';
-      else if (view === 'service-detail') {
-        const found = (content.services || []).find(s => (s.slug || s.id) === slug);
-        setSelectedService(found || content.services[0]);
-        path = `/service/${slug || 'details'}`;
-      } else if (view === 'blog-detail') {
-        const found = (content.blogs || []).find(b => (b.slug || b.id) === slug);
-        setSelectedBlog(found || content.blogs[0]);
-        path = `/blog/${slug || 'post'}`;
-      }
-    }
-    if (window.location.pathname !== path) {
-      window.history.pushState({}, '', path);
+    if (view === 'service-detail') {
+      const found = (content.services || []).find(s => (s.slug || s.id) === slug);
+      setSelectedService(found || content.services[0]);
+    } else if (view === 'blog-detail') {
+      const found = (content.blogs || []).find(b => (b.slug || b.id) === slug);
+      setSelectedBlog(found || content.blogs[0]);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

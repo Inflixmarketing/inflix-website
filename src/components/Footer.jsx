@@ -3,7 +3,7 @@ import { useContent } from '../context/ContentContext';
 import { Mail, Phone, MapPin, Instagram, Facebook, Linkedin, Twitter } from 'lucide-react';
 
 export const Footer = () => {
-  const { content, navigateToView } = useContent();
+  const { content, setActiveTab } = useContent();
   const brand = content.brand || {};
   const cta = content.ctaBanner || {};
 
@@ -88,27 +88,22 @@ export const Footer = () => {
               Inflix Marketing Solutions specializing in performance marketing, brand identity, web development, SEO, and high-converting creative media.
             </p>
 
-            <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
-              {brand.socialLinks?.instagram && (
-                <a href={brand.socialLinks.instagram} target="_blank" rel="noopener noreferrer" style={footerSocialIconStyle} title="Instagram">
-                  <Instagram size={15} />
+            <div style={{ display: 'flex', gap: '0.65rem' }}>
+              {[Instagram, Facebook, Linkedin, Twitter].map((Icon, i) => (
+                <a key={i} href="#" style={{
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '50%',
+                  background: 'rgba(237, 180, 3, 0.1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#EDB403',
+                  border: '1px solid rgba(237, 180, 3, 0.3)'
+                }}>
+                  <Icon size={15} />
                 </a>
-              )}
-              {brand.socialLinks?.facebook && (
-                <a href={brand.socialLinks.facebook} target="_blank" rel="noopener noreferrer" style={footerSocialIconStyle} title="Facebook">
-                  <Facebook size={15} />
-                </a>
-              )}
-              {brand.socialLinks?.linkedin && (
-                <a href={brand.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" style={footerSocialIconStyle} title="LinkedIn">
-                  <Linkedin size={15} />
-                </a>
-              )}
-              {brand.socialLinks?.twitter && (
-                <a href={brand.socialLinks.twitter} target="_blank" rel="noopener noreferrer" style={footerSocialIconStyle} title="Twitter">
-                  <Twitter size={15} />
-                </a>
-              )}
+              ))}
             </div>
           </div>
 
@@ -118,12 +113,11 @@ export const Footer = () => {
               Quick Links
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#E5E7EB' }}>
-              <li><a href="/" onClick={(e) => { e.preventDefault(); navigateToView('home'); }}>Home</a></li>
-              <li><a href="/about" onClick={(e) => { e.preventDefault(); navigateToView('about'); }}>About Us</a></li>
-              <li><a href="/services" onClick={(e) => { e.preventDefault(); navigateToView('services'); }}>Services</a></li>
-              <li><a href="/portfolio" onClick={(e) => { e.preventDefault(); navigateToView('portfolio'); }}>Portfolio</a></li>
-              <li><a href="/process" onClick={(e) => { e.preventDefault(); navigateToView('process'); }}>Process</a></li>
-              <li><a href="/blog" onClick={(e) => { e.preventDefault(); navigateToView('blog'); }}>Blog Insights</a></li>
+              <li><a href="#home" onClick={() => setActiveTab('home')}>Home</a></li>
+              <li><a href="#about" onClick={() => setActiveTab('about')}>About Us</a></li>
+              <li><a href="#services" onClick={() => setActiveTab('services')}>Services</a></li>
+              <li><a href="#portfolio" onClick={() => setActiveTab('portfolio')}>Portfolio</a></li>
+              <li><a href="#process" onClick={() => setActiveTab('process')}>Process</a></li>
             </ul>
           </div>
 
@@ -195,17 +189,4 @@ export const Footer = () => {
       `}</style>
     </footer>
   );
-};
-
-const footerSocialIconStyle = {
-  width: '34px',
-  height: '34px',
-  borderRadius: '50%',
-  background: 'rgba(237, 180, 3, 0.1)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#EDB403',
-  border: '1px solid rgba(237, 180, 3, 0.3)',
-  transition: 'all 0.2s ease'
 };
