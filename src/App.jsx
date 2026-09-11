@@ -139,15 +139,25 @@ function MainAppContent() {
     );
   }
 
-  // Home Page View: Hero, Services, and Contact Us
+  // Home Page View: Full agency landing page experience
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <Header />
       <main style={{ flex: 1, paddingTop: '76px' }}>
         <Hero />
+        <AboutSection />
         <ServicesSection />
+        <WhyUsSection />
+        <PortfolioSection />
+        <ClientsSection />
+        <ProcessSection />
+        <TestimonialsSection />
+        <FaqSection />
+        <BlogSection />
       </main>
       <Footer />
+
+      {/* Dynamic Service Breakdown Modal */}
       <ServiceModal />
     </div>
   );

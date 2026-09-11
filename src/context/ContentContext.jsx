@@ -32,7 +32,8 @@ export const ContentProvider = ({ children }) => {
   });
   const [activeTab, setActiveTab] = useState('home');
   const [activeView, setActiveView] = useState(() => {
-    const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    const raw = window.location.pathname.toLowerCase();
+    const path = raw.endsWith('/index.html') ? '/' : raw.replace(/\/$/, '');
     if (path === '/admin' || window.location.hash === '#admin') return 'admin';
     if (path === '/about') return 'about';
     if (path === '/services') return 'services';
@@ -52,7 +53,8 @@ export const ContentProvider = ({ children }) => {
   // Sync URL route changes
   useEffect(() => {
     const syncRoute = () => {
-      const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+      const raw = window.location.pathname.toLowerCase();
+      const path = raw.endsWith('/index.html') ? '/' : raw.replace(/\/$/, '');
       if (path === '/admin' || window.location.hash === '#admin') {
         setIsAdminOpen(true);
         setActiveView('admin');
@@ -77,7 +79,13 @@ export const ContentProvider = ({ children }) => {
       } else if (path === '/contact') {
         setIsAdminOpen(false);
         setActiveView('contact');
-      } else if (path === '' || path === '/') {
+      } else if (path.startsWith('/service/')) {
+        setIsAdminOpen(false);
+        setActiveView('service-detail');
+      } else if (path.startsWith('/blog/')) {
+        setIsAdminOpen(false);
+        setActiveView('blog-detail');
+      } else {
         setIsAdminOpen(false);
         setActiveView('home');
       }
