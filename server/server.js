@@ -131,6 +131,16 @@ app.post('/api/content', (req, res) => {
   }
 });
 
+// Serve compiled static Vite frontend assets from dist/
+const distPath = path.join(__dirname, '..', 'dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) return next();
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`🚀 Inflix Backend API running on port ${PORT}`);
