@@ -29,11 +29,11 @@ export const ContentProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedService, setSelectedService] = useState(null);
 
-  // Fetch latest content from backend API on mount if server is active
+  // Fetch live saved content from Hostinger PHP/MySQL API on mount
   useEffect(() => {
-    const fetchBackendContent = async () => {
+    const fetchHostingerContent = async () => {
       try {
-        const res = await fetch('/api/content');
+        const res = await fetch('/api/content.php');
         if (res.ok) {
           const data = await res.json();
           if (data && data.brand) {
@@ -41,13 +41,13 @@ export const ContentProvider = ({ children }) => {
           }
         }
       } catch (err) {
-        // Backend API optional or running on separate port
+        // Fallback to defaultData & localStorage
       }
     };
-    fetchBackendContent();
+    fetchHostingerContent();
   }, []);
 
-  // Sync primary color (#edb403), secondary color (#0f172a), and fonts to CSS Custom Properties
+  // Sync CSS properties
   useEffect(() => {
     if (!content || !content.brand) return;
     const root = document.documentElement;
@@ -64,7 +64,7 @@ export const ContentProvider = ({ children }) => {
     root.style.setProperty('--font-body', `'Plus Jakarta Sans', sans-serif`);
   }, [content]);
 
-  // Save changes to state & localStorage & sync to API if available
+  // Save changes to state, localStorage & Hostinger live API
   const saveContent = (newContent) => {
     setContent(newContent);
     try {
@@ -73,8 +73,8 @@ export const ContentProvider = ({ children }) => {
       console.error('Error saving content', e);
     }
 
-    // Sync to backend server API
-    fetch('/api/content', {
+    // Sync to Hostinger live PHP/MySQL API
+    fetch('/api/content.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newContent)
