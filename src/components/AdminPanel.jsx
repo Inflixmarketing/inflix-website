@@ -432,24 +432,6 @@ export const AdminPanel = () => {
               );
             })}
 
-            <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(237, 180, 3, 0.2)' }}>
-              <button 
-                onClick={resetToDefaults}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  color: '#f87171',
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  padding: '0.5rem',
-                  width: '100%',
-                  cursor: 'pointer'
-                }}
-              >
-                <RefreshCw size={14} /> Reset System Defaults
-              </button>
-            </div>
           </aside>
 
           {/* Right Main Content Area (Starts strictly below 65px header) */}
@@ -586,6 +568,93 @@ export const AdminPanel = () => {
                         value={content.brand?.contactPhone || ''} 
                         onChange={(e) => updateSectionState('brand', { ...content.brand, contactPhone: e.target.value })}
                         style={adminInputStyle}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Social Media Links Section */}
+                <div className="card-glass" style={{ marginTop: '1.5rem' }}>
+                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
+                    Social Media Links
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={adminLabelStyle}>INSTAGRAM URL</label>
+                      <input 
+                        type="text" 
+                        value={content.brand?.socialLinks?.instagram || ''} 
+                        onChange={(e) => updateSectionState('brand', { 
+                          ...content.brand, 
+                          socialLinks: { ...(content.brand?.socialLinks || {}), instagram: e.target.value } 
+                        })}
+                        style={adminInputStyle}
+                        placeholder="https://instagram.com/inflixmarketing"
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>FACEBOOK URL</label>
+                      <input 
+                        type="text" 
+                        value={content.brand?.socialLinks?.facebook || ''} 
+                        onChange={(e) => updateSectionState('brand', { 
+                          ...content.brand, 
+                          socialLinks: { ...(content.brand?.socialLinks || {}), facebook: e.target.value } 
+                        })}
+                        style={adminInputStyle}
+                        placeholder="https://facebook.com/inflixmarketing"
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>LINKEDIN URL</label>
+                      <input 
+                        type="text" 
+                        value={content.brand?.socialLinks?.linkedin || ''} 
+                        onChange={(e) => updateSectionState('brand', { 
+                          ...content.brand, 
+                          socialLinks: { ...(content.brand?.socialLinks || {}), linkedin: e.target.value } 
+                        })}
+                        style={adminInputStyle}
+                        placeholder="https://linkedin.com/company/inflixmarketing"
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>TWITTER / X URL</label>
+                      <input 
+                        type="text" 
+                        value={content.brand?.socialLinks?.twitter || ''} 
+                        onChange={(e) => updateSectionState('brand', { 
+                          ...content.brand, 
+                          socialLinks: { ...(content.brand?.socialLinks || {}), twitter: e.target.value } 
+                        })}
+                        style={adminInputStyle}
+                        placeholder="https://twitter.com/inflixmarketing"
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>YOUTUBE URL</label>
+                      <input 
+                        type="text" 
+                        value={content.brand?.socialLinks?.youtube || ''} 
+                        onChange={(e) => updateSectionState('brand', { 
+                          ...content.brand, 
+                          socialLinks: { ...(content.brand?.socialLinks || {}), youtube: e.target.value } 
+                        })}
+                        style={adminInputStyle}
+                        placeholder="https://youtube.com/@inflixmarketing"
+                      />
+                    </div>
+                    <div>
+                      <label style={adminLabelStyle}>WHATSAPP LINK / NUMBER</label>
+                      <input 
+                        type="text" 
+                        value={content.brand?.socialLinks?.whatsapp || ''} 
+                        onChange={(e) => updateSectionState('brand', { 
+                          ...content.brand, 
+                          socialLinks: { ...(content.brand?.socialLinks || {}), whatsapp: e.target.value } 
+                        })}
+                        style={adminInputStyle}
+                        placeholder="https://wa.me/919876543210"
                       />
                     </div>
                   </div>

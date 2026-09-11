@@ -26,6 +26,94 @@ function MainAppContent() {
     return <AdminPanel />;
   }
 
+  if (activeView === 'about') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <AboutSection />
+          <WhyUsSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (activeView === 'services') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <ServicesSection />
+        </main>
+        <Footer />
+        <ServiceModal />
+      </div>
+    );
+  }
+
+  if (activeView === 'portfolio') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <PortfolioSection />
+          <ClientsSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (activeView === 'process') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <ProcessSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (activeView === 'testimonials') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <TestimonialsSection />
+          <FaqSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (activeView === 'blog') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <BlogSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (activeView === 'contact') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <FaqSection />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   if (activeView === 'service-detail') {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -47,29 +135,19 @@ function MainAppContent() {
           <BlogDetailPage />
         </main>
         <Footer />
-        <ServiceModal />
       </div>
     );
   }
 
+  // Home Page View: Hero, Services, and Contact Us
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <Header />
       <main style={{ flex: 1, paddingTop: '76px' }}>
         <Hero />
-        <AboutSection />
         <ServicesSection />
-        <WhyUsSection />
-        <PortfolioSection />
-        <ClientsSection />
-        <ProcessSection />
-        <TestimonialsSection />
-        <FaqSection />
-        <BlogSection />
       </main>
       <Footer />
-
-      {/* Dynamic Service Breakdown Modal */}
       <ServiceModal />
     </div>
   );

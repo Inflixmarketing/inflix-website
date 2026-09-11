@@ -13,7 +13,15 @@
     "contactEmail": "contact@inflixmarketing.com",
     "contactPhone": "+91 98765 43210",
     "location": "Hyderabad, India",
-    "logoUrl": ""
+    "logoUrl": "/logo.png",
+    "socialLinks": {
+      "instagram": "https://instagram.com/inflixmarketing",
+      "facebook": "https://facebook.com/inflixmarketing",
+      "linkedin": "https://linkedin.com/company/inflixmarketing",
+      "twitter": "https://twitter.com/inflixmarketing",
+      "youtube": "https://youtube.com/@inflixmarketing",
+      "whatsapp": "https://wa.me/919876543210"
+    }
   },
   "hero": {
     "capsuleOutline": "Driven by Strategy.",

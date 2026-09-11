@@ -32,22 +32,54 @@ export const ContentProvider = ({ children }) => {
   });
   const [activeTab, setActiveTab] = useState('home');
   const [activeView, setActiveView] = useState(() => {
-    if (window.location.pathname.startsWith('/admin') || window.location.hash === '#admin') {
-      return 'admin';
-    }
+    const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    if (path === '/admin' || window.location.hash === '#admin') return 'admin';
+    if (path === '/about') return 'about';
+    if (path === '/services') return 'services';
+    if (path === '/portfolio') return 'portfolio';
+    if (path === '/process') return 'process';
+    if (path === '/testimonials' || path === '/reviews') return 'testimonials';
+    if (path === '/blog') return 'blog';
+    if (path === '/contact') return 'contact';
+    if (path.startsWith('/service/')) return 'service-detail';
+    if (path.startsWith('/blog/')) return 'blog-detail';
     return 'home';
   });
   const [activeSlug, setActiveSlug] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
 
-  // Sync /admin URL route changes
+  // Sync URL route changes
   useEffect(() => {
     const syncRoute = () => {
-      const isAdminRoute = window.location.pathname.startsWith('/admin') || window.location.hash === '#admin';
-      if (isAdminRoute) {
+      const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+      if (path === '/admin' || window.location.hash === '#admin') {
         setIsAdminOpen(true);
         setActiveView('admin');
+      } else if (path === '/about') {
+        setIsAdminOpen(false);
+        setActiveView('about');
+      } else if (path === '/services') {
+        setIsAdminOpen(false);
+        setActiveView('services');
+      } else if (path === '/portfolio') {
+        setIsAdminOpen(false);
+        setActiveView('portfolio');
+      } else if (path === '/process') {
+        setIsAdminOpen(false);
+        setActiveView('process');
+      } else if (path === '/testimonials' || path === '/reviews') {
+        setIsAdminOpen(false);
+        setActiveView('testimonials');
+      } else if (path === '/blog') {
+        setIsAdminOpen(false);
+        setActiveView('blog');
+      } else if (path === '/contact') {
+        setIsAdminOpen(false);
+        setActiveView('contact');
+      } else if (path === '' || path === '/') {
+        setIsAdminOpen(false);
+        setActiveView('home');
       }
     };
     syncRoute();
@@ -111,14 +143,14 @@ export const ContentProvider = ({ children }) => {
       if (content.seoSettings.metaTitle) {
         document.title = content.seoSettings.metaTitle;
       }
-      if (content.seoSettings.faviconUrl) {
+      if (content.seoSettings.faviconUrl || brand.logoUrl) {
         let link = document.querySelector("link[rel*='icon']");
         if (!link) {
           link = document.createElement('link');
           link.rel = 'shortcut icon';
           document.getElementsByTagName('head')[0].appendChild(link);
         }
-        link.href = content.seoSettings.faviconUrl;
+        link.href = content.seoSettings?.faviconUrl || '/favicon.png';
       }
     }
   }, [content]);
@@ -154,21 +186,32 @@ export const ContentProvider = ({ children }) => {
   const navigateToView = (view, slug = null) => {
     setActiveView(view);
     setActiveSlug(slug);
+    
+    let path = '/';
     if (view === 'admin') {
       setIsAdminOpen(true);
-      if (!window.location.pathname.startsWith('/admin')) {
-        window.history.pushState({}, '', '/admin');
+      path = '/admin';
+    } else {
+      setIsAdminOpen(false);
+      if (view === 'about') path = '/about';
+      else if (view === 'services') path = '/services';
+      else if (view === 'portfolio') path = '/portfolio';
+      else if (view === 'process') path = '/process';
+      else if (view === 'testimonials') path = '/testimonials';
+      else if (view === 'blog') path = '/blog';
+      else if (view === 'contact') path = '/contact';
+      else if (view === 'service-detail') {
+        const found = (content.services || []).find(s => (s.slug || s.id) === slug);
+        setSelectedService(found || content.services[0]);
+        path = `/service/${slug || 'details'}`;
+      } else if (view === 'blog-detail') {
+        const found = (content.blogs || []).find(b => (b.slug || b.id) === slug);
+        setSelectedBlog(found || content.blogs[0]);
+        path = `/blog/${slug || 'post'}`;
       }
-    } else if (view === 'service-detail') {
-      const found = (content.services || []).find(s => (s.slug || s.id) === slug);
-      setSelectedService(found || content.services[0]);
-    } else if (view === 'blog-detail') {
-      const found = (content.blogs || []).find(b => (b.slug || b.id) === slug);
-      setSelectedBlog(found || content.blogs[0]);
-    } else if (view === 'home') {
-      if (window.location.pathname.startsWith('/admin')) {
-        window.history.pushState({}, '', '/');
-      }
+    }
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
