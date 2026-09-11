@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useContent } from '../context/ContentContext';
 import { 
   X, 
-  RotateCcw, 
   Palette, 
   Layout, 
   Briefcase, 
@@ -12,7 +11,8 @@ import {
   CheckCircle,
   FileText,
   Save,
-  Image as ImageIcon,
+  Lock,
+  LogOut,
   RefreshCw
 } from 'lucide-react';
 
@@ -28,6 +28,11 @@ export const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('brand');
   const [saveNotification, setSaveNotification] = useState(false);
   const [localContent, setLocalContent] = useState(content);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('inflix_admin_auth') === 'true';
+  });
+  const [passwordInput, setPasswordInput] = useState('');
+  const [authError, setAuthError] = useState('');
 
   useEffect(() => {
     setLocalContent(content);
@@ -35,21 +40,28 @@ export const AdminPanel = () => {
 
   if (!isAdminOpen) return null;
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Default Admin Passwords: inflix2026 or admin
+    if (passwordInput === 'inflix2026' || passwordInput === 'admin') {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('inflix_admin_auth', 'true');
+      setAuthError('');
+      setPasswordInput('');
+    } else {
+      setAuthError('Incorrect Admin Password! Try: inflix2026');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('inflix_admin_auth');
+    setIsAdminOpen(false);
+  };
+
   const handleSaveAll = async () => {
     saveContent(localContent);
     setSaveNotification(true);
-
-    // Sync to Node.js backend if active
-    try {
-      await fetch('/api/content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(localContent)
-      });
-    } catch (err) {
-      console.log('Local save completed');
-    }
-
     setTimeout(() => setSaveNotification(false), 2500);
   };
 
@@ -93,6 +105,108 @@ export const AdminPanel = () => {
     saveContent(updated);
   };
 
+  /* ==========================================================================
+     1. ADMIN AUTH LOCK SCREEN MODAL
+     ========================================================================== */
+  if (!isAuthenticated) {
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(9, 13, 22, 0.92)',
+        backdropFilter: 'blur(16px)',
+        zIndex: 3000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1.5rem'
+      }}>
+        <div style={{
+          background: '#0f172a',
+          border: '1px solid rgba(237, 180, 3, 0.35)',
+          borderRadius: '20px',
+          maxWidth: '420px',
+          width: '100%',
+          padding: '2.5rem 2rem',
+          color: '#ffffff',
+          textAlign: 'center',
+          boxShadow: '0 25px 50px rgba(0, 0, 0, 0.7)',
+          position: 'relative'
+        }}>
+          <button 
+            onClick={() => setIsAdminOpen(false)}
+            style={{ position: 'absolute', top: '1rem', right: '1rem', color: '#94a3b8' }}
+          >
+            <X size={22} />
+          </button>
+
+          <div style={{
+            width: '54px',
+            height: '54px',
+            borderRadius: '50%',
+            background: 'rgba(237, 180, 3, 0.15)',
+            color: '#edb403',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 1.25rem auto',
+            border: '1px solid rgba(237, 180, 3, 0.3)'
+          }}>
+            <Lock size={26} />
+          </div>
+
+          <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '0.4rem', color: '#ffffff' }}>
+            Admin Access Required
+          </h3>
+          <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: '1.75rem' }}>
+            Enter your admin password to access live website controls.
+          </p>
+
+          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <input 
+              type="password" 
+              placeholder="Enter Admin Password" 
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.8rem 1rem',
+                borderRadius: '10px',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                background: 'rgba(0, 0, 0, 0.3)',
+                color: '#ffffff',
+                fontSize: '0.95rem',
+                textAlign: 'center',
+                letterSpacing: '0.1em'
+              }}
+              autoFocus
+            />
+
+            {authError && (
+              <span style={{ fontSize: '0.8rem', color: '#f87171', fontWeight: 600 }}>
+                {authError}
+              </span>
+            )}
+
+            <button type="submit" className="btn-agatha-gold" style={{ width: '100%', marginTop: '0.5rem' }}>
+              UNLOCK ADMIN PANEL
+            </button>
+          </form>
+
+          <small style={{ display: 'block', marginTop: '1.25rem', color: '#64748b', fontSize: '0.75rem' }}>
+            Default Password: <code style={{ color: '#edb403' }}>inflix2026</code>
+          </small>
+        </div>
+      </div>
+    );
+  }
+
+  /* ==========================================================================
+     2. FULL ADMIN PANEL WORKSPACE
+     ========================================================================== */
   return (
     <div style={{
       position: 'fixed',
@@ -190,6 +304,24 @@ export const AdminPanel = () => {
             >
               <Save size={16} />
               <span>SAVE & APPLY LIVE</span>
+            </button>
+
+            {/* Logout Button */}
+            <button 
+              onClick={handleLogout}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                padding: '0.5rem 0.85rem',
+                background: 'rgba(255, 255, 255, 0.08)',
+                color: '#94a3b8',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: 600
+              }}
+            >
+              <LogOut size={14} /> Logout
             </button>
 
             <button 
