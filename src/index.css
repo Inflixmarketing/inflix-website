@@ -2,10 +2,8 @@
 
 /* ==========================================================================
    CUSTOM FONT INTEGRATION - ANCOLA (REGULAR & ITALIC)
-   Bundled via Vite src/assets/fonts and fallback public/fonts
    ========================================================================== */
 
-/* Ancola Regular (Supports all weights 100 - 900) */
 @font-face {
   font-family: 'Ancola';
   src: url('./assets/fonts/ancola-regular.ttf') format('truetype'),
@@ -17,7 +15,6 @@
   font-display: swap;
 }
 
-/* Ancola Italic (Supports all weights 100 - 900) */
 @font-face {
   font-family: 'Ancola';
   src: url('./assets/fonts/ancola-italic.ttf') format('truetype'),
@@ -30,18 +27,23 @@
 }
 
 :root {
-  --color-primary: #6752ec;
-  --color-primary-hover: #7b68f5;
-  --color-primary-glow: rgba(103, 82, 236, 0.4);
-  --color-secondary: #f4f0ea;
-  --color-accent: #edb403;
-  --color-bg-dark: #02010c;
-  --color-bg-surface: #0c0a1d;
-  --color-card-bg: rgba(14, 11, 33, 0.75);
-  --color-glass-bg: rgba(255, 255, 255, 0.03);
-  --color-glass-border: rgba(103, 82, 236, 0.25);
-  --color-heading: #ffffff;
-  --color-body: #cbd5e1;
+  /* Brand Color System */
+  --color-primary: #EDB403;         /* Premium Gold */
+  --color-primary-hover: #fcd34d;   /* Lighter Gold Hover */
+  --color-primary-glow: rgba(237, 180, 3, 0.4);
+  --color-secondary: #173765;       /* Deep Professional Navy */
+  --color-accent: #EDB403;          /* Gold Accent */
+  
+  /* Background & Surface Tokens */
+  --color-bg-dark: #0B132B;        /* Dark Navy Base */
+  --color-bg-surface: #173765;     /* Deep Navy Surface */
+  --color-card-bg: rgba(23, 55, 101, 0.55);
+  --color-glass-bg: rgba(23, 55, 101, 0.35);
+  --color-glass-border: rgba(237, 180, 3, 0.25);
+  
+  /* Typography Tokens */
+  --color-heading: #FFFFFF;
+  --color-body: #E5E7EB;
   --color-muted: #94a3b8;
   
   --font-heading: 'Ancola', 'Tenor Sans', serif, Georgia;
@@ -77,12 +79,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Background Grid & Gradient Glows */
+/* Background Grid & Soft Gold Glow Effects */
 .agatha-grid-bg {
-  background-color: #02010c;
+  background-color: #0B132B;
   background-image: 
-    radial-gradient(circle at 15% 20%, rgba(103, 82, 236, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 85% 60%, rgba(14, 11, 33, 0.8) 0%, transparent 60%),
+    radial-gradient(circle at 85% 15%, rgba(237, 180, 3, 0.15) 0%, transparent 55%),
+    radial-gradient(circle at 15% 75%, rgba(23, 55, 101, 0.8) 0%, transparent 60%),
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
@@ -123,7 +125,7 @@ button {
 }
 
 .section-category {
-  color: #a394ff;
+  color: #EDB403;
   font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
@@ -132,8 +134,8 @@ button {
   gap: 0.4rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  background: rgba(103, 82, 236, 0.12);
-  border: 1px solid rgba(103, 82, 236, 0.3);
+  background: rgba(237, 180, 3, 0.1);
+  border: 1px solid rgba(237, 180, 3, 0.3);
   padding: 0.4rem 1rem;
   border-radius: var(--radius-pill);
 }
@@ -148,78 +150,53 @@ button {
   letter-spacing: 0.01em;
 }
 
-/* Gradient Text Highlight */
-.text-purple-gradient {
-  background: linear-gradient(135deg, #ffffff 30%, #a394ff 100%);
+/* Gradient Gold Text Highlight */
+.text-purple-gradient, .text-gold-gradient {
+  background: linear-gradient(135deg, #ffffff 40%, #EDB403 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Agatha Buttons */
-.btn-agatha-purple {
+/* Primary Button: Background #EDB403, Text #173765 */
+.btn-agatha-purple, .btn-agatha-gold {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: var(--color-primary);
-  color: #ffffff;
-  font-weight: 600;
+  background: #EDB403;
+  color: #173765;
+  font-weight: 700;
   font-size: 0.875rem;
   padding: 0.95rem 2.4rem;
   border-radius: var(--radius-pill);
   transition: var(--transition-normal);
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  box-shadow: 0 8px 25px rgba(103, 82, 236, 0.4);
+  box-shadow: 0 8px 25px rgba(237, 180, 3, 0.35);
   text-align: center;
   max-width: 100%;
 }
 
-.btn-agatha-purple:hover {
-  background: var(--color-primary-hover);
-  color: #ffffff;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(103, 82, 236, 0.6);
+.btn-agatha-purple:hover, .btn-agatha-gold:hover {
+  background: #fcd34d;
+  color: #173765;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(237, 180, 3, 0.55);
 }
 
-.btn-agatha-gold {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  background: var(--color-primary);
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.95rem 2.4rem;
-  border-radius: var(--radius-pill);
-  transition: var(--transition-normal);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  box-shadow: 0 8px 25px rgba(103, 82, 236, 0.4);
-  text-align: center;
-  max-width: 100%;
-}
-
-.btn-agatha-gold:hover {
-  background: var(--color-primary-hover);
-  color: #ffffff;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(103, 82, 236, 0.6);
-}
-
+/* Secondary Button: Transparent, Border #EDB403, Text #EDB403 */
 .btn-agatha-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
-  font-weight: 500;
+  background: transparent;
+  color: #EDB403;
+  font-weight: 600;
   font-size: 0.875rem;
   padding: 0.95rem 2.4rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1.5px solid #EDB403;
   backdrop-filter: blur(10px);
   transition: var(--transition-normal);
   letter-spacing: 0.05em;
@@ -229,11 +206,11 @@ button {
 }
 
 .btn-agatha-outline:hover {
-  background: var(--color-primary);
-  color: #ffffff;
-  border-color: var(--color-primary);
+  background: #EDB403;
+  color: #173765;
+  border-color: #EDB403;
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(103, 82, 236, 0.4);
+  box-shadow: 0 12px 30px rgba(237, 180, 3, 0.4);
 }
 
 .btn-agatha-navy {
@@ -241,14 +218,13 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: #173765;
   color: #ffffff;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.875rem;
   padding: 0.95rem 2.4rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(237, 180, 3, 0.3);
   transition: var(--transition-normal);
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -257,18 +233,18 @@ button {
 }
 
 .btn-agatha-navy:hover {
-  background: var(--color-primary);
-  color: #ffffff;
-  border-color: var(--color-primary);
+  background: #EDB403;
+  color: #173765;
+  border-color: #EDB403;
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(103, 82, 236, 0.4);
+  box-shadow: 0 12px 30px rgba(237, 180, 3, 0.4);
 }
 
-/* Glassmorphism Card Style */
+/* Dark Navy Glassmorphism Card Style */
 .card-glass {
-  background: rgba(14, 11, 33, 0.75);
+  background: rgba(23, 55, 101, 0.45);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(103, 82, 236, 0.2);
+  border: 1px solid rgba(237, 180, 3, 0.25);
   border-radius: var(--radius-md);
   padding: 2.25rem;
   transition: var(--transition-normal);
@@ -283,15 +259,15 @@ button {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(103, 82, 236, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(237, 180, 3, 0.7), transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .card-glass:hover {
   transform: translateY(-6px);
-  border-color: rgba(103, 82, 236, 0.5);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(237, 180, 3, 0.55);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
 }
 
 .card-glass:hover::before {
@@ -336,36 +312,31 @@ button {
   }
 }
 
-/* ==========================================================================
-   MOBILE UX & ADMIN PANEL RESPONSIVE STYLES
-   ========================================================================== */
-
-/* Minimum Touch Target Sizes (44px) */
+/* Mobile Touch & Scrollbars */
 button, input, select, textarea, a.btn-agatha-purple, a.btn-agatha-outline, .touch-target {
   min-height: 44px;
 }
 
-/* Responsive Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #02010c;
+  background: #0B132B;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(103, 82, 236, 0.4);
+  background: rgba(237, 180, 3, 0.4);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(103, 82, 236, 0.7);
+  background: rgba(237, 180, 3, 0.7);
 }
 
-/* Admin Mobile Sidebar & Overlay */
+/* Admin Mobile Overlay & Tables */
 .admin-mobile-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(4px);
   z-index: 40;
 }
@@ -379,23 +350,20 @@ button, input, select, textarea, a.btn-agatha-purple, a.btn-agatha-outline, .tou
     z-index: 50;
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
   }
   .admin-sidebar-drawer.open {
     transform: translateX(0);
   }
 }
 
-/* Mobile Responsive Table Wrapper */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Responsive Image Containers */
 img {
   max-width: 100%;
   height: auto;
 }
-

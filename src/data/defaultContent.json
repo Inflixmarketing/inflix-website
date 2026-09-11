@@ -1,11 +1,11 @@
 {
   "brand": {
-    "primaryColor": "#6752ec",
-    "secondaryColor": "#0c0a1d",
-    "accentColor": "#a394ff",
-    "darkBg": "#02010c",
-    "surfaceBg": "#0c0a1d",
-    "cardBg": "rgba(14, 11, 33, 0.75)",
+    "primaryColor": "#EDB403",
+    "secondaryColor": "#173765",
+    "accentColor": "#EDB403",
+    "darkBg": "#0B132B",
+    "surfaceBg": "#173765",
+    "cardBg": "rgba(23, 55, 101, 0.55)",
     "headingFont": "Ancola",
     "bodyFont": "Poppins",
     "siteName": "Inflix Marketing Solutions",

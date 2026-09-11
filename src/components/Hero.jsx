@@ -8,27 +8,26 @@ export const Hero = () => {
 
   const outlineText = hero.capsuleOutline || "Driven by Strategy.";
   const solidText = hero.capsuleSolid || "Powered by Creativity.";
-  const titleMain = hero.titleMain || "Next-Gen Digital Marketing & Creative Agency";
   const description = hero.description || "We help ambitious brands scale faster through data-driven performance marketing, high-converting content, and strategic brand positioning.";
 
   return (
     <section id="home" className="agatha-grid-bg" style={{
       position: 'relative',
-      paddingTop: '6rem',
-      paddingBottom: '6rem',
+      paddingTop: '6.5rem',
+      paddingBottom: '6.5rem',
       overflow: 'hidden',
       minHeight: '88vh',
       display: 'flex',
       alignItems: 'center'
     }}>
-      {/* Top Right Glowing Ambient Light */}
+      {/* Top Right Soft Gold Glow Effect */}
       <div style={{
         position: 'absolute',
         top: '-10%',
         right: '0%',
         width: '650px',
         height: '650px',
-        background: `radial-gradient(circle, rgba(103, 82, 236, 0.22) 0%, rgba(2, 1, 12, 0) 70%)`,
+        background: `radial-gradient(circle, rgba(237, 180, 3, 0.22) 0%, rgba(11, 19, 43, 0) 70%)`,
         pointerEvents: 'none',
         filter: 'blur(50px)'
       }} />
@@ -38,7 +37,7 @@ export const Hero = () => {
         {/* Main Headline Container */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           
-          {/* Row 1: Outline Pill + First Heading Text */}
+          {/* Row 1: Outline Pill (#EDB403 Border & Text) + Next-Gen */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -46,15 +45,15 @@ export const Hero = () => {
             flexWrap: 'wrap'
           }} className="agatha-hero-row">
             
-            {/* Outline Capsule Pill */}
+            {/* Top Outline Pill: Border #EDB403, Text #EDB403 */}
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               padding: '0.5rem 2.4rem',
-              border: '1.5px solid rgba(255, 255, 255, 0.35)',
+              border: '1.5px solid #EDB403',
               borderRadius: '9999px',
-              background: 'rgba(255, 255, 255, 0.02)',
+              background: 'rgba(237, 180, 3, 0.05)',
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s ease'
             }} className="agatha-hero-pill-outline">
@@ -63,7 +62,7 @@ export const Hero = () => {
                 fontStyle: 'italic',
                 fontSize: 'clamp(2.2rem, 4.5vw, 4.2rem)',
                 fontWeight: 300,
-                color: '#ffffff',
+                color: '#EDB403',
                 lineHeight: 1.1,
                 letterSpacing: '0.01em'
               }}>
@@ -84,7 +83,7 @@ export const Hero = () => {
             </span>
           </div>
 
-          {/* Row 2: Circle Arrow Button + Main Title Text */}
+          {/* Row 2: Gold Arrow Button + Main Title Text */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -93,26 +92,26 @@ export const Hero = () => {
             marginTop: '0.25rem'
           }} className="agatha-hero-row">
             
-            {/* Circular Arrow Button */}
+            {/* Circular Arrow Button in Gold */}
             <a 
               href="#portfolio" 
               style={{
                 width: '74px',
                 height: '74px',
                 borderRadius: '50%',
-                backgroundColor: '#ffffff',
+                backgroundColor: '#EDB403',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#02010c',
+                color: '#173765',
                 flexShrink: 0,
-                boxShadow: '0 10px 25px rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 10px 30px rgba(237, 180, 3, 0.4)',
                 transition: 'transform 0.3s ease, background-color 0.3s ease'
               }}
               className="agatha-hero-arrow-btn"
               aria-label="Explore Portfolio"
             >
-              <ArrowUp size={34} style={{ transform: 'rotate(45deg)', color: '#02010c', strokeWidth: 2.2 }} />
+              <ArrowUp size={34} style={{ transform: 'rotate(45deg)', color: '#173765', strokeWidth: 2.5 }} />
             </a>
 
             <h1 style={{
@@ -131,7 +130,7 @@ export const Hero = () => {
 
         </div>
 
-        {/* Row 3: Sub-description on Left, Solid White Pill on Right */}
+        {/* Row 3: Sub-description on Left, Solid Gold Pill on Right */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -145,7 +144,7 @@ export const Hero = () => {
           <div style={{ maxWidth: '480px' }}>
             <p style={{
               fontSize: '1.05rem',
-              color: '#cbd5e1',
+              color: '#E5E7EB',
               lineHeight: 1.65,
               margin: 0
             }}>
@@ -153,15 +152,15 @@ export const Hero = () => {
             </p>
           </div>
 
-          {/* Solid White Pill Badge */}
+          {/* Bottom Solid Pill: Background #EDB403, Text #173765 */}
           <a 
             href="#contact"
             style={{
-              backgroundColor: '#ffffff',
-              color: '#02010c',
+              backgroundColor: '#EDB403',
+              color: '#173765',
               padding: '1.1rem 3.4rem',
               borderRadius: '9999px',
-              boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5)',
+              boxShadow: '0 15px 35px rgba(237, 180, 3, 0.4)',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -174,8 +173,8 @@ export const Hero = () => {
               fontFamily: "'Ancola', Georgia, serif",
               fontStyle: 'italic',
               fontSize: 'clamp(1.8rem, 3.8vw, 3rem)',
-              fontWeight: 400,
-              color: '#02010c',
+              fontWeight: 700,
+              color: '#173765',
               lineHeight: 1,
               letterSpacing: '0.01em'
             }}>
@@ -190,11 +189,13 @@ export const Hero = () => {
       <style>{`
         .agatha-hero-arrow-btn:hover {
           transform: scale(1.1) rotate(10deg) !important;
-          background-color: #a394ff !important;
+          background-color: #fcd34d !important;
+          box-shadow: 0 15px 40px rgba(237, 180, 3, 0.6) !important;
         }
         .agatha-hero-pill-solid:hover {
-          transform: translateY(-4px) !important;
-          box-shadow: 0 20px 45px rgba(103, 82, 236, 0.4) !important;
+          transform: translateY(-4px) scale(1.02) !important;
+          background-color: #fcd34d !important;
+          box-shadow: 0 20px 45px rgba(237, 180, 3, 0.6) !important;
         }
         @media (max-width: 768px) {
           .agatha-hero-row {

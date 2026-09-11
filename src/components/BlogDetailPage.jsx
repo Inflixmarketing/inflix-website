@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
-import { ArrowLeft, Calendar, User, Tag, Share2 } from 'lucide-react';
+import { ArrowLeft, Calendar, User } from 'lucide-react';
 
 export const BlogDetailPage = () => {
   const { selectedBlog, navigateToView } = useContent();
@@ -9,7 +9,7 @@ export const BlogDetailPage = () => {
     return (
       <div className="container" style={{ padding: '6rem 1.5rem', textAlign: 'center', color: '#ffffff' }}>
         <h2>Blog Post Not Found</h2>
-        <button onClick={() => navigateToView('home')} className="btn-agatha-purple" style={{ marginTop: '1.5rem' }}>
+        <button onClick={() => navigateToView('home')} className="btn-agatha-gold" style={{ marginTop: '1.5rem' }}>
           Back To Home
         </button>
       </div>
@@ -19,7 +19,7 @@ export const BlogDetailPage = () => {
   const b = selectedBlog;
 
   return (
-    <div style={{ backgroundColor: '#02010c', minHeight: '100vh', color: '#ffffff', paddingTop: '3rem', paddingBottom: '6rem' }}>
+    <div style={{ backgroundColor: '#0B132B', minHeight: '100vh', color: '#ffffff', paddingTop: '3rem', paddingBottom: '6rem' }}>
       <div className="container" style={{ maxWidth: '900px' }}>
         
         {/* Back Link */}
@@ -29,7 +29,7 @@ export const BlogDetailPage = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            color: '#a394ff',
+            color: '#EDB403',
             fontSize: '0.9rem',
             fontWeight: 600,
             marginBottom: '2rem',
@@ -63,17 +63,17 @@ export const BlogDetailPage = () => {
           alignItems: 'center',
           gap: '1.5rem',
           fontSize: '0.875rem',
-          color: '#94a3b8',
+          color: '#cbd5e1',
           paddingBottom: '2rem',
           marginBottom: '2.5rem',
-          borderBottom: '1px solid rgba(103, 82, 236, 0.2)',
+          borderBottom: '1px solid rgba(237, 180, 3, 0.2)',
           flexWrap: 'wrap'
         }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <User size={15} style={{ color: '#a394ff' }} /> {b.author || 'Agatha Agency'}
+            <User size={15} style={{ color: '#EDB403' }} /> {b.author || 'Inflix Marketing'}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <Calendar size={15} style={{ color: '#a394ff' }} /> {b.date}
+            <Calendar size={15} style={{ color: '#EDB403' }} /> {b.date}
           </span>
         </div>
 
@@ -82,7 +82,7 @@ export const BlogDetailPage = () => {
           borderRadius: '20px',
           height: '420px',
           marginBottom: '3rem',
-          border: '1px solid rgba(103, 82, 236, 0.2)'
+          border: '1px solid rgba(237, 180, 3, 0.2)'
         }}>
           <img 
             src={b.imageUrl || "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=1200&q=80"} 
@@ -94,7 +94,7 @@ export const BlogDetailPage = () => {
         {/* Article Body */}
         <div style={{
           fontSize: '1.1rem',
-          color: '#cbd5e1',
+          color: '#E5E7EB',
           lineHeight: 1.85,
           whiteSpace: 'pre-line'
         }}>

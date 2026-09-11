@@ -5,15 +5,13 @@ import { Target, Compass, ArrowRight } from 'lucide-react';
 export const AboutSection = () => {
   const { content } = useContent();
   const about = content.about || {};
-  const brand = content.brand || {};
-  const primaryColor = brand.primaryColor || '#edb403';
 
   return (
     <section id="about" className="section-padding" style={{
-      background: 'rgba(12, 10, 29, 0.6)',
+      background: 'rgba(23, 55, 101, 0.25)',
       position: 'relative',
-      borderTop: '1px solid rgba(103, 82, 236, 0.15)',
-      borderBottom: '1px solid rgba(103, 82, 236, 0.15)'
+      borderTop: '1px solid rgba(237, 180, 3, 0.15)',
+      borderBottom: '1px solid rgba(237, 180, 3, 0.15)'
     }}>
       <div className="container">
         
@@ -28,28 +26,28 @@ export const AboutSection = () => {
           {/* Left Headline */}
           <div>
             <span className="section-category">
-              {about.category || 'About Agatha'}
+              {about.category || 'About Us'}
             </span>
 
             <h2 className="section-title" style={{ marginTop: '0.75rem' }}>
-              {about.headline || 'We Use Experience To Create Iconic Digital Solutions'}
+              {about.headline || 'We Use Our Experience To Get Clients Results'}
             </h2>
 
             <p style={{
               fontSize: '1.1rem',
               fontWeight: 500,
-              color: '#a394ff',
+              color: '#EDB403',
               lineHeight: 1.6,
               marginBottom: '1.25rem'
             }}>
-              {about.highlight || 'We Are A Creative Digital Agency Specializing In Web Design, Brand Identity, & High-Growth Strategy.'}
+              {about.highlight || 'We Are A Digital Agency That Specializes In Web Design, Branding Identity, And Social Media Management.'}
             </p>
 
-            <p style={{ fontSize: '1rem', color: '#cbd5e1', lineHeight: 1.7, marginBottom: '2rem' }}>
-              {about.body || 'At Agatha, we translate complex creative and marketing challenges into elegant, high-converting digital products.'}
+            <p style={{ fontSize: '1rem', color: '#E5E7EB', lineHeight: 1.7, marginBottom: '2rem' }}>
+              {about.body || 'At Inflix Marketing Solutions, we turn complex digital marketing challenges into clear growth strategies.'}
             </p>
 
-            <a href="#services" className="btn-agatha-purple">
+            <a href="#services" className="btn-agatha-gold">
               <span>EXPLORE SERVICES</span>
               <ArrowRight size={16} />
             </a>
@@ -59,28 +57,28 @@ export const AboutSection = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             
             {/* Left Box 1: Philosophy */}
-            <div className="card-glass" style={{ borderLeft: `4px solid #6752ec` }}>
+            <div className="card-glass" style={{ borderLeft: `4px solid #EDB403` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                <Compass size={22} style={{ color: '#a394ff' }} />
+                <Compass size={22} style={{ color: '#EDB403' }} />
                 <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.3rem', color: '#ffffff' }}>
-                  {about.philosophyTitle || 'Our Creative Philosophy'}
+                  {about.philosophyTitle || 'Our Philosophy'}
                 </h3>
               </div>
-              <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.65 }}>
-                {about.philosophy || 'We believe design and performance marketing should be seamless, data-driven, and focused on tangible business ROI.'}
+              <p style={{ fontSize: '0.95rem', color: '#E5E7EB', lineHeight: 1.65 }}>
+                {about.philosophy || 'We believe marketing should be transparent, data-led, and obsessively focused on ROI.'}
               </p>
             </div>
 
             {/* Left Box 2: Goals */}
-            <div className="card-glass" style={{ borderLeft: `4px solid #a394ff` }}>
+            <div className="card-glass" style={{ borderLeft: `4px solid #EDB403` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                <Target size={22} style={{ color: '#a394ff' }} />
+                <Target size={22} style={{ color: '#EDB403' }} />
                 <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.3rem', color: '#ffffff' }}>
-                  {about.goalsTitle || 'Our Mission & Vision'}
+                  {about.goalsTitle || 'Our Goals'}
                 </h3>
               </div>
-              <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.65 }}>
-                {about.goals || 'Our mission is to empower visionaries with world-class digital tools and marketing strategies that scale effortlessly.'}
+              <p style={{ fontSize: '0.95rem', color: '#E5E7EB', lineHeight: 1.65 }}>
+                {about.goals || 'Our goal is to empower ambitious brands to scale seamlessly by providing high-impact digital strategies.'}
               </p>
             </div>
 

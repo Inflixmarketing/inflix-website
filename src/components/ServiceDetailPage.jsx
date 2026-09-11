@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
-import { ArrowLeft, CheckCircle2, ArrowRight, ShieldCheck, Zap, HelpCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const ServiceDetailPage = () => {
   const { selectedService, navigateToView } = useContent();
@@ -9,7 +9,7 @@ export const ServiceDetailPage = () => {
     return (
       <div className="container" style={{ padding: '6rem 1.5rem', textAlign: 'center', color: '#ffffff' }}>
         <h2>Service Not Found</h2>
-        <button onClick={() => navigateToView('home')} className="btn-agatha-purple" style={{ marginTop: '1.5rem' }}>
+        <button onClick={() => navigateToView('home')} className="btn-agatha-gold" style={{ marginTop: '1.5rem' }}>
           Back To Home
         </button>
       </div>
@@ -19,7 +19,7 @@ export const ServiceDetailPage = () => {
   const s = selectedService;
 
   return (
-    <div style={{ backgroundColor: '#02010c', minHeight: '100vh', color: '#ffffff', paddingTop: '3rem', paddingBottom: '6rem' }}>
+    <div style={{ backgroundColor: '#0B132B', minHeight: '100vh', color: '#ffffff', paddingTop: '3rem', paddingBottom: '6rem' }}>
       <div className="container">
         
         {/* Back Link */}
@@ -29,7 +29,7 @@ export const ServiceDetailPage = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            color: '#a394ff',
+            color: '#EDB403',
             fontSize: '0.9rem',
             fontWeight: 600,
             marginBottom: '2rem',
@@ -41,10 +41,10 @@ export const ServiceDetailPage = () => {
 
         {/* Hero Banner */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(103, 82, 236, 0.2) 0%, rgba(12, 10, 29, 0.95) 100%)',
+          background: 'linear-gradient(135deg, rgba(23, 55, 101, 0.6) 0%, rgba(11, 19, 43, 0.95) 100%)',
           borderRadius: '24px',
           padding: '3.5rem 2.5rem',
-          border: '1px solid rgba(103, 82, 236, 0.3)',
+          border: '1px solid rgba(237, 180, 3, 0.3)',
           marginBottom: '3.5rem'
         }}>
           <span className="section-category">
@@ -65,7 +65,7 @@ export const ServiceDetailPage = () => {
 
           <p style={{
             fontSize: '1.2rem',
-            color: '#cbd5e1',
+            color: '#E5E7EB',
             maxWidth: '750px',
             lineHeight: 1.7
           }}>
@@ -86,7 +86,7 @@ export const ServiceDetailPage = () => {
               borderRadius: '20px',
               height: '380px',
               marginBottom: '2.5rem',
-              border: '1px solid rgba(103, 82, 236, 0.2)'
+              border: '1px solid rgba(237, 180, 3, 0.2)'
             }}>
               <img 
                 src={s.imageUrl || "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=1200&q=80"} 
@@ -107,7 +107,7 @@ export const ServiceDetailPage = () => {
 
             <p style={{
               fontSize: '1.05rem',
-              color: '#cbd5e1',
+              color: '#E5E7EB',
               lineHeight: 1.8,
               marginBottom: '3rem'
             }}>
@@ -135,7 +135,7 @@ export const ServiceDetailPage = () => {
                   {s.deliverables.map((item, idx) => (
                     <div key={idx} className="card-glass" style={{ padding: '1.5rem' }}>
                       <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
-                        <CheckCircle2 size={22} style={{ color: '#a394ff', flexShrink: 0, marginTop: '2px' }} />
+                        <CheckCircle2 size={22} style={{ color: '#EDB403', flexShrink: 0, marginTop: '2px' }} />
                         <span style={{ fontSize: '0.95rem', color: '#ffffff', lineHeight: 1.6 }}>
                           {item}
                         </span>
@@ -152,14 +152,14 @@ export const ServiceDetailPage = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             
             {/* Quick Contact Card */}
-            <div className="card-glass" style={{ borderLeft: '4px solid #6752ec' }}>
+            <div className="card-glass" style={{ borderLeft: '4px solid #EDB403' }}>
               <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.5rem', color: '#ffffff', marginBottom: '1rem' }}>
                 Ready to Scale?
               </h3>
-              <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.65, marginBottom: '1.75rem' }}>
+              <p style={{ fontSize: '0.95rem', color: '#E5E7EB', lineHeight: 1.65, marginBottom: '1.75rem' }}>
                 Schedule a 1-on-1 strategy call with our agency team to analyze your brand goals.
               </p>
-              <a href="#contact" onClick={() => navigateToView('home')} className="btn-agatha-purple" style={{ width: '100%' }}>
+              <a href="#contact" onClick={() => navigateToView('home')} className="btn-agatha-gold" style={{ width: '100%' }}>
                 <span>BOOK A STRATEGY CALL</span>
                 <ArrowRight size={16} />
               </a>
@@ -168,10 +168,10 @@ export const ServiceDetailPage = () => {
             {/* Value Props */}
             <div className="card-glass">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <ShieldCheck size={24} style={{ color: '#a394ff' }} />
+                <ShieldCheck size={24} style={{ color: '#EDB403' }} />
                 <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff' }}>Guaranteed Performance</h4>
               </div>
-              <p style={{ fontSize: '0.9rem', color: '#94a3b8', lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.9rem', color: '#cbd5e1', lineHeight: 1.6 }}>
                 Every campaign is continuously monitored, A/B tested, and optimized to protect your ROI.
               </p>
             </div>

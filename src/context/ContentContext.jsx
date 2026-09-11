@@ -3,7 +3,7 @@ import defaultData from '../data/defaultContent.json';
 
 const ContentContext = createContext();
 
-const LOCAL_STORAGE_KEY = 'inflix_website_data_v6';
+const LOCAL_STORAGE_KEY = 'inflix_website_data_v7';
 
 export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(() => {
@@ -43,15 +43,15 @@ export const ContentProvider = ({ children }) => {
   useEffect(() => {
     if (!content || !content.brand) return;
     const root = document.documentElement;
-    const primary = content.brand.primaryColor || '#6752ec';
-    const secondary = content.brand.secondaryColor || '#0c0a1d';
-    const accent = content.brand.accentColor || '#a394ff';
+    const primary = content.brand.primaryColor || '#EDB403';
+    const secondary = content.brand.secondaryColor || '#173765';
+    const accent = content.brand.accentColor || '#EDB403';
 
     root.style.setProperty('--color-primary', primary);
     root.style.setProperty('--color-secondary', secondary);
     root.style.setProperty('--color-accent', accent);
     root.style.setProperty('--color-heading-text', '#ffffff');
-    root.style.setProperty('--color-body-text', '#cbd5e1');
+    root.style.setProperty('--color-body-text', '#E5E7EB');
     root.style.setProperty('--font-heading', `'Ancola', 'Tenor Sans', serif`);
     root.style.setProperty('--font-body', `'Poppins', sans-serif`);
   }, [content]);

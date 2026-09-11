@@ -6,17 +6,15 @@ export const ProcessSection = () => {
   const { content } = useContent();
   const header = content.processHeader || {};
   const steps = content.process || [];
-  const brand = content.brand || {};
-  const primaryColor = brand.primaryColor || '#edb403';
 
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   return (
     <section id="process" className="section-padding" style={{
-      background: 'rgba(12, 10, 29, 0.6)',
+      background: 'rgba(23, 55, 101, 0.25)',
       position: 'relative',
-      borderTop: '1px solid rgba(103, 82, 236, 0.15)',
-      borderBottom: '1px solid rgba(103, 82, 236, 0.15)'
+      borderTop: '1px solid rgba(237, 180, 3, 0.15)',
+      borderBottom: '1px solid rgba(237, 180, 3, 0.15)'
     }}>
       <div className="container">
         
@@ -44,19 +42,19 @@ export const ProcessSection = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   padding: '1.5rem',
-                  borderLeft: `4px solid ${idx === 0 ? '#6752ec' : 'rgba(103, 82, 236, 0.3)'}`
+                  borderLeft: `4px solid ${idx === 0 ? '#EDB403' : 'rgba(237, 180, 3, 0.3)'}`
                 }}
               >
                 <div style={{
                   fontFamily: "'Ancola', 'Tenor Sans', serif",
                   fontSize: '1.5rem',
-                  color: '#a394ff',
+                  color: '#EDB403',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}>
                   <span>{st.num}</span>
-                  <CheckCircle2 size={18} style={{ color: '#6752ec' }} />
+                  <CheckCircle2 size={18} style={{ color: '#EDB403' }} />
                 </div>
 
                 <div>
@@ -70,7 +68,7 @@ export const ProcessSection = () => {
                   }}>
                     {st.title}
                   </h3>
-                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                  <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.5 }}>
                     {st.desc}
                   </p>
                 </div>
@@ -81,22 +79,22 @@ export const ProcessSection = () => {
           {/* Right Column: Header & Watch Video Button */}
           <div>
             <span className="section-category">
-              {header.category || 'Agatha Workflow'}
+              {header.category || 'Process'}
             </span>
 
             <h2 className="section-title" style={{ marginTop: '0.5rem' }}>
-              {header.headline || 'Our Smooth Agency Workflow'}
+              {header.headline || 'Our Smooth Workflow'}
             </h2>
 
-            <p style={{ fontSize: '1.05rem', color: '#cbd5e1', lineHeight: 1.7, marginBottom: '2rem' }}>
-              {header.paragraph || 'We follow a structured, step-by-step methodology to ensure every creative campaign is executed seamlessly, optimized in real-time, and engineered for maximum impact.'}
+            <p style={{ fontSize: '1.05rem', color: '#E5E7EB', lineHeight: 1.7, marginBottom: '2rem' }}>
+              {header.paragraph || 'We follow a structured, step-by-step methodology to ensure every marketing campaign is executed seamlessly.'}
             </p>
 
             <button 
               onClick={() => setIsVideoModalOpen(true)}
-              className="btn-agatha-purple"
+              className="btn-agatha-gold"
             >
-              <Play size={16} fill="#ffffff" />
+              <Play size={16} fill="#173765" />
               <span>{header.videoButtonText || 'WATCH VIDEO'}</span>
             </button>
           </div>
@@ -113,7 +111,7 @@ export const ProcessSection = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(2, 1, 12, 0.92)',
+          backgroundColor: 'rgba(11, 19, 43, 0.95)',
           backdropFilter: 'blur(16px)',
           zIndex: 2000,
           display: 'flex',
@@ -122,8 +120,8 @@ export const ProcessSection = () => {
           padding: '1.25rem'
         }}>
           <div style={{
-            background: '#0c0a1d',
-            border: '1px solid rgba(103, 82, 236, 0.35)',
+            background: '#173765',
+            border: '1px solid rgba(237, 180, 3, 0.35)',
             color: '#ffffff',
             borderRadius: '20px',
             maxWidth: '600px',
@@ -145,14 +143,14 @@ export const ProcessSection = () => {
               <X size={24} />
             </button>
 
-            <h3 style={{ fontFamily: "'Tenor Sans', serif", fontSize: '1.8rem', fontWeight: 400, marginBottom: '1rem', color: '#ffffff' }}>
-              Agatha Workflow Video
+            <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', fontWeight: 400, marginBottom: '1rem', color: '#ffffff' }}>
+              Inflix Workflow Overview
             </h3>
-            <p style={{ color: '#cbd5e1', lineHeight: 1.65, marginBottom: '2rem', fontSize: '0.95rem' }}>
+            <p style={{ color: '#E5E7EB', lineHeight: 1.65, marginBottom: '2rem', fontSize: '0.95rem' }}>
               Watch how our team conducts discovery research, develops high-converting brand identity assets, deploys performance campaigns, and optimizes CAC continuously.
             </p>
 
-            <button onClick={() => setIsVideoModalOpen(false)} className="btn-agatha-purple">
+            <button onClick={() => setIsVideoModalOpen(false)} className="btn-agatha-gold">
               Close Showcase
             </button>
           </div>

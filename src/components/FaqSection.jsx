@@ -77,7 +77,7 @@ export const FaqSection = () => {
                       fontFamily: "'Ancola', 'Tenor Sans', serif",
                       fontSize: '1.2rem',
                       fontWeight: 400,
-                      color: isOpen ? '#a394ff' : '#ffffff',
+                      color: isOpen ? '#EDB403' : '#ffffff',
                       lineHeight: 1.35
                     }}>
                       {faq.question}
@@ -90,7 +90,7 @@ export const FaqSection = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: isOpen ? '#090d16' : '#ffffff',
+                      color: isOpen ? '#173765' : '#ffffff',
                       transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'all 0.3s ease',
                       flexShrink: 0

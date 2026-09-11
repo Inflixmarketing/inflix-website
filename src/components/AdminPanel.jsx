@@ -209,11 +209,11 @@ export const AdminPanel = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem', fontSize: '0.785rem' }}>
             <button 
               onClick={() => setShowForgotModal(true)} 
-              style={{ color: '#a394ff', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}
+              style={{ color: '#EDB403', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}
             >
               Forgot Password?
             </button>
-            <span style={{ color: '#64748b' }}>Default: <code style={{ color: '#a394ff' }}>inflix2026</code></span>
+            <span style={{ color: '#64748b' }}>Default: <code style={{ color: '#EDB403' }}>inflix2026</code></span>
           </div>
         </div>
 
@@ -233,7 +233,7 @@ export const AdminPanel = () => {
                 Password Recovery
               </h3>
               <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1.5rem' }}>
-                Enter the security phrase (<code style={{ color: '#a394ff' }}>inflix</code> or <code style={{ color: '#a394ff' }}>agatha</code>) to reset.
+                Enter the security phrase (<code style={{ color: '#EDB403' }}>inflix</code> or <code style={{ color: '#EDB403' }}>agatha</code>) to reset.
               </p>
 
               <form onSubmit={handleForgotSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -353,11 +353,11 @@ export const AdminPanel = () => {
                   style={{
                     ...sidebarNavButtonStyle,
                     background: isActive ? 'rgba(103, 82, 236, 0.2)' : 'transparent',
-                    color: isActive ? '#a394ff' : '#94a3b8',
+                    color: isActive ? '#EDB403' : '#94a3b8',
                     border: isActive ? '1px solid rgba(103, 82, 236, 0.4)' : '1px solid transparent'
                   }}
                 >
-                  <Icon size={17} style={{ color: isActive ? '#a394ff' : '#64748b' }} />
+                  <Icon size={17} style={{ color: isActive ? '#EDB403' : '#64748b' }} />
                   <span>{tab.label}</span>
                 </button>
               );
@@ -377,8 +377,8 @@ export const AdminPanel = () => {
                 {/* Counter Metric Cards */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
                   {[
-                    { label: 'Total Projects', count: localContent.portfolio?.length || 0, color: '#6752ec', icon: Layers },
-                    { label: 'Total Services', count: localContent.services?.length || 0, color: '#a394ff', icon: Briefcase },
+                    { label: 'Total Projects', count: localContent.portfolio?.length || 0, color: '#EDB403', icon: Layers },
+                    { label: 'Total Services', count: localContent.services?.length || 0, color: '#EDB403', icon: Briefcase },
                     { label: 'Testimonials', count: localContent.testimonials?.length || 0, color: '#10b981', icon: MessageSquare },
                     { label: 'Blog Posts', count: localContent.blogs?.length || 0, color: '#f59e0b', icon: FileText },
                     { label: 'FAQs', count: localContent.faqs?.length || 0, color: '#ec4899', icon: HelpCircle }
@@ -427,9 +427,9 @@ export const AdminPanel = () => {
                         <span style={{ fontSize: '0.9rem', color: '#ffffff' }}>System Online & Synchronized</span>
                       </div>
                       <div style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.6 }}>
-                        Current Theme: <strong style={{ color: '#a394ff' }}>Agatha Creative Portfolio</strong><br />
-                        Heading Font: <strong style={{ color: '#a394ff' }}>Ancola Regular/Italic</strong><br />
-                        Data Version: <strong style={{ color: '#a394ff' }}>v5 Dynamic Store</strong>
+                        Current Theme: <strong style={{ color: '#EDB403' }}>Agatha Creative Portfolio</strong><br />
+                        Heading Font: <strong style={{ color: '#EDB403' }}>Ancola Regular/Italic</strong><br />
+                        Data Version: <strong style={{ color: '#EDB403' }}>v5 Dynamic Store</strong>
                       </div>
                     </div>
                   </div>
@@ -521,7 +521,7 @@ export const AdminPanel = () => {
                   {(localContent.services || []).map((serv, index) => (
                     <div key={serv.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
-                        <div style={{ fontWeight: 600, color: '#a394ff' }}>#{index + 1}: {serv.title}</div>
+                        <div style={{ fontWeight: 600, color: '#EDB403' }}>#{index + 1}: {serv.title}</div>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
                           <button onClick={() => duplicateService(index)} style={actionIconBtnStyle} title="Duplicate">
                             <Copy size={15} /> Duplicate
@@ -574,7 +574,7 @@ export const AdminPanel = () => {
                   {(localContent.portfolio || []).map((port, index) => (
                     <div key={port.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
-                        <div style={{ fontWeight: 600, color: '#a394ff' }}>{port.category}: {port.title}</div>
+                        <div style={{ fontWeight: 600, color: '#EDB403' }}>{port.category}: {port.title}</div>
                         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                           <button 
                             onClick={() => toggleFeaturedPortfolio(index)} 
@@ -634,7 +634,7 @@ export const AdminPanel = () => {
                   {(localContent.clients || []).map((cli, index) => (
                     <div key={cli.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
-                        <div style={{ fontWeight: 600, color: '#a394ff' }}>Brand: {cli.name}</div>
+                        <div style={{ fontWeight: 600, color: '#EDB403' }}>Brand: {cli.name}</div>
                         <button onClick={() => deleteClient(index)} style={deleteButtonStyle}>
                           <Trash2 size={15} /> Delete
                         </button>
@@ -678,7 +678,7 @@ export const AdminPanel = () => {
                   {(localContent.testimonials || []).map((t, index) => (
                     <div key={t.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
-                        <div style={{ fontWeight: 600, color: '#a394ff' }}>{t.name} ({t.title})</div>
+                        <div style={{ fontWeight: 600, color: '#EDB403' }}>{t.name} ({t.title})</div>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
                           <button 
                             onClick={() => toggleTestimonialVisibility(index)}
@@ -734,7 +734,7 @@ export const AdminPanel = () => {
                   {(localContent.faqs || []).map((f, index) => (
                     <div key={f.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
-                        <div style={{ fontWeight: 600, color: '#a394ff' }}>FAQ #{index + 1}</div>
+                        <div style={{ fontWeight: 600, color: '#EDB403' }}>FAQ #{index + 1}</div>
                         <button onClick={() => deleteFaq(index)} style={deleteButtonStyle}>
                           <Trash2 size={15} /> Delete
                         </button>
@@ -772,7 +772,7 @@ export const AdminPanel = () => {
                   {(localContent.blogs || []).map((b, index) => (
                     <div key={b.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
-                        <div style={{ fontWeight: 600, color: '#a394ff' }}>{b.title}</div>
+                        <div style={{ fontWeight: 600, color: '#EDB403' }}>{b.title}</div>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
                           <button 
                             onClick={() => toggleBlogStatus(index)}
@@ -964,7 +964,7 @@ const lockIconCircleStyle = {
   height: '54px',
   borderRadius: '50%',
   background: 'rgba(103, 82, 236, 0.15)',
-  color: '#a394ff',
+  color: '#EDB403',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -1013,7 +1013,7 @@ const headerLogoSquareStyle = {
   width: '36px',
   height: '36px',
   borderRadius: '8px',
-  background: '#6752ec',
+  background: '#EDB403',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -1093,7 +1093,7 @@ const adminLabelStyle = {
   fontWeight: 600,
   fontSize: '0.825rem',
   marginBottom: '0.35rem',
-  color: '#a394ff'
+  color: '#EDB403'
 };
 
 const adminInputStyle = {
@@ -1112,7 +1112,7 @@ const addButtonHeaderStyle = {
   alignItems: 'center',
   gap: '0.4rem',
   padding: '0.55rem 1.1rem',
-  background: '#6752ec',
+  background: '#EDB403',
   color: '#ffffff',
   borderRadius: '8px',
   fontSize: '0.825rem',

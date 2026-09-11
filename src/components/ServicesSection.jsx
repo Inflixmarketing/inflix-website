@@ -27,8 +27,6 @@ export const ServicesSection = () => {
   const { content, setSelectedService, navigateToView } = useContent();
   const header = content.servicesHeader || {};
   const services = content.services || [];
-  const brand = content.brand || {};
-  const primaryColor = brand.primaryColor || '#edb403';
 
   return (
     <section id="services" className="section-padding" style={{ position: 'relative' }}>
@@ -52,7 +50,7 @@ export const ServicesSection = () => {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <p style={{ fontSize: '1.05rem', color: '#cbd5e1', lineHeight: 1.7 }}>
+            <p style={{ fontSize: '1.05rem', color: '#E5E7EB', lineHeight: 1.7 }}>
               {header.paragraph || 'At Inflix Marketing Solutions, we deliver end-to-end performance marketing and strategic digital management.'}
             </p>
           </div>
@@ -85,13 +83,13 @@ export const ServicesSection = () => {
                     width: '54px',
                     height: '54px',
                     borderRadius: '14px',
-                    background: 'rgba(103, 82, 236, 0.18)',
+                    background: 'rgba(237, 180, 3, 0.15)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#a394ff',
+                    color: '#EDB403',
                     marginBottom: '1.5rem',
-                    border: '1px solid rgba(103, 82, 236, 0.35)'
+                    border: '1px solid rgba(237, 180, 3, 0.35)'
                   }}>
                     <IconComponent size={26} strokeWidth={1.75} />
                   </div>
@@ -109,7 +107,7 @@ export const ServicesSection = () => {
                   <p style={{
                     fontSize: '0.925rem',
                     lineHeight: 1.6,
-                    color: '#94a3b8'
+                    color: '#cbd5e1'
                   }}>
                     {svc.shortDesc}
                   </p>
@@ -122,7 +120,7 @@ export const ServicesSection = () => {
                   fontSize: '0.8rem',
                   fontWeight: 600,
                   letterSpacing: '0.05em',
-                  color: '#a394ff',
+                  color: '#EDB403',
                   marginTop: '1.5rem',
                   textTransform: 'uppercase'
                 }}>

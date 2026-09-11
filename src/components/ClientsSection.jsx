@@ -6,8 +6,6 @@ export const ClientsSection = () => {
   const { content } = useContent();
   const header = content.clientsHeader || {};
   const clients = content.clients || [];
-  const brand = content.brand || {};
-  const primaryColor = brand.primaryColor || '#edb403';
 
   return (
     <section className="section-padding" style={{ position: 'relative' }}>
@@ -20,13 +18,13 @@ export const ClientsSection = () => {
           margin: '0 auto 3.5rem auto'
         }}>
           <span className="section-category" style={{ justifyContent: 'center' }}>
-            <Award size={14} style={{ color: primaryColor }} />
+            <Award size={14} style={{ color: '#EDB403' }} />
             <span>{header.category || 'Our Clients'}</span>
           </span>
           <h2 className="section-title" style={{ marginTop: '0.5rem' }}>
             {header.headline || 'Our Clients Are Leading Companies And Brands'}
           </h2>
-          <p style={{ fontSize: '1.05rem', color: '#cbd5e1', lineHeight: 1.7 }}>
+          <p style={{ fontSize: '1.05rem', color: '#E5E7EB', lineHeight: 1.7 }}>
             {header.paragraph || 'We partner with visionary founders, clinics, and businesses to accelerate digital market authority and patient/customer acquisitions.'}
           </p>
         </div>
@@ -54,12 +52,12 @@ export const ClientsSection = () => {
                     width: '42px',
                     height: '42px',
                     borderRadius: '10px',
-                    background: 'rgba(103, 82, 236, 0.18)',
+                    background: 'rgba(237, 180, 3, 0.15)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#a394ff',
-                    border: '1px solid rgba(103, 82, 236, 0.35)'
+                    color: '#EDB403',
+                    border: '1px solid rgba(237, 180, 3, 0.35)'
                   }}>
                     <Building2 size={20} />
                   </div>
@@ -67,13 +65,13 @@ export const ClientsSection = () => {
                     <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', fontWeight: 400, color: '#ffffff', lineHeight: 1.2 }}>
                       {cli.name}
                     </h3>
-                    <span style={{ fontSize: '0.75rem', color: '#a394ff', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#EDB403', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       {cli.category}
                     </span>
                   </div>
                 </div>
 
-                <p style={{ fontSize: '0.9rem', color: '#94a3b8', lineHeight: 1.65 }}>
+                <p style={{ fontSize: '0.9rem', color: '#cbd5e1', lineHeight: 1.65 }}>
                   {cli.desc}
                 </p>
               </div>
