@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
-import { Menu, X, Settings, ChevronDown, ArrowRight } from 'lucide-react';
+import { Menu, X, Settings, ChevronDown } from 'lucide-react';
 
 export const Header = () => {
   const { content, setIsAdminOpen, isAdminOpen, activeTab, setActiveTab } = useContent();
@@ -22,14 +22,17 @@ export const Header = () => {
 
   return (
     <header style={{
-      position: 'sticky',
+      position: 'fixed',
       top: 0,
+      left: 0,
+      right: 0,
+      width: '100%',
       zIndex: 1000,
-      backgroundColor: 'rgba(9, 13, 22, 0.85)',
+      backgroundColor: 'rgba(9, 13, 22, 0.92)',
       backdropFilter: 'blur(20px)',
       WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-      padding: '1rem 0',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+      padding: '0.85rem 0',
       transition: 'all 0.3s ease'
     }}>
       <div className="container" style={{

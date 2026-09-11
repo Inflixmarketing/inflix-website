@@ -18,9 +18,9 @@ import { AdminPanel } from './components/AdminPanel';
 export function App() {
   return (
     <ContentProvider>
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <Header />
-        <main style={{ flex: 1 }}>
+        <main style={{ flex: 1, paddingTop: '76px' }}>
           <Hero />
           <AboutSection />
           <ServicesSection />
