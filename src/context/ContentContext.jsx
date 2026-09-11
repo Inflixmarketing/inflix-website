@@ -151,7 +151,7 @@ export const ContentProvider = ({ children }) => {
       if (content.seoSettings.metaTitle) {
         document.title = content.seoSettings.metaTitle;
       }
-      if (content.seoSettings.faviconUrl || brand.logoUrl) {
+      if (content.seoSettings.faviconUrl || content.brand?.logoUrl) {
         let link = document.querySelector("link[rel*='icon']");
         if (!link) {
           link = document.createElement('link');
