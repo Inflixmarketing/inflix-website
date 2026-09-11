@@ -21,16 +21,19 @@ export const Hero = () => {
       alignItems: 'center'
     }}>
       {/* Top Right Soft Gold Glow Effect */}
-      <div style={{
-        position: 'absolute',
-        top: '-10%',
-        right: '0%',
-        width: '550px',
-        height: '550px',
-        background: `radial-gradient(circle, rgba(237, 180, 3, 0.22) 0%, rgba(11, 19, 43, 0) 70%)`,
-        pointerEvents: 'none',
-        filter: 'blur(50px)'
-      }} />
+      <div 
+        className="animate-glow-pulse"
+        style={{
+          position: 'absolute',
+          top: '-10%',
+          right: '0%',
+          width: '550px',
+          height: '550px',
+          background: `radial-gradient(circle, rgba(237, 180, 3, 0.25) 0%, rgba(11, 19, 43, 0) 70%)`,
+          pointerEvents: 'none',
+          filter: 'blur(55px)'
+        }} 
+      />
 
       <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
         
@@ -57,7 +60,7 @@ export const Hero = () => {
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s ease',
               maxWidth: '100%'
-            }} className="agatha-hero-pill-outline">
+            }} className="agatha-hero-pill-outline animate-fade-up animate-float">
               <span style={{
                 fontFamily: "'Ancola', Georgia, serif",
                 fontStyle: 'italic',
@@ -88,25 +91,28 @@ export const Hero = () => {
                 boxShadow: '0 10px 30px rgba(237, 180, 3, 0.4)',
                 transition: 'transform 0.3s ease, background-color 0.3s ease'
               }}
-              className="agatha-hero-arrow-btn"
+              className="agatha-hero-arrow-btn animate-fade-up animate-float"
               aria-label="Explore Portfolio"
             >
               <ArrowUp size={28} style={{ transform: 'rotate(45deg)', color: '#173765', strokeWidth: 2.5 }} />
             </a>
 
             {/* Main Headline Title rendered dynamically from CMS */}
-            <h1 style={{
-              fontFamily: "'Ancola', 'Tenor Sans', serif",
-              fontSize: 'clamp(2rem, 5.5vw, 4.8rem)',
-              fontWeight: 400,
-              color: '#ffffff',
-              lineHeight: 1.08,
-              letterSpacing: '0.01em',
-              margin: 0,
-              display: 'inline',
-              wordBreak: 'break-word',
-              overflowWrap: 'break-word'
-            }}>
+            <h1 
+              className="animate-fade-up"
+              style={{
+                fontFamily: "'Ancola', 'Tenor Sans', serif",
+                fontSize: 'clamp(2rem, 5.5vw, 4.8rem)',
+                fontWeight: 400,
+                color: '#ffffff',
+                lineHeight: 1.08,
+                letterSpacing: '0.01em',
+                margin: 0,
+                display: 'inline',
+                wordBreak: 'break-word',
+                overflowWrap: 'break-word'
+              }}
+            >
               {hero.titleMain || "Next-Gen Digital Marketing & Creative Agency"}
             </h1>
           </div>
@@ -124,7 +130,7 @@ export const Hero = () => {
         }} className="agatha-hero-bottom">
           
           {/* Subheading / Description */}
-          <div style={{ maxWidth: '480px' }}>
+          <div style={{ maxWidth: '480px' }} className="animate-fade-up">
             <p style={{
               fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
               color: '#E5E7EB',
@@ -151,7 +157,7 @@ export const Hero = () => {
               transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               maxWidth: '100%'
             }} 
-            className="agatha-hero-pill-solid"
+            className="agatha-hero-pill-solid animate-fade-up animate-shimmer"
           >
             <span style={{
               fontFamily: "'Ancola', Georgia, serif",

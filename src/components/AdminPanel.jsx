@@ -335,11 +335,11 @@ export const AdminPanel = () => {
         
         {/* Fixed Top Header Navbar */}
         <div style={topNavbarStyle}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
             <button 
               onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)} 
               className="mobile-sidebar-toggle"
-              style={{ color: '#ffffff', display: 'flex', alignItems: 'center', padding: '0.35rem', cursor: 'pointer' }}
+              style={{ color: '#ffffff', display: 'flex', alignItems: 'center', padding: '0.35rem', cursor: 'pointer', flexShrink: 0 }}
               aria-label="Toggle Navigation Drawer"
             >
               <Menu size={22} />
@@ -349,25 +349,25 @@ export const AdminPanel = () => {
               <Palette size={18} style={{ color: '#173765' }} />
             </div>
 
-            <div>
-              <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.1rem', fontWeight: 400, color: '#ffffff', lineHeight: 1, margin: 0 }}>
-                Inflix Marketing Solution
+            <div style={{ overflow: 'hidden' }}>
+              <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: 'clamp(0.85rem, 3.5vw, 1.1rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1, margin: 0, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                Inflix Marketing
               </h2>
-              <span style={{ fontSize: '0.55rem', color: '#EDB403', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginTop: '2px' }}>
+              <span style={{ fontSize: '0.55rem', color: '#EDB403', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginTop: '2px', whiteSpace: 'nowrap' }}>
                 Website Management System
               </span>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
             {saveNotification && (
-              <span style={{ fontSize: '0.75rem', color: '#10b981', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
+              <span style={{ fontSize: '0.75rem', color: '#10b981', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.2rem', whiteSpace: 'nowrap' }}>
                 <CheckCircle size={14} /> SAVED!
               </span>
             )}
 
-            <button onClick={handleSaveAll} className="btn-agatha-gold" style={{ padding: '0.45rem 0.95rem', fontSize: '0.75rem' }}>
-              <Save size={14} /> SAVE ALL
+            <button onClick={handleSaveAll} className="admin-nav-btn" style={adminSaveBtnStyle}>
+              <Save size={14} /> <span style={{ whiteSpace: 'nowrap' }}>SAVE ALL</span>
             </button>
 
             <button onClick={logout} style={logoutIconButtonStyle} title="Lock Admin Session">
@@ -381,7 +381,7 @@ export const AdminPanel = () => {
         </div>
 
         {/* Dashboard Main Workspace Layout */}
-        <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative', width: '100%', height: 'calc(100vh - 65px)' }}>
+        <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative', width: '100%', height: 'calc(100dvh - 60px)' }}>
           
           {/* Mobile Overlay Background */}
           {mobileSidebarOpen && (
@@ -1125,24 +1125,57 @@ const authInputStyle = {
 
 const dashboardContainerStyle = {
   width: '100%',
-  height: '100vh',
+  height: '100dvh',
+  maxHeight: '100dvh',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
   background: '#0B132B',
   display: 'flex',
   flexDirection: 'column',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  zIndex: 3000
 };
 
 const topNavbarStyle = {
-  height: '65px',
+  height: '60px',
+  minHeight: '60px',
   background: '#173765',
   borderBottom: '1px solid rgba(237, 180, 3, 0.2)',
-  padding: '0 1rem',
+  padding: '0 0.75rem',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   flexShrink: 0,
-  zIndex: 100,
-  position: 'relative'
+  zIndex: 3100,
+  position: 'sticky',
+  top: 0,
+  left: 0,
+  right: 0,
+  width: '100%',
+  boxSizing: 'border-box'
+};
+
+const adminSaveBtnStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '0.35rem',
+  background: '#EDB403',
+  color: '#173765',
+  height: '34px',
+  padding: '0 0.75rem',
+  borderRadius: '8px',
+  fontSize: '0.75rem',
+  fontWeight: 700,
+  letterSpacing: '0.04em',
+  whiteSpace: 'nowrap',
+  flexShrink: 0,
+  border: 'none',
+  cursor: 'pointer',
+  boxShadow: '0 2px 10px rgba(237, 180, 3, 0.3)'
 };
 
 const headerLogoSquareStyle = {
