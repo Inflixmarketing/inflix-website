@@ -11,7 +11,6 @@ export const ContentProvider = ({ children }) => {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Deep merge saved content with defaultData so new fields are always present
         return {
           ...defaultData,
           ...parsed,
@@ -29,6 +28,24 @@ export const ContentProvider = ({ children }) => {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
   const [selectedService, setSelectedService] = useState(null);
+
+  // Fetch latest content from backend API on mount if server is active
+  useEffect(() => {
+    const fetchBackendContent = async () => {
+      try {
+        const res = await fetch('/api/content');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.brand) {
+            setContent(prev => ({ ...defaultData, ...prev, ...data }));
+          }
+        }
+      } catch (err) {
+        // Backend API optional or running on separate port
+      }
+    };
+    fetchBackendContent();
+  }, []);
 
   // Sync primary color (#edb403), secondary color (#0f172a), and fonts to CSS Custom Properties
   useEffect(() => {
@@ -55,6 +72,13 @@ export const ContentProvider = ({ children }) => {
     } catch (e) {
       console.error('Error saving content', e);
     }
+
+    // Sync to backend server API
+    fetch('/api/content', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newContent)
+    }).catch(() => {});
   };
 
   const updateBrand = (key, value) => {
