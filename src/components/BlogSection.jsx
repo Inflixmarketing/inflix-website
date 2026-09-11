@@ -7,13 +7,10 @@ export const BlogSection = () => {
   const header = content.blogHeader || {};
   const blogs = content.blogs || [];
   const brand = content.brand || {};
+  const primaryColor = brand.primaryColor || '#edb403';
 
   return (
-    <section className="section-padding" style={{
-      background: brand.surfaceBg || '#111c30',
-      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
-    }}>
+    <section className="section-padding" style={{ position: 'relative' }}>
       <div className="container">
         
         {/* Header */}
@@ -23,17 +20,22 @@ export const BlogSection = () => {
           alignItems: 'flex-end',
           justifyContent: 'space-between',
           gap: '2rem',
-          marginBottom: '4rem'
+          marginBottom: '3.5rem'
         }}>
           <div style={{ maxWidth: '650px' }}>
-            <span className="section-category">{header.category || 'Our Blog'}</span>
-            <h2 className="section-title">{header.headline || 'Read Our Latest Blogs & Insights'}</h2>
-            <p style={{ fontSize: '1.05rem', color: '#94a3b8', lineHeight: 1.7 }}>
-              {header.paragraph || 'Stay updated with proven marketing strategies, digital trends, and actionable insights. Learn how to optimize your ad spend, build brand authority, and turn online engagement into measurable business growth.'}
+            <span className="section-category">
+              <BookOpen size={14} style={{ color: primaryColor }} />
+              <span>{header.category || 'Our Blog'}</span>
+            </span>
+            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>
+              {header.headline || 'Read Our Latest Blogs & Insights'}
+            </h2>
+            <p style={{ fontSize: '1.05rem', color: '#cbd5e1', lineHeight: 1.7 }}>
+              {header.paragraph || 'Stay updated with proven marketing strategies, digital trends, and actionable insights.'}
             </p>
           </div>
 
-          <a href="#contact" className="btn-secondary">
+          <a href="#contact" className="btn-agatha-gold">
             <span>{header.ctaText || 'VIEW ALL →'}</span>
           </a>
         </div>
@@ -48,21 +50,27 @@ export const BlogSection = () => {
             <article key={b.id} className="card-glass" style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
-              background: `linear-gradient(145deg, rgba(23, 38, 66, 0.8) 0%, rgba(10, 17, 30, 0.9) 100%)`
+              justifyContent: 'space-between'
             }}>
               <div>
+                <div className="img-hover-container" style={{ borderRadius: '12px', height: '200px', marginBottom: '1.5rem' }}>
+                  <img 
+                    src={b.imageUrl || "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=800&q=80"} 
+                    alt={b.title} 
+                  />
+                </div>
+
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '1rem',
-                  marginBottom: '1.25rem',
+                  marginBottom: '1rem',
                   fontSize: '0.825rem',
                   color: '#94a3b8'
                 }}>
                   <span style={{
                     background: 'rgba(237, 180, 3, 0.12)',
-                    color: brand.accentColor || '#edb403',
+                    color: primaryColor,
                     padding: '0.25rem 0.75rem',
                     borderRadius: '6px',
                     fontWeight: 700
@@ -75,11 +83,11 @@ export const BlogSection = () => {
                   </span>
                 </div>
 
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.85rem', lineHeight: 1.35 }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.85rem', lineHeight: 1.35 }}>
                   {b.title}
                 </h3>
 
-                <p style={{ fontSize: '0.925rem', color: '#94a3b8', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+                <p style={{ fontSize: '0.925rem', color: '#cbd5e1', lineHeight: 1.6, marginBottom: '1.75rem' }}>
                   {b.excerpt}
                 </p>
               </div>
@@ -88,9 +96,9 @@ export const BlogSection = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                fontSize: '0.875rem',
+                fontSize: '0.85rem',
                 fontWeight: 700,
-                color: brand.accentColor || '#edb403'
+                color: primaryColor
               }}>
                 <span>Read Full Article</span>
                 <ArrowRight size={16} />

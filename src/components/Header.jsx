@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
-import { Menu, X, Settings, ChevronDown } from 'lucide-react';
+import { Menu, X, Settings, ChevronDown, ArrowRight } from 'lucide-react';
 
 export const Header = () => {
   const { content, setIsAdminOpen, isAdminOpen, activeTab, setActiveTab } = useContent();
@@ -9,7 +9,6 @@ export const Header = () => {
 
   const brand = content.brand || {};
   const primaryColor = brand.primaryColor || '#edb403';
-  const secondaryColor = brand.secondaryColor || '#0f172a';
 
   const handleNavClick = (tabId, hash) => {
     setActiveTab(tabId);
@@ -25,11 +24,12 @@ export const Header = () => {
     <header style={{
       position: 'sticky',
       top: 0,
-      zIndex: 100,
-      backgroundColor: 'var(--header-bg, rgba(255, 255, 255, 0.95))',
-      backdropFilter: 'blur(16px)',
-      borderBottom: '1px solid var(--border-color, rgba(0, 0, 0, 0.08))',
-      padding: '0.85rem 0',
+      zIndex: 1000,
+      backgroundColor: 'rgba(9, 13, 22, 0.85)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+      padding: '1rem 0',
       transition: 'all 0.3s ease'
     }}>
       <div className="container" style={{
@@ -46,24 +46,24 @@ export const Header = () => {
           textDecoration: 'none'
         }}>
           {brand.logoUrl ? (
-            <img src={brand.logoUrl} alt={brand.siteName} style={{ height: '42px', maxWidth: '180px', objectFit: 'contain' }} />
+            <img src={brand.logoUrl} alt={brand.siteName} style={{ height: '38px', maxWidth: '160px', objectFit: 'contain' }} />
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <div style={{
                 width: '36px',
                 height: '36px',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 background: primaryColor,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#0f172a',
-                boxShadow: `0 4px 15px rgba(237, 180, 3, 0.3)`
+                color: '#090d16',
+                boxShadow: `0 4px 20px rgba(237, 180, 3, 0.35)`
               }}>
                 <svg width="20" height="20" viewBox="0 0 100 100" fill="none">
-                  <rect x="15" y="35" width="16" height="50" rx="4" fill="#0f172a" />
-                  <circle cx="23" cy="20" r="8" fill="#0f172a" />
-                  <path d="M40 85 L75 20 L85 20 L85 30 L50 85 Z" fill="#0f172a" />
+                  <rect x="15" y="35" width="16" height="50" rx="4" fill="#090d16" />
+                  <circle cx="23" cy="20" r="8" fill="#090d16" />
+                  <path d="M40 85 L75 20 L85 20 L85 30 L50 85 Z" fill="#090d16" />
                   <path d="M45 20 L80 85 L70 85 L35 20 Z" fill="#ffffff" />
                 </svg>
               </div>
@@ -72,7 +72,7 @@ export const Header = () => {
                   fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : 'sans-serif',
                   fontSize: '1.4rem',
                   fontWeight: 800,
-                  color: 'var(--logo-text-color, #0f172a)',
+                  color: '#ffffff',
                   letterSpacing: '-0.02em',
                   lineHeight: 1
                 }}>
@@ -97,7 +97,7 @@ export const Header = () => {
         {/* Desktop Navigation Links */}
         <nav style={{
           display: 'none',
-          gap: '2rem',
+          gap: '2.25rem',
           alignItems: 'center'
         }} className="desktop-nav">
           <a href="#home" onClick={() => handleNavClick('home', '#home')} style={navLinkStyle(activeTab === 'home', primaryColor)}>HOME</a>
@@ -123,12 +123,13 @@ export const Header = () => {
                 position: 'absolute',
                 top: '100%',
                 left: 0,
-                backgroundColor: '#ffffff',
-                color: '#000000',
+                backgroundColor: '#0f172a',
+                border: '1px solid rgba(237, 180, 3, 0.25)',
+                color: '#ffffff',
                 borderRadius: '12px',
                 padding: '1rem',
-                minWidth: '200px',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)',
+                minWidth: '210px',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.75rem',
@@ -158,8 +159,8 @@ export const Header = () => {
               alignItems: 'center',
               gap: '0.35rem',
               padding: '0.45rem 0.85rem',
-              background: 'rgba(0, 0, 0, 0.05)',
-              color: 'var(--logo-text-color, #0f172a)',
+              background: 'rgba(255, 255, 255, 0.05)',
+              color: '#ffffff',
               border: `1px solid ${primaryColor}`,
               borderRadius: '9999px',
               fontSize: '0.75rem',
@@ -170,19 +171,19 @@ export const Header = () => {
             <span>Admin</span>
           </button>
 
-          {/* Primary CTA Button */}
+          {/* Desktop Only CTA (Hidden on Mobile view to avoid clutter) */}
           <a 
             href="#contact" 
             className="btn-agatha-gold desktop-cta"
             style={{ padding: '0.65rem 1.4rem', fontSize: '0.8rem' }}
           >
-            <span>{content.hero?.primaryCta || 'Get Started Today →'}</span>
+            <span>GET STARTED →</span>
           </a>
 
-          {/* Mobile Menu Trigger */}
+          {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: 'var(--logo-text-color, #0f172a)', padding: '0.4rem' }}
+            style={{ color: '#ffffff', padding: '0.4rem' }}
             className="mobile-toggle"
           >
             {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -193,8 +194,8 @@ export const Header = () => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div style={{
-          backgroundColor: 'var(--header-bg, #ffffff)',
-          borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+          backgroundColor: '#090d16',
+          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
           padding: '1.25rem 1.5rem',
           display: 'flex',
           flexDirection: 'column',
@@ -208,10 +209,18 @@ export const Header = () => {
           <a href="#testimonials" onClick={() => handleNavClick('testimonials', '#testimonials')} style={mobileNavLinkStyle}>REVIEWS</a>
           <a href="#contact" onClick={() => handleNavClick('contact', '#contact')} style={mobileNavLinkStyle}>CONTACT</a>
           
-          <div style={{ paddingTop: '0.75rem' }}>
+          <div style={{ paddingTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <a 
+              href="#contact" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="btn-agatha-gold"
+              style={{ width: '100%' }}
+            >
+              LET'S TALK →
+            </a>
             <button 
               onClick={() => { setIsAdminOpen(true); setMobileMenuOpen(false); }}
-              className="btn-agatha-gold"
+              className="btn-agatha-navy"
               style={{ width: '100%' }}
             >
               OPEN ADMIN PANEL
@@ -226,13 +235,16 @@ export const Header = () => {
           .desktop-cta { display: inline-flex !important; }
           .mobile-toggle { display: none !important; }
         }
+        @media (max-width: 991px) {
+          .desktop-cta { display: none !important; }
+        }
       `}</style>
     </header>
   );
 };
 
 const navLinkStyle = (isActive, primaryColor) => ({
-  color: isActive ? primaryColor : 'var(--logo-text-color, #0f172a)',
+  color: isActive ? primaryColor : '#cbd5e1',
   fontWeight: isActive ? 700 : 600,
   fontSize: '0.85rem',
   letterSpacing: '0.05em',
@@ -245,14 +257,14 @@ const dropdownItemStyle = {
   fontSize: '0.8rem',
   fontWeight: 700,
   letterSpacing: '0.05em',
-  color: '#000000',
+  color: '#ffffff',
   textTransform: 'uppercase'
 };
 
 const mobileNavLinkStyle = {
-  color: 'var(--logo-text-color, #0f172a)',
+  color: '#ffffff',
   fontSize: '0.95rem',
   fontWeight: 600,
   padding: '0.4rem 0',
-  borderBottom: '1px solid rgba(0,0,0,0.05)'
+  borderBottom: '1px solid rgba(255,255,255,0.05)'
 };

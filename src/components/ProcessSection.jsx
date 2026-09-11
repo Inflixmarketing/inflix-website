@@ -1,118 +1,102 @@
 import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
-import { Play, X } from 'lucide-react';
+import { Play, X, CheckCircle2 } from 'lucide-react';
 
 export const ProcessSection = () => {
   const { content } = useContent();
   const header = content.processHeader || {};
   const steps = content.process || [];
   const brand = content.brand || {};
+  const primaryColor = brand.primaryColor || '#edb403';
 
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   return (
-    <section id="process" className="section-padding" style={{ background: '#ffffff', color: '#000000', position: 'relative' }}>
+    <section id="process" className="section-padding" style={{
+      background: 'rgba(15, 23, 42, 0.4)',
+      position: 'relative',
+      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+    }}>
       <div className="container">
         
         {/* Process Header & Grid */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
-          gap: '2.5rem',
-          alignItems: 'center',
-          '@media (min-width: 992px)': { gridTemplateColumns: '1fr 1fr' }
+          gap: '3rem',
+          alignItems: 'center'
         }} className="process-grid">
           
-          {/* Left Column: 4 Grid Cards */}
+          {/* Left Column: 4 Step Glass Cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-            gap: '1rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: '1.25rem'
           }}>
-            {steps.map((st, idx) => {
-              const isFirstDark = idx === 0;
-              return (
-                <div 
-                  key={idx} 
-                  className={isFirstDark ? "card-dark-grid" : "card-light-gray"}
-                  style={{
-                    minHeight: '160px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    padding: '1.25rem'
-                  }}
-                >
-                  <div style={{
+            {steps.map((st, idx) => (
+              <div 
+                key={idx} 
+                className="card-glass"
+                style={{
+                  minHeight: '180px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  padding: '1.5rem',
+                  borderLeft: `4px solid ${idx === 0 ? primaryColor : 'rgba(255, 255, 255, 0.2)'}`
+                }}
+              >
+                <div style={{
+                  fontSize: '1.4rem',
+                  fontWeight: 800,
+                  color: primaryColor,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}>
+                  <span>{st.num}</span>
+                  <CheckCircle2 size={18} style={{ color: primaryColor }} />
+                </div>
+
+                <div>
+                  <h3 style={{
                     fontSize: '1.1rem',
                     fontWeight: 700,
-                    color: isFirstDark ? '#ffffff' : '#000000',
-                    fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : 'sans-serif'
-                  }}>
-                    {st.num}
-                  </div>
-
-                  <h3 style={{
-                    fontSize: '1.05rem',
-                    fontWeight: 600,
-                    color: isFirstDark ? '#ffffff' : '#000000',
-                    fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : 'sans-serif',
-                    lineHeight: 1.3
+                    color: '#ffffff',
+                    lineHeight: 1.3,
+                    marginBottom: '0.35rem'
                   }}>
                     {st.title}
                   </h3>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                    {st.desc}
+                  </p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
-          {/* Right Column: Category, Headline, Paragraph & Watch Video Button */}
+          {/* Right Column: Header & Watch Video Button */}
           <div>
-            <span style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '0.4rem' }}>
+            <span className="section-category">
               {header.category || 'Process'}
             </span>
 
-            <h2 style={{
-              fontSize: 'clamp(1.8rem, 4vw, 3.25rem)',
-              fontWeight: 400,
-              color: '#000000',
-              lineHeight: 1.25,
-              marginBottom: '1.25rem',
-              fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : 'sans-serif'
-            }}>
+            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>
               {header.headline || 'Our Smooth Workflow'}
             </h2>
 
-            <p style={{ fontSize: '0.925rem', color: '#64748b', lineHeight: 1.65, marginBottom: '2rem' }}>
-              {header.paragraph || 'We follow a structured, step-by-step methodology to ensure every marketing campaign is executed seamlessly.'}
+            <p style={{ fontSize: '1.05rem', color: '#cbd5e1', lineHeight: 1.7, marginBottom: '2rem' }}>
+              {header.paragraph || 'We follow a structured, step-by-step methodology to ensure every marketing campaign is executed seamlessly, optimized in real-time, and built to achieve maximum profitability.'}
             </p>
 
             <button 
               onClick={() => setIsVideoModalOpen(true)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.85rem',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-                color: '#000000',
-                textTransform: 'uppercase'
-              }}
+              className="btn-agatha-gold"
             >
+              <Play size={16} fill="#090d16" />
               <span>{header.videoButtonText || 'WATCH VIDEO'}</span>
-              <div style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                background: '#cbd5e1',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#000000'
-              }}>
-                <Play size={16} fill="#000000" />
-              </div>
             </button>
           </div>
 
@@ -128,21 +112,22 @@ export const ProcessSection = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(12px)',
-          zIndex: 1000,
+          backgroundColor: 'rgba(9, 13, 22, 0.9)',
+          backdropFilter: 'blur(16px)',
+          zIndex: 2000,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           padding: '1.25rem'
         }}>
           <div style={{
-            background: '#ffffff',
-            color: '#000000',
+            background: '#0f172a',
+            border: '1px solid rgba(237, 180, 3, 0.3)',
+            color: '#ffffff',
             borderRadius: '20px',
-            maxWidth: '650px',
+            maxWidth: '600px',
             width: '100%',
-            padding: '2rem',
+            padding: '2.25rem',
             position: 'relative',
             textAlign: 'center'
           }}>
@@ -150,23 +135,23 @@ export const ProcessSection = () => {
               onClick={() => setIsVideoModalOpen(false)}
               style={{
                 position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                color: '#000000',
-                padding: '0.5rem'
+                top: '1.25rem',
+                right: '1.25rem',
+                color: '#ffffff',
+                padding: '0.4rem'
               }}
             >
-              <X size={22} />
+              <X size={24} />
             </button>
 
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '1rem', color: primaryColor }}>
               Inflix Smooth Workflow Video
             </h3>
-            <p style={{ color: '#64748b', lineHeight: 1.65, marginBottom: '1.75rem', fontSize: '0.9rem' }}>
+            <p style={{ color: '#cbd5e1', lineHeight: 1.65, marginBottom: '2rem', fontSize: '0.95rem' }}>
               Watch how our team conducts discovery research, develops high-converting ad copy, deploys performance campaigns, and optimizes CAC continuously.
             </p>
 
-            <button onClick={() => setIsVideoModalOpen(false)} className="btn-agatha-navy">
+            <button onClick={() => setIsVideoModalOpen(false)} className="btn-agatha-gold">
               Close Video Showcase
             </button>
           </div>
@@ -176,7 +161,7 @@ export const ProcessSection = () => {
       <style>{`
         @media (min-width: 992px) {
           .process-grid {
-            grid-template-columns: 1fr 1fr !important;
+            grid-template-columns: 1.2fr 0.8fr !important;
           }
         }
       `}</style>

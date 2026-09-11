@@ -1,32 +1,27 @@
-/* Modern CSS Design System - Inflix Marketing Solutions (Default Bright Mode & Full Mobile Responsiveness) */
+/* Ultra-Premium Glassmorphism & High-Converting Design System - Inflix Marketing Solutions */
 
-@font-face {
-  font-family: 'Ancola';
-  src: local('Outfit'), local('Syne'), local('Tenor Sans');
-  font-weight: normal;
-  font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap');
 
 :root {
   --color-primary: #edb403;
+  --color-primary-glow: rgba(237, 180, 3, 0.35);
   --color-secondary: #0f172a;
   --color-accent: #edb403;
-  --color-dark-bg: #f8fafc;
-  --color-surface: #ffffff;
-  --color-card-dark: #ffffff;
-  --color-card-light: #f1f5f9;
-  --color-text-main: #0f172a;
-  --color-text-muted: #64748b;
-  --color-heading-text: #0f172a;
-  --color-body-text: #334155;
-  --header-bg: rgba(255, 255, 255, 0.95);
-  --logo-text-color: #0f172a;
-  --border-color: rgba(0, 0, 0, 0.08);
-  --font-heading: 'Ancola', 'Outfit', 'Syne', sans-serif;
-  --font-body: 'Poppins', 'Inter', sans-serif;
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --color-bg-dark: #090d16;
+  --color-bg-surface: #0f172a;
+  --color-card-bg: rgba(15, 23, 42, 0.65);
+  --color-glass-bg: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(237, 180, 3, 0.2);
+  --color-heading: #ffffff;
+  --color-body: #cbd5e1;
+  --color-muted: #94a3b8;
+  
+  --font-heading: 'Syne', 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
   --radius-pill: 9999px;
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -45,31 +40,32 @@ html {
 }
 
 body {
-  background-color: var(--color-dark-bg);
-  color: var(--color-text-main);
+  background-color: var(--color-bg-dark);
+  color: var(--color-body);
   font-family: var(--font-body);
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: hidden;
   width: 100%;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Light Background Grid Overlay */
+/* Background Grid & Gradient Glows */
 .agatha-grid-bg {
-  background-color: #f8fafc;
+  background-color: #090d16;
   background-image: 
-    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+    radial-gradient(circle at 15% 20%, rgba(237, 180, 3, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 60%, rgba(23, 55, 101, 0.4) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
-  color: var(--color-heading-text);
+  color: var(--color-heading);
   letter-spacing: -0.02em;
   word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
 a {
@@ -95,96 +91,83 @@ button {
 }
 
 .section-padding {
-  padding: 5rem 0;
+  padding: 5.5rem 0;
 }
 
 .section-category {
   color: var(--color-primary);
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  display: block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
+  background: rgba(237, 180, 3, 0.1);
+  border: 1px solid rgba(237, 180, 3, 0.25);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-pill);
 }
 
 .section-title {
-  font-size: clamp(1.8rem, 4vw, 3.25rem);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
   font-weight: 800;
   margin-bottom: 1.25rem;
-  color: var(--color-heading-text);
+  color: #ffffff;
   font-family: var(--font-heading);
+  line-height: 1.15;
 }
 
-/* Agatha Gold Button (#edb403) */
+/* Gradient Text Highlight */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fff 20%, #edb403 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Premium Buttons */
 .btn-agatha-gold {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
   background: var(--color-primary);
-  color: #0f172a;
-  font-weight: 700;
+  color: #090d16;
+  font-weight: 800;
   font-size: 0.875rem;
-  padding: 0.85rem 2rem;
+  padding: 0.9rem 2.2rem;
   border-radius: var(--radius-pill);
   transition: var(--transition-normal);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  box-shadow: 0 4px 20px rgba(237, 180, 3, 0.35);
+  box-shadow: 0 8px 25px rgba(237, 180, 3, 0.35);
   text-align: center;
   max-width: 100%;
 }
 
 .btn-agatha-gold:hover {
-  background: #0f172a;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.25);
-}
-
-/* Agatha White Button */
-.btn-agatha-white {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
   background: #ffffff;
-  color: #0f172a;
-  font-weight: 700;
-  font-size: 0.875rem;
-  padding: 0.85rem 2rem;
-  border-radius: var(--radius-pill);
-  transition: var(--transition-normal);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  max-width: 100%;
+  color: #090d16;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3);
 }
 
-.btn-agatha-white:hover {
-  background: var(--color-primary);
-  color: #0f172a;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(237, 180, 3, 0.4);
-}
-
-/* Agatha Navy / Dark Button */
 .btn-agatha-navy {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: #0f172a;
+  background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
   font-weight: 700;
-  font-size: 0.85rem;
-  padding: 0.85rem 2rem;
+  font-size: 0.875rem;
+  padding: 0.9rem 2.2rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
   transition: var(--transition-normal);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: center;
   max-width: 100%;
@@ -192,112 +175,44 @@ button {
 
 .btn-agatha-navy:hover {
   background: var(--color-primary);
-  color: #0f172a;
-  transform: translateY(-2px);
-}
-
-/* Circular Arrow Icon Button */
-.circle-arrow-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(237, 180, 3, 0.3);
-  transition: var(--transition-normal);
-  flex-shrink: 0;
-}
-
-.circle-arrow-btn:hover {
-  transform: scale(1.08) rotate(45deg);
-  background: #0f172a;
-  color: #ffffff;
-}
-
-/* Outlined Capsule Pill */
-.capsule-outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.4rem 1.4rem;
-  border: 1.5px solid var(--color-primary);
-  border-radius: var(--radius-pill);
-  font-style: italic;
-  font-family: var(--font-heading);
-  font-size: clamp(1.1rem, 3vw, 2.25rem);
-  font-weight: 600;
-  color: var(--color-heading-text);
-  line-height: 1.2;
-  max-width: 100%;
-}
-
-/* Solid Gold Capsule Pill */
-.capsule-solid {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.4rem 1.5rem;
-  background: var(--color-primary);
-  border-radius: var(--radius-pill);
-  font-style: italic;
-  font-family: var(--font-heading);
-  font-size: clamp(1.1rem, 3vw, 2.25rem);
-  font-weight: 600;
-  color: #0f172a;
-  box-shadow: 0 10px 25px rgba(237, 180, 3, 0.35);
-  line-height: 1.2;
-  max-width: 100%;
-}
-
-/* Card Styles */
-.card-dark-grid {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: var(--radius-md);
-  padding: 2rem;
-  transition: var(--transition-normal);
-  color: #0f172a;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-}
-
-.card-dark-grid:hover {
-  transform: translateY(-4px);
+  color: #090d16;
   border-color: var(--color-primary);
-  box-shadow: 0 15px 35px rgba(237, 180, 3, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(237, 180, 3, 0.3);
 }
 
-.card-light-gray {
-  background: #ffffff;
-  color: #0f172a;
-  border-radius: var(--radius-md);
-  padding: 2rem;
-  transition: var(--transition-normal);
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.04);
-}
-
-.card-light-gray:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-  border-color: var(--color-primary);
-}
-
+/* Glassmorphism Card Style */
 .card-glass {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-md);
-  padding: 2rem;
+  padding: 2.25rem;
   transition: var(--transition-normal);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(237, 180, 3, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .card-glass:hover {
-  transform: translateY(-4px);
-  border-color: var(--color-primary);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px);
+  border-color: rgba(237, 180, 3, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card-glass:hover::before {
+  opacity: 1;
 }
 
 .img-hover-container {
@@ -314,36 +229,26 @@ button {
 }
 
 .img-hover-container:hover img {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
-/* Responsive Rules */
+/* Mobile Adjustments */
 @media (max-width: 991px) {
   .container {
     padding: 0 1.25rem;
   }
   .section-padding {
-    padding: 3.5rem 0;
+    padding: 4rem 0;
   }
 }
 
 @media (max-width: 768px) {
-  html {
-    font-size: 15px;
-  }
-  .container {
-    padding: 0 1rem;
-  }
-  .section-padding {
-    padding: 3rem 0;
-  }
   .section-title {
-    font-size: 1.85rem !important;
-    line-height: 1.25;
+    font-size: 2rem !important;
   }
-  .btn-agatha-gold, .btn-agatha-white, .btn-agatha-navy {
-    padding: 0.75rem 1.4rem !important;
-    font-size: 0.8rem !important;
+  .btn-agatha-gold, .btn-agatha-navy {
     width: 100% !important;
+    padding: 0.8rem 1.5rem !important;
+    font-size: 0.8rem !important;
   }
 }
