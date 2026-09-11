@@ -6,6 +6,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import blogPortfolioRouter from './routes/blogPortfolio.js';
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +36,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// Mount Blog and Portfolio API Routes
+app.use('/api', blogPortfolioRouter);
 
 // Content File Path for persistent storage
 const contentFilePath = path.join(__dirname, 'data', 'content.json');
