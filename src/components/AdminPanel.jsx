@@ -11,15 +11,18 @@ import {
   Users, 
   MessageSquare, 
   HelpCircle, 
-  Sparkles,
   CheckCircle,
   FileText,
-  Image as ImageIcon
+  Save,
+  Image as ImageIcon,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export const AdminPanel = () => {
   const { 
     content, 
+    saveContent,
     updateBrand, 
     updateSection, 
     resetToDefaults, 
@@ -32,35 +35,91 @@ export const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('brand');
   const [saveNotification, setSaveNotification] = useState(false);
   const [importJsonText, setImportJsonText] = useState('');
+  const [localContent, setLocalContent] = useState(content);
 
   if (!isAdminOpen) return null;
 
-  const brand = content.brand || {};
-  const hero = content.hero || {};
-  const about = content.about || {};
-  const whyUs = content.whyUs || {};
-
-  const handleSaveNotify = () => {
+  const handleSaveAll = async () => {
+    saveContent(localContent);
     setSaveNotification(true);
+
+    // Sync to Node.js backend if active
+    try {
+      await fetch('/api/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(localContent)
+      });
+    } catch (err) {
+      console.log('Local save completed (Backend sync optional)');
+    }
+
     setTimeout(() => setSaveNotification(false), 2500);
   };
 
-  const handleImportSubmit = () => {
-    if (!importJsonText.trim()) return;
-    if (importConfig(importJsonText)) {
-      setImportJsonText('');
-      handleSaveNotify();
-    }
+  const handleLogoUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      const base64Url = uploadEvent.target.result;
+      const updated = {
+        ...localContent,
+        brand: { ...localContent.brand, logoUrl: base64Url }
+      };
+      setLocalContent(updated);
+      saveContent(updated);
+    };
+    reader.readAsDataURL(file);
   };
 
-  const downloadJsonFile = () => {
-    const jsonStr = exportConfig();
-    const blob = new Blob([jsonStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'inflix_brand_content_config.json';
-    a.click();
+  const handleThemeToggle = (mode) => {
+    let updated;
+    if (mode === 'bright') {
+      updated = {
+        ...localContent,
+        brand: {
+          ...localContent.brand,
+          darkBg: '#f8fafc',
+          surfaceBg: '#ffffff',
+          secondaryColor: '#0f172a'
+        }
+      };
+    } else {
+      updated = {
+        ...localContent,
+        brand: {
+          ...localContent.brand,
+          darkBg: '#0b0c10',
+          surfaceBg: '#173765',
+          secondaryColor: '#173765'
+        }
+      };
+    }
+    setLocalContent(updated);
+    saveContent(updated);
+  };
+
+  const updateLocalSection = (sectionKey, fieldKey, value) => {
+    const updated = {
+      ...localContent,
+      [sectionKey]: {
+        ...localContent[sectionKey],
+        [fieldKey]: value
+      }
+    };
+    setLocalContent(updated);
+  };
+
+  const updateLocalBrand = (fieldKey, value) => {
+    const updated = {
+      ...localContent,
+      brand: {
+        ...localContent.brand,
+        [fieldKey]: value
+      }
+    };
+    setLocalContent(updated);
   };
 
   return (
@@ -70,577 +129,502 @@ export const AdminPanel = () => {
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(5, 10, 20, 0.94)',
+      backgroundColor: 'rgba(15, 23, 42, 0.85)',
       backdropFilter: 'blur(16px)',
       zIndex: 3000,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '0'
+      padding: '1rem'
     }}>
       <div style={{
-        background: '#0d1626',
-        border: '1px solid rgba(237, 180, 3, 0.4)',
-        borderRadius: '0',
+        background: '#ffffff',
+        color: '#0f172a',
+        borderRadius: '16px',
         width: '100%',
-        height: '100vh',
+        maxWidth: '1200px',
+        height: '90vh',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9)',
-        overflow: 'hidden'
-      }} className="admin-container">
-        {/* Top Header Bar */}
+        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.3)',
+        overflow: 'hidden',
+        border: '1px solid rgba(0, 0, 0, 0.1)'
+      }}>
+        
+        {/* Admin Header */}
         <div style={{
-          padding: '1rem 1.25rem',
-          background: 'rgba(23, 38, 66, 0.95)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          padding: '1.25rem 1.75rem',
+          background: '#0f172a',
+          color: '#ffffff',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '0.75rem'
+          gap: '1rem'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             <div style={{
-              width: '34px',
-              height: '34px',
+              width: '38px',
+              height: '38px',
               borderRadius: '8px',
-              background: brand.primaryColor || '#edb403',
+              background: '#edb403',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#0c1421'
+              color: '#0f172a'
             }}>
-              <Palette size={18} />
+              <Palette size={20} />
             </div>
             <div>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
-                Inflix Admin Panel
+              <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+                Inflix Live Admin Panel
               </h2>
-              <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '2px' }}>
-                Primary: #edb403 | Secondary: #173765
-              </p>
+              <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+                Full Customization & Real-Time Website Editor
+              </span>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             {saveNotification && (
-              <span style={{
-                color: '#10b981',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.25rem'
-              }}>
-                <CheckCircle size={14} /> Saved!
+              <span style={{ color: '#10b981', fontSize: '0.85rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <CheckCircle size={16} /> Changes Saved Live!
               </span>
             )}
 
+            {/* Bright / Dark Mode Toggle */}
+            <div style={{ display: 'flex', background: 'rgba(255,255,255,0.1)', padding: '0.25rem', borderRadius: '8px', gap: '0.25rem' }}>
+              <button 
+                onClick={() => handleThemeToggle('bright')}
+                style={{
+                  padding: '0.35rem 0.75rem',
+                  borderRadius: '6px',
+                  background: localContent.brand?.darkBg === '#f8fafc' ? '#edb403' : 'transparent',
+                  color: localContent.brand?.darkBg === '#f8fafc' ? '#0f172a' : '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.3rem'
+                }}
+              >
+                <Sun size={14} /> Bright Mode
+              </button>
+              <button 
+                onClick={() => handleThemeToggle('dark')}
+                style={{
+                  padding: '0.35rem 0.75rem',
+                  borderRadius: '6px',
+                  background: localContent.brand?.darkBg === '#0b0c10' ? '#edb403' : 'transparent',
+                  color: localContent.brand?.darkBg === '#0b0c10' ? '#0f172a' : '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.3rem'
+                }}
+              >
+                <Moon size={14} /> Dark Mode
+              </button>
+            </div>
+
+            {/* Save All Changes Button */}
             <button 
-              onClick={() => { resetToDefaults(); handleSaveNotify(); }}
+              onClick={handleSaveAll}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.3rem',
-                padding: '0.4rem 0.75rem',
-                background: 'rgba(239, 68, 68, 0.15)',
-                color: '#f87171',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                borderRadius: '6px',
-                fontSize: '0.775rem',
-                fontWeight: 600
+                gap: '0.4rem',
+                padding: '0.55rem 1.25rem',
+                background: '#edb403',
+                color: '#0f172a',
+                borderRadius: '8px',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                boxShadow: '0 4px 15px rgba(237, 180, 3, 0.4)'
               }}
             >
-              <RotateCcw size={13} /> Reset
+              <Save size={16} />
+              <span>SAVE CHANGES</span>
             </button>
 
             <button 
               onClick={() => setIsAdminOpen(false)}
-              style={{
-                color: '#ffffff',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: 'none',
-                borderRadius: '50%',
-                width: '34px',
-                height: '34px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+              style={{ color: '#ffffff', padding: '0.4rem' }}
             >
-              <X size={18} />
+              <X size={24} />
             </button>
           </div>
         </div>
 
-        {/* Content Body: Sidebar Tabs + Editor Workspace */}
-        <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }} className="admin-body">
+        {/* Main Admin Workspace */}
+        <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
           
-          {/* Sidebar Tabs */}
+          {/* Navigation Sidebar */}
           <div style={{
-            width: '220px',
-            background: 'rgba(10, 17, 30, 0.85)',
-            borderRight: '1px solid rgba(255, 255, 255, 0.08)',
-            padding: '1rem 0.5rem',
+            width: '240px',
+            background: '#f8fafc',
+            borderRight: '1px solid #e2e8f0',
+            padding: '1.25rem 0.85rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.35rem',
-            overflowY: 'auto'
-          }} className="admin-sidebar">
-            <TabButton id="brand" label="Brand & Colors" icon={Palette} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="hero" label="Hero Section" icon={Sparkles} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="about" label="About Us & Image" icon={Layout} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="services" label="Services & Covers" icon={Briefcase} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="portfolio" label="Portfolio Images" icon={ImageIcon} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="clients" label="Client Logos" icon={Users} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="testimonials" label="Testimonials" icon={MessageSquare} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="faqs" label="FAQ Accordion" icon={HelpCircle} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="blogs" label="Blog Articles" icon={FileText} active={activeTab} onClick={setActiveTab} />
-            <TabButton id="json" label="Export / Import" icon={Download} active={activeTab} onClick={setActiveTab} />
+            gap: '0.5rem'
+          }}>
+            {[
+              { id: 'brand', label: 'Brand & Logo', icon: Palette },
+              { id: 'hero', label: 'Hero Banner', icon: Layout },
+              { id: 'about', label: 'About Us', icon: FileText },
+              { id: 'services', label: 'Services (8)', icon: Briefcase },
+              { id: 'portfolio', label: 'Portfolio (9)', icon: Briefcase },
+              { id: 'clients', label: 'Clients (8)', icon: Users },
+              { id: 'testimonials', label: 'Testimonials (5)', icon: MessageSquare },
+              { id: 'faqs', label: 'FAQs (4)', icon: HelpCircle }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    padding: '0.75rem 1rem',
+                    borderRadius: '8px',
+                    background: isActive ? '#0f172a' : 'transparent',
+                    color: isActive ? '#ffffff' : '#475569',
+                    fontWeight: isActive ? 700 : 600,
+                    fontSize: '0.85rem',
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <Icon size={18} style={{ color: isActive ? '#edb403' : '#64748b' }} />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Editor Workspace */}
-          <div style={{
-            flex: 1,
-            padding: '1.5rem',
-            overflowY: 'auto',
-            background: '#0d1626'
-          }} className="admin-workspace">
+          {/* Editor Form View */}
+          <div style={{ flex: 1, padding: '2rem', overflowY: 'auto', background: '#ffffff' }}>
             
-            {/* TAB 1: BRAND & LOGO UPLOAD */}
+            {/* BRAND & LOGO TAB */}
             {activeTab === 'brand' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.4rem' }}>
-                  Brand Specs & Palette
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>
+                  Brand Identity & Uploadable Logo
                 </h3>
-                <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
-                  Primary: #edb403 | Secondary: #173765
-                </p>
-
-                <div className="card-glass" style={{ padding: '1.25rem', marginBottom: '1.5rem' }}>
-                  <ImageUploadField 
-                    label="Upload Brand Logo Image (PNG / SVG)"
-                    value={brand.logoUrl}
-                    onChange={(newUrl) => {
-                      updateBrand('logoUrl', newUrl);
-                      handleSaveNotify();
-                    }}
-                  />
+                
+                {/* Uploadable Logo Section */}
+                <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '12px', marginBottom: '2rem', background: '#f8fafc' }}>
+                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>Website Logo Image</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
+                    {localContent.brand?.logoUrl ? (
+                      <img src={localContent.brand.logoUrl} alt="Logo Preview" style={{ height: '50px', objectFit: 'contain', border: '1px solid #cbd5e1', padding: '4px', borderRadius: '6px', background: '#ffffff' }} />
+                    ) : (
+                      <div style={{ padding: '0.5rem 1rem', background: '#e2e8f0', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Text Mark Active</div>
+                    )}
+                    
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={handleLogoUpload}
+                      style={{ fontSize: '0.85rem' }} 
+                    />
+                  </div>
+                  <small style={{ color: '#64748b', display: 'block', marginTop: '0.5rem' }}>Upload any PNG/SVG/JPG logo from your computer. It will update live across the header, footer, and brand touchpoints.</small>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
-                  <div className="card-glass" style={{ padding: '1.25rem' }}>
-                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.5rem' }}>
-                      Primary Color (#edb403)
-                    </label>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <input 
-                        type="color" 
-                        value={brand.primaryColor || '#edb403'} 
-                        onChange={(e) => { updateBrand('primaryColor', e.target.value); handleSaveNotify(); }}
-                        style={{ width: '42px', height: '40px', border: 'none', borderRadius: '6px', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input 
-                        type="text" 
-                        value={brand.primaryColor || '#edb403'} 
-                        onChange={(e) => { updateBrand('primaryColor', e.target.value); handleSaveNotify(); }}
-                        style={inputStyle}
-                      />
-                    </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Site Name</label>
+                    <input 
+                      type="text" 
+                      value={localContent.brand?.siteName || ''} 
+                      onChange={(e) => updateLocalBrand('siteName', e.target.value)}
+                      style={adminInputStyle} 
+                    />
                   </div>
-
-                  <div className="card-glass" style={{ padding: '1.25rem' }}>
-                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.5rem' }}>
-                      Secondary Color (#173765)
-                    </label>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <input 
-                        type="color" 
-                        value={brand.secondaryColor || '#173765'} 
-                        onChange={(e) => { updateBrand('secondaryColor', e.target.value); handleSaveNotify(); }}
-                        style={{ width: '42px', height: '40px', border: 'none', borderRadius: '6px', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input 
-                        type="text" 
-                        value={brand.secondaryColor || '#173765'} 
-                        onChange={(e) => { updateBrand('secondaryColor', e.target.value); handleSaveNotify(); }}
-                        style={inputStyle}
-                      />
-                    </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Tagline</label>
+                    <input 
+                      type="text" 
+                      value={localContent.brand?.tagline || ''} 
+                      onChange={(e) => updateLocalBrand('tagline', e.target.value)}
+                      style={adminInputStyle} 
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Contact Email</label>
+                    <input 
+                      type="text" 
+                      value={localContent.brand?.contactEmail || ''} 
+                      onChange={(e) => updateLocalBrand('contactEmail', e.target.value)}
+                      style={adminInputStyle} 
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.85rem' }}>Contact Phone</label>
+                    <input 
+                      type="text" 
+                      value={localContent.brand?.contactPhone || ''} 
+                      onChange={(e) => updateLocalBrand('contactPhone', e.target.value)}
+                      style={adminInputStyle} 
+                    />
                   </div>
                 </div>
+
+                <button onClick={handleSaveAll} style={saveBtnStyle}>
+                  <Save size={16} /> Save Brand Settings
+                </button>
               </div>
             )}
 
-            {/* TAB 2: HERO SECTION */}
+            {/* HERO TAB */}
             {activeTab === 'hero' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '1.25rem' }}>
-                  Edit Hero Section
-                </h3>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                    <div>
-                      <label style={labelStyle}>Outlined Capsule Text</label>
-                      <input 
-                        type="text" 
-                        value={hero.capsuleOutline || ''} 
-                        onChange={(e) => { updateSection('hero', { ...hero, capsuleOutline: e.target.value }); handleSaveNotify(); }}
-                        style={inputStyle}
-                      />
-                    </div>
-                    <div>
-                      <label style={labelStyle}>Display Word Highlight</label>
-                      <input 
-                        type="text" 
-                        value={hero.displayHighlight || ''} 
-                        onChange={(e) => { updateSection('hero', { ...hero, displayHighlight: e.target.value }); handleSaveNotify(); }}
-                        style={inputStyle}
-                      />
-                    </div>
-                  </div>
-
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Hero Banner Settings</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
                   <div>
-                    <label style={labelStyle}>Main Title</label>
-                    <input 
-                      type="text" 
-                      value={hero.titleMain || ''} 
-                      onChange={(e) => { updateSection('hero', { ...hero, titleMain: e.target.value }); handleSaveNotify(); }}
-                      style={inputStyle}
-                    />
+                    <label style={adminLabelStyle}>Capsule Outline Pill</label>
+                    <input type="text" value={localContent.hero?.capsuleOutline || ''} onChange={(e) => updateLocalSection('hero', 'capsuleOutline', e.target.value)} style={adminInputStyle} />
                   </div>
-
                   <div>
-                    <label style={labelStyle}>Description</label>
-                    <textarea 
-                      rows={3}
-                      value={hero.description || ''} 
-                      onChange={(e) => { updateSection('hero', { ...hero, description: e.target.value }); handleSaveNotify(); }}
-                      style={textareaStyle}
-                    />
+                    <label style={adminLabelStyle}>Capsule Solid Pill</label>
+                    <input type="text" value={localContent.hero?.capsuleSolid || ''} onChange={(e) => updateLocalSection('hero', 'capsuleSolid', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={adminLabelStyle}>Main Title Headline</label>
+                    <input type="text" value={localContent.hero?.titleMain || ''} onChange={(e) => updateLocalSection('hero', 'titleMain', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={adminLabelStyle}>Description</label>
+                    <textarea rows={3} value={localContent.hero?.description || ''} onChange={(e) => updateLocalSection('hero', 'description', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div>
+                    <label style={adminLabelStyle}>Primary CTA Text</label>
+                    <input type="text" value={localContent.hero?.primaryCta || ''} onChange={(e) => updateLocalSection('hero', 'primaryCta', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div>
+                    <label style={adminLabelStyle}>Secondary CTA Text</label>
+                    <input type="text" value={localContent.hero?.secondaryCta || ''} onChange={(e) => updateLocalSection('hero', 'secondaryCta', e.target.value)} style={adminInputStyle} />
                   </div>
                 </div>
+                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Hero Changes</button>
               </div>
             )}
 
-            {/* TAB 3: ABOUT */}
+            {/* ABOUT US TAB */}
             {activeTab === 'about' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '1.25rem' }}>
-                  Edit About Us Section
-                </h3>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                  <div className="card-glass" style={{ padding: '1.25rem' }}>
-                    <ImageUploadField 
-                      label="Upload About Section Image"
-                      value={about.aboutImage}
-                      onChange={(newUrl) => {
-                        updateSection('about', { ...about, aboutImage: newUrl });
-                        handleSaveNotify();
-                      }}
-                    />
-                  </div>
-
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>About Us Section</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
                   <div>
-                    <label style={labelStyle}>Headline</label>
-                    <input 
-                      type="text" 
-                      value={about.headline || ''} 
-                      onChange={(e) => { updateSection('about', { ...about, headline: e.target.value }); handleSaveNotify(); }}
-                      style={inputStyle}
-                    />
+                    <label style={adminLabelStyle}>Section Category</label>
+                    <input type="text" value={localContent.about?.category || ''} onChange={(e) => updateLocalSection('about', 'category', e.target.value)} style={adminInputStyle} />
                   </div>
-
                   <div>
-                    <label style={labelStyle}>Highlight Copy</label>
-                    <textarea 
-                      rows={3}
-                      value={about.highlight || ''} 
-                      onChange={(e) => { updateSection('about', { ...about, highlight: e.target.value }); handleSaveNotify(); }}
-                      style={textareaStyle}
-                    />
+                    <label style={adminLabelStyle}>Headline</label>
+                    <input type="text" value={localContent.about?.headline || ''} onChange={(e) => updateLocalSection('about', 'headline', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={adminLabelStyle}>Top Highlight Text</label>
+                    <textarea rows={3} value={localContent.about?.highlight || ''} onChange={(e) => updateLocalSection('about', 'highlight', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={adminLabelStyle}>Right Body Paragraph</label>
+                    <textarea rows={3} value={localContent.about?.body || ''} onChange={(e) => updateLocalSection('about', 'body', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div>
+                    <label style={adminLabelStyle}>Left Box 1: Our Philosophy</label>
+                    <textarea rows={3} value={localContent.about?.philosophy || ''} onChange={(e) => updateLocalSection('about', 'philosophy', e.target.value)} style={adminInputStyle} />
+                  </div>
+                  <div>
+                    <label style={adminLabelStyle}>Left Box 2: Our Goals</label>
+                    <textarea rows={3} value={localContent.about?.goals || ''} onChange={(e) => updateLocalSection('about', 'goals', e.target.value)} style={adminInputStyle} />
                   </div>
                 </div>
+                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save About Us Changes</button>
               </div>
             )}
 
-            {/* TAB 4: SERVICES */}
+            {/* SERVICES TAB */}
             {activeTab === 'services' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '1.25rem' }}>
-                  Manage Services
-                </h3>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(content.services || []).map((svc, index) => (
-                    <div key={svc.id} className="card-glass" style={{ padding: '1.25rem' }}>
-                      <ImageUploadField 
-                        label={`Cover Image: ${svc.title}`}
-                        value={svc.imageUrl}
-                        onChange={(newUrl) => {
-                          const newServices = [...content.services];
-                          newServices[index].imageUrl = newUrl;
-                          updateSection('services', newServices);
-                          handleSaveNotify();
-                        }}
-                      />
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Services Cards Management (8 Services)</h3>
+                <div style={{ display: 'grid', gap: '1.5rem' }}>
+                  {(localContent.services || []).map((serv, index) => (
+                    <div key={serv.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.25rem', background: '#f8fafc' }}>
+                      <div style={{ fontWeight: 800, marginBottom: '0.5rem', color: '#edb403' }}>Service #{index + 1}: {serv.title}</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div>
+                          <label style={adminLabelStyle}>Title</label>
+                          <input type="text" value={serv.title} onChange={(e) => {
+                            const updatedServices = [...localContent.services];
+                            updatedServices[index].title = e.target.value;
+                            setLocalContent({ ...localContent, services: updatedServices });
+                          }} style={adminInputStyle} />
+                        </div>
+                        <div>
+                          <label style={adminLabelStyle}>Short Description</label>
+                          <input type="text" value={serv.shortDesc} onChange={(e) => {
+                            const updatedServices = [...localContent.services];
+                            updatedServices[index].shortDesc = e.target.value;
+                            setLocalContent({ ...localContent, services: updatedServices });
+                          }} style={adminInputStyle} />
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
+                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save All Services</button>
               </div>
             )}
 
-            {/* TAB 5: PORTFOLIO */}
+            {/* PORTFOLIO TAB */}
             {activeTab === 'portfolio' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '1.25rem' }}>
-                  Manage Portfolio
-                </h3>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(content.portfolio || []).map((p, i) => (
-                    <div key={p.id} className="card-glass" style={{ padding: '1.25rem' }}>
-                      <ImageUploadField 
-                        label={`Project Image: ${p.title}`}
-                        value={p.imageUrl}
-                        onChange={(newUrl) => {
-                          const newP = [...content.portfolio];
-                          newP[i].imageUrl = newUrl;
-                          updateSection('portfolio', newP);
-                          handleSaveNotify();
-                        }}
-                      />
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Portfolio Projects (9 Projects)</h3>
+                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                  {(localContent.portfolio || []).map((port, index) => (
+                    <div key={port.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
+                      <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>{port.category}: {port.title}</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '0.75rem' }}>
+                        <input type="text" placeholder="Category" value={port.category} onChange={(e) => {
+                          const updated = [...localContent.portfolio];
+                          updated[index].category = e.target.value;
+                          setLocalContent({ ...localContent, portfolio: updated });
+                        }} style={adminInputStyle} />
+                        <input type="text" placeholder="Title" value={port.title} onChange={(e) => {
+                          const updated = [...localContent.portfolio];
+                          updated[index].title = e.target.value;
+                          setLocalContent({ ...localContent, portfolio: updated });
+                        }} style={adminInputStyle} />
+                      </div>
                     </div>
                   ))}
                 </div>
+                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Portfolio Changes</button>
               </div>
             )}
 
-            {/* JSON */}
-            {activeTab === 'json' && (
+            {/* CLIENTS TAB */}
+            {activeTab === 'clients' && (
               <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '1.25rem' }}>
-                  Export / Import JSON
-                </h3>
-
-                <button 
-                  onClick={downloadJsonFile}
-                  className="btn-agatha-gold"
-                  style={{ marginBottom: '1.5rem' }}
-                >
-                  <Download size={16} /> Download Backup
-                </button>
-
-                <div className="card-glass" style={{ padding: '1.25rem' }}>
-                  <textarea 
-                    rows={6}
-                    placeholder="Paste JSON configuration..."
-                    value={importJsonText}
-                    onChange={(e) => setImportJsonText(e.target.value)}
-                    style={{ ...textareaStyle, fontFamily: 'monospace', fontSize: '0.8rem' }}
-                  />
-
-                  <button 
-                    onClick={handleImportSubmit}
-                    className="btn-agatha-navy"
-                    style={{ marginTop: '1rem' }}
-                  >
-                    <Upload size={14} /> Import Config
-                  </button>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Client Brands & Case Studies (8 Clients)</h3>
+                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                  {(localContent.clients || []).map((cli, index) => (
+                    <div key={cli.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
+                      <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>Brand: {cli.name}</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                        <input type="text" placeholder="Brand Name" value={cli.name} onChange={(e) => {
+                          const updated = [...localContent.clients];
+                          updated[index].name = e.target.value;
+                          setLocalContent({ ...localContent, clients: updated });
+                        }} style={adminInputStyle} />
+                        <input type="text" placeholder="Category" value={cli.category} onChange={(e) => {
+                          const updated = [...localContent.clients];
+                          updated[index].category = e.target.value;
+                          setLocalContent({ ...localContent, clients: updated });
+                        }} style={adminInputStyle} />
+                      </div>
+                      <textarea rows={2} placeholder="Description" value={cli.desc} onChange={(e) => {
+                        const updated = [...localContent.clients];
+                        updated[index].desc = e.target.value;
+                        setLocalContent({ ...localContent, clients: updated });
+                      }} style={adminInputStyle} />
+                    </div>
+                  ))}
                 </div>
+                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Clients Changes</button>
+              </div>
+            )}
+
+            {/* TESTIMONIALS TAB */}
+            {activeTab === 'testimonials' && (
+              <div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Testimonials Reviews (5 Reviews)</h3>
+                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                  {(localContent.testimonials || []).map((t, index) => (
+                    <div key={t.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
+                      <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>{t.name} ({t.title})</div>
+                      <textarea rows={2} value={t.quote} onChange={(e) => {
+                        const updated = [...localContent.testimonials];
+                        updated[index].quote = e.target.value;
+                        setLocalContent({ ...localContent, testimonials: updated });
+                      }} style={adminInputStyle} />
+                    </div>
+                  ))}
+                </div>
+                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save Testimonials</button>
+              </div>
+            )}
+
+            {/* FAQS TAB */}
+            {activeTab === 'faqs' && (
+              <div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>Frequently Asked Questions</h3>
+                <div style={{ display: 'grid', gap: '1.25rem' }}>
+                  {(localContent.faqs || []).map((f, index) => (
+                    <div key={f.id} style={{ border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', background: '#f8fafc' }}>
+                      <label style={adminLabelStyle}>Q{index + 1}: Question</label>
+                      <input type="text" value={f.question} onChange={(e) => {
+                        const updated = [...localContent.faqs];
+                        updated[index].question = e.target.value;
+                        setLocalContent({ ...localContent, faqs: updated });
+                      }} style={{ ...adminInputStyle, marginBottom: '0.5rem' }} />
+                      <label style={adminLabelStyle}>Answer</label>
+                      <textarea rows={2} value={f.answer} onChange={(e) => {
+                        const updated = [...localContent.faqs];
+                        updated[index].answer = e.target.value;
+                        setLocalContent({ ...localContent, faqs: updated });
+                      }} style={adminInputStyle} />
+                    </div>
+                  ))}
+                </div>
+                <button onClick={handleSaveAll} style={saveBtnStyle}><Save size={16} /> Save FAQs</button>
               </div>
             )}
 
           </div>
-
         </div>
-      </div>
 
-      <style>{`
-        @media (min-width: 768px) {
-          .admin-container {
-            width: 90% !important;
-            height: 90vh !important;
-            border-radius: 20px !important;
-          }
-        }
-        @media (max-width: 767px) {
-          .admin-body {
-            flex-direction: column !important;
-          }
-          .admin-sidebar {
-            width: 100% !important;
-            flex-direction: row !important;
-            overflow-x: auto !important;
-            padding: 0.5rem !important;
-            border-right: none !important;
-            border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-          }
-          .admin-sidebar button {
-            white-space: nowrap !important;
-            padding: 0.4rem 0.75rem !important;
-            font-size: 0.75rem !important;
-          }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-const ImageUploadField = ({ label, value, onChange }) => {
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (uploadEvent) => {
-      const dataUrl = uploadEvent.target.result;
-      onChange(dataUrl);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  return (
-    <div>
-      <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.4rem' }}>
-        {label}
-      </label>
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem' }}>
-        {value ? (
-          <div style={{ position: 'relative', width: '70px', height: '55px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.2)', background: '#000' }}>
-            <img src={value} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            <button 
-              onClick={() => onChange('')}
-              style={{
-                position: 'absolute',
-                top: '2px',
-                right: '2px',
-                background: 'rgba(239, 68, 68, 0.85)',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '50%',
-                width: '18px',
-                height: '18px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer'
-              }}
-            >
-              <X size={10} />
-            </button>
-          </div>
-        ) : (
-          <div style={{
-            width: '70px',
-            height: '55px',
-            borderRadius: '8px',
-            border: '2px dashed rgba(255, 255, 255, 0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#64748b'
-          }}>
-            <ImageIcon size={20} />
-          </div>
-        )}
-
-        <div style={{ flex: 1, minWidth: '200px', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <label style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.45rem 1rem',
-              background: '#edb403',
-              color: '#0c1421',
-              fontWeight: 700,
-              fontSize: '0.75rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              textTransform: 'uppercase'
-            }}>
-              <Upload size={13} />
-              <span>Choose File</span>
-              <input 
-                type="file" 
-                accept="image/*" 
-                onChange={handleFileUpload}
-                style={{ display: 'none' }} 
-              />
-            </label>
-          </div>
-
-          <input 
-            type="text" 
-            placeholder="https://example.com/image.jpg"
-            value={value || ''} 
-            onChange={(e) => onChange(e.target.value)}
-            style={inputStyle}
-          />
-        </div>
       </div>
     </div>
   );
 };
 
-const TabButton = ({ id, label, icon: Icon, active, onClick }) => {
-  const isActive = active === id;
-  return (
-    <button
-      onClick={() => onClick(id)}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.6rem',
-        width: '100%',
-        padding: '0.6rem 0.85rem',
-        borderRadius: '8px',
-        fontSize: '0.8rem',
-        fontWeight: isActive ? 700 : 500,
-        textAlign: 'left',
-        background: isActive ? 'rgba(237, 180, 3, 0.2)' : 'transparent',
-        color: isActive ? '#edb403' : 'rgba(255, 255, 255, 0.65)',
-        border: `1px solid ${isActive ? 'rgba(237, 180, 3, 0.4)' : 'transparent'}`
-      }}
-    >
-      <Icon size={16} />
-      <span>{label}</span>
-    </button>
-  );
-};
-
-const labelStyle = {
+const adminLabelStyle = {
   display: 'block',
-  fontSize: '0.8rem',
   fontWeight: 700,
-  color: '#ffffff',
-  marginBottom: '0.35rem'
+  fontSize: '0.85rem',
+  marginBottom: '0.35rem',
+  color: '#0f172a'
 };
 
-const inputStyle = {
+const adminInputStyle = {
   width: '100%',
-  padding: '0.6rem 0.85rem',
-  background: 'rgba(255, 255, 255, 0.05)',
-  border: '1px solid rgba(255, 255, 255, 0.12)',
-  borderRadius: '6px',
-  color: '#ffffff',
-  fontSize: '0.85rem',
-  outline: 'none'
+  padding: '0.65rem 0.85rem',
+  borderRadius: '8px',
+  border: '1px solid #cbd5e1',
+  background: '#ffffff',
+  color: '#0f172a',
+  fontSize: '0.9rem',
+  fontFamily: 'inherit'
 };
 
-const textareaStyle = {
-  width: '100%',
-  padding: '0.6rem 0.85rem',
-  background: 'rgba(255, 255, 255, 0.05)',
-  border: '1px solid rgba(255, 255, 255, 0.12)',
-  borderRadius: '6px',
-  color: '#ffffff',
+const saveBtnStyle = {
+  marginTop: '1.5rem',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  padding: '0.75rem 1.5rem',
+  background: '#edb403',
+  color: '#0f172a',
+  fontWeight: 700,
   fontSize: '0.85rem',
-  outline: 'none',
-  resize: 'vertical'
+  borderRadius: '8px',
+  boxShadow: '0 4px 15px rgba(237, 180, 3, 0.4)'
 };

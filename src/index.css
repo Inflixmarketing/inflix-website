@@ -1,4 +1,4 @@
-/* Modern CSS Design System - Inflix Marketing Solutions (Full Mobile Responsiveness) */
+/* Modern CSS Design System - Inflix Marketing Solutions (Default Bright Mode & Full Mobile Responsiveness) */
 
 @font-face {
   font-family: 'Ancola';
@@ -9,15 +9,19 @@
 
 :root {
   --color-primary: #edb403;
-  --color-secondary: #173765;
+  --color-secondary: #0f172a;
   --color-accent: #edb403;
-  --color-dark-bg: #0b0c10;
-  --color-surface: #173765;
-  --color-card-dark: #12151c;
+  --color-dark-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-card-dark: #ffffff;
   --color-card-light: #f1f5f9;
-  --color-text-main: #f0f4f8;
-  --color-text-muted: #94a3b8;
-  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
+  --color-heading-text: #0f172a;
+  --color-body-text: #334155;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --logo-text-color: #0f172a;
+  --border-color: rgba(0, 0, 0, 0.08);
   --font-heading: 'Ancola', 'Outfit', 'Syne', sans-serif;
   --font-body: 'Poppins', 'Inter', sans-serif;
   --radius-sm: 8px;
@@ -50,19 +54,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Agatha Grid Lines Background Overlay */
+/* Light Background Grid Overlay */
 .agatha-grid-bg {
-  background-color: #0b0c10;
+  background-color: #f8fafc;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
-  color: #ffffff;
+  color: var(--color-heading-text);
   letter-spacing: -0.02em;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -97,16 +101,18 @@ button {
 .section-category {
   color: var(--color-primary);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .section-title {
   font-size: clamp(1.8rem, 4vw, 3.25rem);
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 1.25rem;
-  color: #ffffff;
+  color: var(--color-heading-text);
   font-family: var(--font-heading);
 }
 
@@ -117,7 +123,7 @@ button {
   justify-content: center;
   gap: 0.6rem;
   background: var(--color-primary);
-  color: #0c1421;
+  color: #0f172a;
   font-weight: 700;
   font-size: 0.875rem;
   padding: 0.85rem 2rem;
@@ -125,16 +131,16 @@ button {
   transition: var(--transition-normal);
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  box-shadow: 0 4px 20px rgba(237, 180, 3, 0.3);
+  box-shadow: 0 4px 20px rgba(237, 180, 3, 0.35);
   text-align: center;
   max-width: 100%;
 }
 
 .btn-agatha-gold:hover {
-  background: #ffffff;
-  color: var(--color-secondary);
+  background: #0f172a;
+  color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.25);
 }
 
 /* Agatha White Button */
@@ -144,7 +150,7 @@ button {
   justify-content: center;
   gap: 0.6rem;
   background: #ffffff;
-  color: #0c1421;
+  color: #0f172a;
   font-weight: 700;
   font-size: 0.875rem;
   padding: 0.85rem 2rem;
@@ -152,31 +158,31 @@ button {
   transition: var(--transition-normal);
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   text-align: center;
   max-width: 100%;
 }
 
 .btn-agatha-white:hover {
   background: var(--color-primary);
-  color: #0c1421;
+  color: #0f172a;
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(237, 180, 3, 0.4);
 }
 
-/* Agatha Navy Button (#173765) */
+/* Agatha Navy / Dark Button */
 .btn-agatha-navy {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: var(--color-secondary);
+  background: #0f172a;
   color: #ffffff;
   font-weight: 700;
   font-size: 0.85rem;
   padding: 0.85rem 2rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   transition: var(--transition-normal);
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -186,14 +192,14 @@ button {
 
 .btn-agatha-navy:hover {
   background: var(--color-primary);
-  color: #0c1421;
+  color: #0f172a;
   transform: translateY(-2px);
 }
 
 /* Circular Arrow Icon Button */
 .circle-arrow-btn {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--color-primary);
   color: #000000;
@@ -207,7 +213,8 @@ button {
 
 .circle-arrow-btn:hover {
   transform: scale(1.08) rotate(45deg);
-  background: #ffffff;
+  background: #0f172a;
+  color: #ffffff;
 }
 
 /* Outlined Capsule Pill */
@@ -215,15 +222,15 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1.8rem;
+  padding: 0.4rem 1.4rem;
   border: 1.5px solid var(--color-primary);
   border-radius: var(--radius-pill);
   font-style: italic;
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 4.5vw, 3.5rem);
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 1;
+  font-size: clamp(1.1rem, 3vw, 2.25rem);
+  font-weight: 600;
+  color: var(--color-heading-text);
+  line-height: 1.2;
   max-width: 100%;
 }
 
@@ -232,66 +239,65 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 2rem;
+  padding: 0.4rem 1.5rem;
   background: var(--color-primary);
   border-radius: var(--radius-pill);
   font-style: italic;
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 4.5vw, 3.5rem);
-  font-weight: 400;
-  color: #0c1421;
-  box-shadow: 0 10px 30px rgba(237, 180, 3, 0.35);
-  line-height: 1;
+  font-size: clamp(1.1rem, 3vw, 2.25rem);
+  font-weight: 600;
+  color: #0f172a;
+  box-shadow: 0 10px 25px rgba(237, 180, 3, 0.35);
+  line-height: 1.2;
   max-width: 100%;
 }
 
 /* Card Styles */
 .card-dark-grid {
-  background: #0d0f14;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 30px 30px;
-  border: 1px solid rgba(237, 180, 3, 0.25);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--radius-md);
   padding: 2rem;
   transition: var(--transition-normal);
-  color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .card-dark-grid:hover {
   transform: translateY(-4px);
   border-color: var(--color-primary);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 35px rgba(237, 180, 3, 0.2);
 }
 
 .card-light-gray {
-  background: #f1f5f9;
+  background: #ffffff;
   color: #0f172a;
   border-radius: var(--radius-md);
   padding: 2rem;
   transition: var(--transition-normal);
   border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.04);
 }
 
 .card-light-gray:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-  border-color: var(--color-secondary);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-primary);
 }
 
 .card-glass {
-  background: var(--color-card-dark);
-  border: 1px solid var(--color-border);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--radius-md);
   padding: 2rem;
   transition: var(--transition-normal);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .card-glass:hover {
   transform: translateY(-4px);
   border-color: var(--color-primary);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .img-hover-container {
@@ -311,21 +317,13 @@ button {
   transform: scale(1.05);
 }
 
-/* ==========================================================================
-   Comprehensive Mobile & Tablet Media Queries (< 992px & < 768px & < 480px)
-   ========================================================================== */
-
+/* Responsive Rules */
 @media (max-width: 991px) {
   .container {
     padding: 0 1.25rem;
   }
-  
   .section-padding {
     padding: 3.5rem 0;
-  }
-
-  .grid-2col {
-    grid-template-columns: 1fr !important;
   }
 }
 
@@ -333,83 +331,19 @@ button {
   html {
     font-size: 15px;
   }
-
   .container {
     padding: 0 1rem;
   }
-
   .section-padding {
     padding: 3rem 0;
   }
-
   .section-title {
     font-size: 1.85rem !important;
     line-height: 1.25;
   }
-
-  .capsule-outline {
-    font-size: 1.5rem !important;
-    padding: 0.4rem 1.2rem !important;
-    margin-right: 0 !important;
-  }
-
-  .capsule-solid {
-    font-size: 1.5rem !important;
-    padding: 0.4rem 1.25rem !important;
-  }
-
-  .circle-arrow-btn {
-    width: 48px !important;
-    height: 48px !important;
-  }
-
-  .card-dark-grid, .card-light-gray, .card-glass {
-    padding: 1.35rem !important;
-  }
-
   .btn-agatha-gold, .btn-agatha-white, .btn-agatha-navy {
     padding: 0.75rem 1.4rem !important;
     font-size: 0.8rem !important;
     width: 100% !important;
   }
-
-  /* Footer Agatha CTA Banner Mobile Adjustments */
-  .footer-cta-banner {
-    padding: 2rem 1.25rem !important;
-    flex-direction: column !important;
-    text-align: center !important;
-    align-items: center !important;
-  }
-
-  .footer-cta-banner .circle-cta-hover {
-    width: 130px !important;
-    height: 130px !important;
-    font-size: 0.75rem !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .section-title {
-    font-size: 1.6rem !important;
-  }
-
-  .capsule-outline, .capsule-solid {
-    font-size: 1.2rem !important;
-    padding: 0.35rem 1rem !important;
-  }
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-dark-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-secondary);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
 }

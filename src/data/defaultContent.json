@@ -1,13 +1,13 @@
 {
   "brand": {
     "primaryColor": "#edb403",
-    "secondaryColor": "#173765",
+    "secondaryColor": "#0f172a",
     "accentColor": "#edb403",
-    "darkBg": "#0b0c10",
-    "surfaceBg": "#173765",
-    "cardBg": "#12151c",
+    "darkBg": "#f8fafc",
+    "surfaceBg": "#ffffff",
+    "cardBg": "#ffffff",
     "headingFont": "Ancola",
-    "bodyFont": "Avenir Next Condensed",
+    "bodyFont": "Poppins",
     "siteName": "Inflix Marketing Solutions",
     "tagline": "Driven by Strategy. Powered by Creativity.",
     "contactEmail": "contact@inflixmarketing.com",
@@ -16,20 +16,20 @@
     "logoUrl": ""
   },
   "hero": {
-    "capsuleOutline": "Driven by Strategy",
-    "displayHighlight": "Creative",
-    "titleMain": "Portfolio & Performance",
-    "titleSub": "Digital Agency",
-    "capsuleSolid": "Powered by Creativity",
+    "capsuleOutline": "Driven by Strategy.",
+    "capsuleSolid": "Powered by Creativity.",
+    "displayHighlight": "",
+    "titleMain": "Next-Gen Digital Marketing & Creative Agency",
+    "titleSub": "",
     "description": "We help ambitious brands scale faster through data-driven performance marketing, high-converting content, and strategic brand positioning.",
-    "primaryCta": "LET'S TALK →",
-    "secondaryCta": "EXPLORE SERVICES",
+    "primaryCta": "Get Started Today →",
+    "secondaryCta": "Explore Our Services",
     "heroBgImage": ""
   },
   "about": {
     "category": "About Us",
     "headline": "We Use Our Experience To Get Clients Results",
-    "highlight": "We Are A Creative Agency That Specializes In Web Design, Branding Identity, And Social Media Management. Our Experienced Team Works Closely With Clients To Deliver Customized Solutions That Meet Their Specific Needs.",
+    "highlight": "We Are A Digital Agency That Specializes In Web Design, Branding Identity, And Social Media Management. Our Experienced Team Works Closely With Clients To Deliver Customized Solutions That Meet Their Specific Needs.",
     "body": "At Inflix Marketing Solutions, we turn complex digital marketing challenges into clear growth strategies. From high-converting web experiences to targeted social media campaigns, we engineer every touchpoint to capture attention and convert visitors into loyal customers.",
     "philosophyTitle": "Our Philosophy",
     "philosophy": "We believe marketing should be transparent, data-led, and obsessively focused on ROI—combining bold creativity with actionable metrics to deliver sustained business growth.",
@@ -65,7 +65,7 @@
   "servicesHeader": {
     "category": "Services",
     "headline": "What Services We Offer You ?",
-    "paragraph": "At Inflix Marketing Solutions, we deliver end-to-end performance marketing and strategic digital management. We build customized, multi-channel growth systems that lower customer acquisition costs."
+    "paragraph": "We provide growth-driven digital marketing solutions to scale your business online. From target audience acquisition to maximum campaign conversions, we craft data-backed strategies that deliver measurable results."
   },
   "services": [
     {
@@ -75,13 +75,13 @@
       "heroTitle": "Branding Identity Services",
       "heroSub": "Build a powerful, memorable, and unique brand visual identity that captivates your ideal audience and establishes immediate market trust.",
       "overviewTitle": "Strategic Brand Building That Sets You Apart",
-      "overviewContent": "Your brand is more than just a logo—it's the total experience your customers have with your business. At Inflix Marketing Solutions, we craft cohesive brand identities that communicate your company's values, authority, and unique selling propositions clearly.",
+      "overviewContent": "Your brand is more than just a logo—it’s the total experience your customers have with your business. At Inflix Marketing Solutions, we craft cohesive brand identities that communicate your company’s values, authority, and unique selling propositions clearly.",
       "imageUrl": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "Brand Strategy & Positioning: Defining target audience and messaging",
-        "Logo Design & Identity System: Primary and secondary logo marks",
-        "Visual Style Guidelines: Color palettes, typography, and icon rules",
-        "Brand Touchpoints: Business cards, social headers, and collateral"
+        "Brand Strategy & Positioning: Defining your target audience, core messaging, and competitive positioning.",
+        "Logo Design & Identity System: Creating versatile primary and secondary logos designed for modern digital platforms.",
+        "Visual Style Guidelines: Detailed brand guidelines covering typography, color palettes, icon styles, and image usage.",
+        "Brand Touchpoints: Designing business cards, stationery, social media headers, and marketing collateral."
       ]
     },
     {
@@ -94,10 +94,10 @@
       "overviewContent": "A company's website is its primary digital storefront. We build modern, secure, and mobile-responsive websites designed around seamless user journeys and conversion optimization.",
       "imageUrl": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "Custom Responsive Web Design: Perfect across mobile and desktop",
-        "Speed & Performance Optimization: Lightning-fast page loads",
-        "SEO-Friendly Architecture: Optimized technical layout for Google",
-        "Conversion Rate Optimization (CRO): High-impact CTAs and forms"
+        "Custom Responsive Web Design: Optimized for perfect display across smartphones, tablets, and desktop devices.",
+        "Speed & Performance Optimization: Clean code architecture to ensure lightning-fast page loading times.",
+        "SEO-Friendly Architecture: On-page technical SEO structure to maximize organic Google visibility.",
+        "Conversion Rate Optimization (CRO): Strategic Call-To-Action (CTA) placement and lead capture forms."
       ]
     },
     {
@@ -110,10 +110,10 @@
       "overviewContent": "Great design goes beyond aesthetics—it solves user friction. Our UI/UX design process focuses on understanding consumer behavior to build intuitive navigation flows that guide users effortlessly toward conversion.",
       "imageUrl": "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "User Research & Wireframing: User journey mapping and structural layouts",
-        "Interactive Prototyping: Clickable high-fidelity product prototypes",
-        "Interface Design (UI): Sleek visual systems aligned with brand identity",
-        "Usability Testing: Layout refinement based on behavior analytics"
+        "User Research & Wireframing: Mapping out user journeys and structural interactive wireframes.",
+        "Interactive Prototyping: Clickable high-fidelity prototypes to visualize digital products before development.",
+        "Interface Design (UI): Modern visual interfaces aligned with your brand guidelines.",
+        "Usability Testing: Refining layout structures based on real user interactions and behavior data."
       ]
     },
     {
@@ -126,26 +126,26 @@
       "overviewContent": "In a visually crowded digital landscape, high-quality graphics are essential to cut through the noise. We produce compelling designs for advertising campaigns, social channels, and marketing materials.",
       "imageUrl": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "Ad Campaign Creatives: High-converting banners for Meta & Google",
-        "Social Media Graphics: Engaging post templates and story layouts",
-        "Marketing Collateral: Professional brochures, flyers, and pitch decks",
-        "Print & Packaging Design: Packaging assets and corporate prints"
+        "Ad Campaign Creatives: High-converting banner ads for Meta (Facebook/Instagram) and Google Ads.",
+        "Social Media Graphics: Engaging post templates, story layouts, and promotional banners.",
+        "Marketing Materials: Professional brochures, flyers, pitch decks, and email newsletters.",
+        "Print Design: Packaging, banner prints, and corporate branding assets."
       ]
     },
     {
       "id": "performance-marketing",
       "title": "Performance Marketing",
-      "shortDesc": "Data-driven Meta, Google, and PPC campaigns structured specifically to target high-intent clients and scale return on ad spend (ROAS).",
+      "shortDesc": "Targeted Meta, Google, and PPC campaigns designed to lower customer acquisition costs and maximize your business ROI.",
       "heroTitle": "Performance Marketing & PPC",
       "heroSub": "Data-driven ad campaigns designed to generate high-quality leads, lower acquisition costs, and maximize ROAS.",
       "overviewTitle": "Scalable Customer Acquisition Engines",
       "overviewContent": "Stop wasting budget on vanity metrics. Our performance marketing strategies leverage precision audience targeting, A/B ad testing, and real-time optimization across Meta, Google, and LinkedIn to generate predictable business growth.",
       "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "Meta Ads (Facebook & Instagram): Precision lead gen & retargeting",
-        "Google Search & PPC Ads: Capturing high-intent customer queries",
-        "Funnel Building & Analytics: Full-funnel tracking setup and CAC tracking",
-        "Ad Creative & Copy Testing: Continuous visual hook & copy optimization"
+        "Meta Ads (Facebook & Instagram): Highly targeted lead generation and retargeting campaigns.",
+        "Google Search & PPC Ads: Capturing high-intent customer search queries at the exact moment of demand.",
+        "Funnel Building & Analytics: End-to-end tracking setups to monitor conversion data and CAC.",
+        "Ad Creative & Copy Testing: Continuous testing of visual hooks and copy to improve click-through rates."
       ]
     },
     {
@@ -158,10 +158,10 @@
       "overviewContent": "Video content is currently the highest-performing media type across all social platforms. We script, edit, and produce high-converting short-form reels, product showcases, and brand videos designed to keep viewers engaged.",
       "imageUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "Short-Form Reels & Shorts: Dynamic 15–60s edits for IG, Shorts, TikTok",
-        "Performance Video Ads: Direct response video ads engineered for sales",
-        "Motion Graphics & Animations: Eye-catching transitions and text effects",
-        "Scriptwriting & Production: Strategic messaging and audio balancing"
+        "Short-Form Reels & Shorts: Dynamic 15–60 second video edits tailored for Instagram, YouTube Shorts, and TikTok.",
+        "Performance Video Ads: High-hook direct response ads built to boost ad conversions.",
+        "Motion Graphics & Animations: Eye-catching visual effects, text overlays, and graphic transitions.",
+        "Video Scriptwriting & Editing: Strategic messaging, audio balancing, and color grading."
       ]
     },
     {
@@ -174,26 +174,26 @@
       "overviewContent": "Great design gets attention, but compelling copywriting closes the sale. We write clear, action-oriented messaging that resonates with your target audience and communicates your unique market value clearly.",
       "imageUrl": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "Sales & Landing Page Copy: Direct response messaging built for leads",
-        "Ad Copywriting: High-hook copy for Meta and Google search ads",
-        "SEO Blog & Article Content: Value-driven posts ranking on Google",
-        "Email Marketing Copy: High-converting nurture and sales sequences"
+        "Sales & Landing Page Copy: High-converting direct response website copy structured for lead capture.",
+        "Ad Copywriting: High-hook messaging for social media ads and Google search listings.",
+        "SEO Blog & Content Creation: Value-driven article content written to rank on search engine results.",
+        "Email Marketing Copy: Nurture sequences and sales outreach emails designed for open and click rates."
       ]
     },
     {
       "id": "social-media-management",
       "title": "Social Media Management",
-      "shortDesc": "End-to-end account management, content calendar planning, and audience engagement strategies tailored to establish industry authority.",
+      "shortDesc": "Engaging content strategy, viral reels, and creative campaign management to turn followers into loyal paying customers.",
       "heroTitle": "Social Media & Digital Marketing",
       "heroSub": "Comprehensive social media growth management, SEO, and multi-channel marketing campaigns that scale your digital footprint.",
       "overviewTitle": "Full-Funnel Digital Growth & Online Management",
       "overviewContent": "Establish market leadership with a structured digital marketing campaign. We manage your complete online presence—combining organic social media growth, SEO optimization, and audience engagement strategies.",
       "imageUrl": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80",
       "deliverables": [
-        "Social Media Management: Content calendars, posting, and profile optimization",
-        "Search Engine Optimization (SEO): Technical, on-page, and off-page SEO",
-        "Audience Engagement & Community: Active management for loyal followers",
-        "Monthly Performance Reports: Comprehensive analytics on ROI and traffic"
+        "Social Media Strategy & Management: Content calendar planning, posting, and profile optimization.",
+        "Search Engine Optimization (SEO): Technical, on-page, and off-page SEO strategies for organic rankings.",
+        "Audience Engagement & Community: Active management and engagement to cultivate a loyal follower base.",
+        "Monthly Performance Reporting: Comprehensive analytics reports showing traffic, lead growth, and ROI metrics."
       ]
     }
   ],
@@ -205,45 +205,66 @@
   "portfolio": [
     {
       "id": "p1",
-      "category": "Website",
-      "title": "Prayel - Website Redesign",
-      "desc": "Redesigned landing page user flows with fast loading speeds, increasing lead conversion rate from 2.1% to 6.8%.",
-      "imageUrl": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
+      "category": "Performance Marketing",
+      "title": "E-Commerce Brand – Paid Ads & ROAS Scaling",
+      "desc": "Targeted Meta, Google, and PPC campaigns designed to lower customer acquisition costs and scale revenue.",
+      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "p2",
-      "category": "UI/UX Design",
-      "title": "Astro - Mobile Apps Design",
-      "desc": "Produced sleek wireframes and mobile user experiences for a fast-scaling tech application.",
-      "imageUrl": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+      "category": "Social Media Growth",
+      "title": "Local Business – Viral Reel & Engagement Campaign",
+      "desc": "Engaging content strategy and viral reels management turning followers into loyal customers.",
+      "imageUrl": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "p3",
-      "category": "Graphic Design",
-      "title": "Volex - Logo Branding Design",
-      "desc": "Crafted comprehensive visual guidelines, logo identity, and market messaging for a luxury brand.",
-      "imageUrl": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80"
+      "category": "Search Engine Optimization",
+      "title": "B2B Portal – Organic Traffic & Lead Gen Boost",
+      "desc": "On-page and technical SEO strategy driving high-intent organic leads to enterprise portal.",
+      "imageUrl": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "p4",
-      "category": "Graphic Design",
-      "title": "Eagent - Mockup Design",
-      "desc": "Structured eco-packaging design and product photography assets that expanded brand reach.",
-      "imageUrl": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80"
+      "category": "Brand Strategy",
+      "title": "Tech Startup – Complete Brand Identity & Positioning",
+      "desc": "Comprehensive visual branding, logo mark identity, and market messaging framework.",
+      "imageUrl": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "p5",
-      "category": "Brand Strategy",
-      "title": "Damour Perfumes - Premium Packaging",
-      "desc": "Crafted luxurious visual branding, high-converting product assets, and Meta ad creatives.",
-      "imageUrl": "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80"
+      "category": "Web & Conversion",
+      "title": "High-Converting Landing Page Redesign",
+      "desc": "Ultra-fast responsive web build structured specifically for lead capture and high conversion rates.",
+      "imageUrl": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "p6",
-      "category": "Performance Marketing",
-      "title": "E-Commerce Brand – Paid Ads ROAS",
-      "desc": "Scaled paid ad campaigns on Meta & Google with precise retargeting funnels, driving a 4.2x ROAS increase.",
-      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+      "category": "Content Marketing",
+      "title": "Influencer Outreach & Campaign Strategy",
+      "desc": "Strategic creator partnerships and content distribution scaling organic market reach.",
+      "imageUrl": "https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p7",
+      "category": "Branding & Digital Marketing",
+      "title": "Dharani Agri Life - Brand Positioning & Marketing",
+      "desc": "Developed a cohesive brand identity and targeted lead generation campaigns to build market authority in the agricultural sector.",
+      "imageUrl": "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p8",
+      "category": "Graphic Design & E-Commerce",
+      "title": "Damour Perfumes - Premium Packaging & Ad Creatives",
+      "desc": "Crafted luxurious visual branding, high-converting product photography assets, and Meta ad creatives for high-end fragrances.",
+      "imageUrl": "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p9",
+      "category": "Web Development & SEO",
+      "title": "Ron Rehabilitation Center - Website & Local SEO Strategy",
+      "desc": "Designed an empathetic, accessible responsive website combined with local SEO optimizations to drive patient inquiries.",
+      "imageUrl": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80"
     }
   ],
   "clientsHeader": {
@@ -318,22 +339,22 @@
   "process": [
     {
       "num": "01.",
-      "title": "Discovery And Planning",
+      "title": "Discovery & Strategy",
       "desc": "We analyze your business goals, target audience, and competitive landscape to build a customized growth blueprint."
     },
     {
       "num": "02.",
-      "title": "Analytics And Measurement",
+      "title": "Content & Creative Development",
       "desc": "Our team crafts high-converting ad copy, visual assets, and strategic marketing materials aligned with your brand identity."
     },
     {
       "num": "03.",
-      "title": "Product Development",
+      "title": "Campaign Execution & Ads",
       "desc": "We deploy multi-channel ad campaigns across Meta, Google, and social platforms with precise targeting."
     },
     {
       "num": "04.",
-      "title": "Delivery And Launch",
+      "title": "Analytics & Continuous Scaling",
       "desc": "We track performance metrics constantly, refining campaign tactics to maximize lead quality and lower acquisition costs."
     }
   ],
