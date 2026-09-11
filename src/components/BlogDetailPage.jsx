@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
+import { ComingSoonOverlay } from './ComingSoonOverlay';
 
 export const BlogDetailPage = () => {
   const { selectedBlog, navigateToView } = useContent();
@@ -13,6 +14,16 @@ export const BlogDetailPage = () => {
           Back To Home
         </button>
       </div>
+    );
+  }
+
+  if (selectedBlog.comingSoon?.enabled) {
+    return (
+      <ComingSoonOverlay 
+        title={selectedBlog.title} 
+        message={selectedBlog.comingSoon?.message} 
+        imageUrl={selectedBlog.comingSoon?.imageUrl || selectedBlog.imageUrl} 
+      />
     );
   }
 

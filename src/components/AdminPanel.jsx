@@ -21,7 +21,11 @@ import {
   Upload,
   Key,
   Layers,
-  Menu
+  Menu,
+  Share2,
+  ShieldCheck,
+  ToggleLeft,
+  ToggleRight
 } from 'lucide-react';
 
 // Reusable Image Uploader with File Picker, URL input, Replace, Delete & Live Preview
@@ -321,6 +325,9 @@ export const AdminPanel = () => {
     { id: 'testimonials', label: `Testimonials (${content.testimonials?.length || 0})`, icon: MessageSquare },
     { id: 'faqs', label: `FAQs (${content.faqs?.length || 0})`, icon: HelpCircle },
     { id: 'blogs', label: `Blogs (${content.blogs?.length || 0})`, icon: FileText },
+    { id: 'social', label: 'Social Media Links', icon: Share2 },
+    { id: 'privacy', label: 'Privacy Policy', icon: ShieldCheck },
+    { id: 'terms', label: 'Terms of Service', icon: FileText },
     { id: 'settings', label: 'Security & Settings', icon: Key }
   ];
 
@@ -391,7 +398,7 @@ export const AdminPanel = () => {
             />
           )}
 
-          {/* Left Sidebar Drawer (Starts strictly below 65px header) */}
+          {/* Left Sidebar Drawer (Starts strictly below 60px header) */}
           <aside className={`admin-sidebar-drawer ${mobileSidebarOpen ? 'open' : ''}`} style={sidebarContainerStyle}>
             {sidebarNavItems.map((tab) => {
               const Icon = tab.icon;
@@ -414,25 +421,6 @@ export const AdminPanel = () => {
                 </button>
               );
             })}
-
-            <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(237, 180, 3, 0.2)' }}>
-              <button 
-                onClick={resetToDefaults}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  color: '#f87171',
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  padding: '0.5rem',
-                  width: '100%',
-                  cursor: 'pointer'
-                }}
-              >
-                <RefreshCw size={14} /> Reset System Defaults
-              </button>
-            </div>
           </aside>
 
           {/* Right Main Content Area (Starts strictly below 65px header) */}
@@ -974,7 +962,205 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* 10. SECURITY & SETTINGS */}
+            {/* 10. SOCIAL MEDIA & FOOTER LOGO CMS */}
+            {activeTab === 'social' && (
+              <div>
+                <h2 style={tabHeaderTitleStyle}>Social Media & Global Controls</h2>
+
+                {/* Coming Soon Toggle */}
+                <div className="card-glass" style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#ffffff', margin: 0 }}>
+                      Global Coming Soon Page Mode
+                    </h3>
+                    <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: '0.25rem 0 0 0' }}>
+                      When enabled, Detail pages (Services, Portfolio, Blogs) will render a high-converting "Coming Soon" screen.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => updateSectionState('comingSoonMode', !content.comingSoonMode)}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      background: content.comingSoonMode ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)',
+                      color: content.comingSoonMode ? '#f87171' : '#10b981',
+                      border: content.comingSoonMode ? '1px solid #f87171' : '1px solid #10b981',
+                      fontWeight: 700,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {content.comingSoonMode ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
+                    {content.comingSoonMode ? 'Coming Soon ACTIVE' : 'Standard Mode'}
+                  </button>
+                </div>
+
+                {/* Footer Logo Uploader */}
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <ImageUploader 
+                    label="Footer Specific Logo Image (Optional)"
+                    value={content.brand?.footerLogoUrl || ''}
+                    onChange={(url) => updateSectionState('brand', { ...content.brand, footerLogoUrl: url })}
+                    placeholder="Paste Footer Logo URL or Upload File"
+                  />
+                </div>
+
+                {/* Social Media Links Form */}
+                <div className="card-glass">
+                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1.25rem' }}>
+                    Social Media Profiles & URLs
+                  </h3>
+                  
+                  {['facebook', 'instagram', 'linkedin', 'twitter', 'youtube', 'whatsapp'].map((platform) => {
+                    const currentObj = content.brand?.socialLinks?.[platform] || { url: '', enabled: true };
+                    return (
+                      <div key={platform} style={{ display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
+                        <span style={{ textTransform: 'capitalize', fontWeight: 600, color: '#EDB403', fontSize: '0.85rem' }}>
+                          {platform}
+                        </span>
+                        <input
+                          type="text"
+                          value={currentObj.url || ''}
+                          onChange={(e) => {
+                            const updatedLinks = {
+                              ...content.brand?.socialLinks,
+                              [platform]: { ...currentObj, url: e.target.value }
+                            };
+                            updateSectionState('brand', { ...content.brand, socialLinks: updatedLinks });
+                          }}
+                          placeholder={`Enter ${platform} profile URL`}
+                          style={adminInputStyle}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updatedLinks = {
+                              ...content.brand?.socialLinks,
+                              [platform]: { ...currentObj, enabled: !currentObj.enabled }
+                            };
+                            updateSectionState('brand', { ...content.brand, socialLinks: updatedLinks });
+                          }}
+                          style={{
+                            padding: '0.4rem 0.75rem',
+                            borderRadius: '6px',
+                            background: currentObj.enabled ? 'rgba(16, 185, 129, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+                            color: currentObj.enabled ? '#10b981' : '#94a3b8',
+                            border: currentObj.enabled ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(148, 163, 184, 0.3)',
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {currentObj.enabled ? 'Enabled' : 'Disabled'}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* 11. PRIVACY POLICY CMS */}
+            {activeTab === 'privacy' && (
+              <div>
+                <h2 style={tabHeaderTitleStyle}>Privacy Policy Page CMS</h2>
+
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>PAGE TITLE</label>
+                    <input 
+                      type="text" 
+                      value={content.privacyPolicy?.title || ''} 
+                      onChange={(e) => updateSectionState('privacyPolicy', { ...content.privacyPolicy, title: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>SEO TITLE</label>
+                    <input 
+                      type="text" 
+                      value={content.privacyPolicy?.seoTitle || ''} 
+                      onChange={(e) => updateSectionState('privacyPolicy', { ...content.privacyPolicy, seoTitle: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>SEO DESCRIPTION</label>
+                    <input 
+                      type="text" 
+                      value={content.privacyPolicy?.seoDesc || ''} 
+                      onChange={(e) => updateSectionState('privacyPolicy', { ...content.privacyPolicy, seoDesc: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={adminLabelStyle}>PRIVACY POLICY DOCUMENT BODY</label>
+                    <textarea 
+                      rows={12} 
+                      value={content.privacyPolicy?.content || ''} 
+                      onChange={(e) => updateSectionState('privacyPolicy', { ...content.privacyPolicy, content: e.target.value })}
+                      style={{ ...adminInputStyle, lineHeight: 1.6 }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 12. TERMS OF SERVICE CMS */}
+            {activeTab === 'terms' && (
+              <div>
+                <h2 style={tabHeaderTitleStyle}>Terms of Service Page CMS</h2>
+
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>PAGE TITLE</label>
+                    <input 
+                      type="text" 
+                      value={content.termsOfService?.title || ''} 
+                      onChange={(e) => updateSectionState('termsOfService', { ...content.termsOfService, title: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>SEO TITLE</label>
+                    <input 
+                      type="text" 
+                      value={content.termsOfService?.seoTitle || ''} 
+                      onChange={(e) => updateSectionState('termsOfService', { ...content.termsOfService, seoTitle: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>SEO DESCRIPTION</label>
+                    <input 
+                      type="text" 
+                      value={content.termsOfService?.seoDesc || ''} 
+                      onChange={(e) => updateSectionState('termsOfService', { ...content.termsOfService, seoDesc: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={adminLabelStyle}>TERMS OF SERVICE DOCUMENT BODY</label>
+                    <textarea 
+                      rows={12} 
+                      value={content.termsOfService?.content || ''} 
+                      onChange={(e) => updateSectionState('termsOfService', { ...content.termsOfService, content: e.target.value })}
+                      style={{ ...adminInputStyle, lineHeight: 1.6 }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 13. SECURITY & SETTINGS */}
             {activeTab === 'settings' && (
               <div>
                 <h2 style={tabHeaderTitleStyle}>Security & Password Settings</h2>

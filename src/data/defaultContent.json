@@ -13,7 +13,28 @@
     "contactEmail": "contact@inflixmarketing.com",
     "contactPhone": "+91 98765 43210",
     "location": "Hyderabad, India",
-    "logoUrl": ""
+    "logoUrl": "",
+    "footerLogoUrl": "",
+    "socialLinks": {
+      "facebook": { "url": "https://facebook.com/inflixmarketing", "enabled": true },
+      "instagram": { "url": "https://instagram.com/inflixmarketing", "enabled": true },
+      "linkedin": { "url": "https://linkedin.com/company/inflixmarketing", "enabled": true },
+      "twitter": { "url": "https://twitter.com/inflixmarketing", "enabled": true },
+      "youtube": { "url": "https://youtube.com/@inflixmarketing", "enabled": true },
+      "whatsapp": { "url": "https://wa.me/919876543210", "enabled": true }
+    }
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "seoTitle": "Privacy Policy | Inflix Marketing Solutions",
+    "seoDesc": "Read the Privacy Policy for Inflix Marketing Solutions to understand how we collect, protect, and handle your data.",
+    "content": "At Inflix Marketing Solutions, accessible from https://inflixmarketing.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Inflix Marketing Solutions and how we use it.\n\nInformation We Collect:\nWe collect information you provide directly to us when requesting marketing consultations, filling out contact forms, or communicating with our team. This may include your name, email address, phone number, company name, and campaign requirements.\n\nHow We Use Your Information:\n1. To provide, operate, and maintain our digital marketing and agency services.\n2. To improve, personalize, and expand our website offerings.\n3. To understand and analyze how you use our website.\n4. To communicate with you regarding project updates, campaign performance, and promotional inquiries.\n5. To prevent fraudulent transactions and maintain data security.\n\nData Security:\nWe implement industry-standard encryption and security measures to protect your personal information against unauthorized access, alteration, or disclosure."
+  },
+  "termsOfService": {
+    "title": "Terms of Service",
+    "seoTitle": "Terms of Service | Inflix Marketing Solutions",
+    "seoDesc": "Read the Terms of Service for using Inflix Marketing Solutions agency services and website.",
+    "content": "Welcome to Inflix Marketing Solutions! These terms and conditions outline the rules and regulations for the use of Inflix Marketing Solutions's Website, located at https://inflixmarketing.in.\n\nBy accessing this website we assume you accept these terms and conditions. Do not continue to use Inflix Marketing Solutions if you do not agree to take all of the terms and conditions stated on this page.\n\nIntellectual Property Rights:\nUnless otherwise stated, Inflix Marketing Solutions and/or its licensors own the intellectual property rights for all material on Inflix Marketing Solutions. All intellectual property rights are reserved.\n\nAgency Services & Client Commitments:\n1. All marketing campaigns, ad budgets, and creative deliverables are subject to mutually agreed service contracts.\n2. Inflix Marketing Solutions is committed to transparent reporting, performance optimization, and data security.\n3. Clients retain ownership of their proprietary brand assets and credentials provided during onboarding.\n\nLimitation of Liability:\nIn no event shall Inflix Marketing Solutions, nor any of its officers, directors, and employees, be held liable for anything arising out of or in any way connected with your use of this website."
   },
   "hero": {
     "capsuleOutline": "Driven by Strategy.",

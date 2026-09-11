@@ -1,11 +1,22 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
-import { Mail, Phone, MapPin, Instagram, Facebook, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Facebook, Linkedin, Twitter, Youtube, MessageCircle, Lock } from 'lucide-react';
 
 export const Footer = () => {
-  const { content, setActiveTab } = useContent();
+  const { content, navigateToView } = useContent();
   const brand = content.brand || {};
   const cta = content.ctaBanner || {};
+  const socialLinks = brand.socialLinks || {};
+  const footerLogo = brand.footerLogoUrl || brand.logoUrl;
+
+  const socialMap = [
+    { key: 'facebook', icon: Facebook, label: 'Facebook', defaultUrl: 'https://facebook.com/inflixmarketing' },
+    { key: 'instagram', icon: Instagram, label: 'Instagram', defaultUrl: 'https://instagram.com/inflixmarketing' },
+    { key: 'linkedin', icon: Linkedin, label: 'LinkedIn', defaultUrl: 'https://linkedin.com/company/inflixmarketing' },
+    { key: 'twitter', icon: Twitter, label: 'Twitter / X', defaultUrl: 'https://twitter.com/inflixmarketing' },
+    { key: 'youtube', icon: Youtube, label: 'YouTube', defaultUrl: 'https://youtube.com/@inflixmarketing' },
+    { key: 'whatsapp', icon: MessageCircle, label: 'WhatsApp', defaultUrl: 'https://wa.me/919876543210' }
+  ];
 
   return (
     <footer id="contact" style={{
@@ -76,34 +87,60 @@ export const Footer = () => {
           gap: '2.5rem',
           marginBottom: '3rem'
         }}>
-          {/* Column 1: Brand Info */}
+          {/* Column 1: Brand Info & Footer Logo */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.6rem', color: '#ffffff', letterSpacing: '0.04em' }}>
-                Inflix
-              </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+              {footerLogo ? (
+                <img 
+                  src={footerLogo} 
+                  alt={brand.siteName || "Inflix Marketing Solutions"} 
+                  style={{ height: '42px', maxWidth: '180px', objectFit: 'contain' }} 
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
+              ) : (
+                <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.6rem', color: '#ffffff', letterSpacing: '0.04em' }}>
+                  Inflix
+                </span>
+              )}
             </div>
 
             <p style={{ fontSize: '0.875rem', color: '#E5E7EB', lineHeight: 1.65, marginBottom: '1.25rem' }}>
               Inflix Marketing Solutions specializing in performance marketing, brand identity, web development, SEO, and high-converting creative media.
             </p>
 
-            <div style={{ display: 'flex', gap: '0.65rem' }}>
-              {[Instagram, Facebook, Linkedin, Twitter].map((Icon, i) => (
-                <a key={i} href="#" style={{
-                  width: '34px',
-                  height: '34px',
-                  borderRadius: '50%',
-                  background: 'rgba(237, 180, 3, 0.1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#EDB403',
-                  border: '1px solid rgba(237, 180, 3, 0.3)'
-                }}>
-                  <Icon size={15} />
-                </a>
-              ))}
+            {/* Social Icons List */}
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {socialMap.map(({ key, icon: Icon, label, defaultUrl }) => {
+                const item = socialLinks[key] || {};
+                const isEnabled = item.enabled !== false;
+                const linkUrl = item.url || defaultUrl;
+
+                if (!isEnabled) return null;
+
+                return (
+                  <a 
+                    key={key} 
+                    href={linkUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    title={label}
+                    style={{
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: 'rgba(237, 180, 3, 0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#EDB403',
+                      border: '1px solid rgba(237, 180, 3, 0.3)',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    <Icon size={16} />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -113,11 +150,12 @@ export const Footer = () => {
               Quick Links
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#E5E7EB' }}>
-              <li><a href="#home" onClick={() => setActiveTab('home')}>Home</a></li>
-              <li><a href="#about" onClick={() => setActiveTab('about')}>About Us</a></li>
-              <li><a href="#services" onClick={() => setActiveTab('services')}>Services</a></li>
-              <li><a href="#portfolio" onClick={() => setActiveTab('portfolio')}>Portfolio</a></li>
-              <li><a href="#process" onClick={() => setActiveTab('process')}>Process</a></li>
+              <li><a href="/" onClick={(e) => { e.preventDefault(); navigateToView('home'); }}>Home</a></li>
+              <li><a href="/about" onClick={(e) => { e.preventDefault(); navigateToView('about'); }}>About Us</a></li>
+              <li><a href="/services" onClick={(e) => { e.preventDefault(); navigateToView('services'); }}>Services</a></li>
+              <li><a href="/portfolio" onClick={(e) => { e.preventDefault(); navigateToView('portfolio'); }}>Portfolio</a></li>
+              <li><a href="/process" onClick={(e) => { e.preventDefault(); navigateToView('process'); }}>Process</a></li>
+              <li><a href="/blogs" onClick={(e) => { e.preventDefault(); navigateToView('blogs'); }}>Blogs & Insights</a></li>
             </ul>
           </div>
 
@@ -157,7 +195,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
+        {/* Copyright & Legal Links */}
         <div style={{
           paddingTop: '1.5rem',
           borderTop: '1px solid rgba(237, 180, 3, 0.15)',
@@ -172,9 +210,16 @@ export const Footer = () => {
           <div>
             © {new Date().getFullYear()} Inflix Marketing Solutions. All Rights Reserved.
           </div>
-          <div style={{ display: 'flex', gap: '1.25rem' }}>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+          <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+            <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigateToView('privacy-policy'); }}>Privacy Policy</a>
+            <a href="/terms-of-service" onClick={(e) => { e.preventDefault(); navigateToView('terms-of-service'); }}>Terms of Service</a>
+            <a 
+              href="/admin" 
+              onClick={(e) => { e.preventDefault(); navigateToView('admin'); }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: '#EDB403' }}
+            >
+              <Lock size={12} /> Admin Portal
+            </a>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
 import { ArrowLeft, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ComingSoonOverlay } from './ComingSoonOverlay';
 
 export const ServiceDetailPage = () => {
   const { selectedService, navigateToView } = useContent();
@@ -13,6 +14,16 @@ export const ServiceDetailPage = () => {
           Back To Home
         </button>
       </div>
+    );
+  }
+
+  if (selectedService.comingSoon?.enabled) {
+    return (
+      <ComingSoonOverlay 
+        title={selectedService.title} 
+        message={selectedService.comingSoon?.message} 
+        imageUrl={selectedService.comingSoon?.imageUrl || selectedService.imageUrl} 
+      />
     );
   }
 

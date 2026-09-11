@@ -39,9 +39,33 @@ export const ClientsSection = () => {
             <div key={cli.id} className="card-glass" style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              overflow: 'hidden'
             }}>
               <div>
+                {(cli.imageUrl || cli.logoUrl) && (
+                  <div style={{
+                    width: '100%',
+                    height: '140px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    marginBottom: '1rem',
+                    background: '#0B132B',
+                    border: '1px solid rgba(237, 180, 3, 0.2)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0.5rem'
+                  }}>
+                    <img 
+                      src={cli.imageUrl || cli.logoUrl} 
+                      alt={cli.name} 
+                      style={{ maxHeight: '120px', maxWidth: '100%', objectFit: 'contain' }}
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                  </div>
+                )}
+
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -58,7 +82,8 @@ export const ClientsSection = () => {
                     justifyContent: 'center',
                     color: '#EDB403',
                     border: '1px solid rgba(237, 180, 3, 0.35)',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    flexShrink: 0
                   }}>
                     {cli.logoUrl ? (
                       <img 

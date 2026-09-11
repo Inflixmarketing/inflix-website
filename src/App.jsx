@@ -16,6 +16,9 @@ import { ServiceModal } from './components/ServiceModal';
 import { AdminPanel } from './components/AdminPanel';
 import { ServiceDetailPage } from './components/ServiceDetailPage';
 import { BlogDetailPage } from './components/BlogDetailPage';
+import { PortfolioDetailPage } from './components/PortfolioDetailPage';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
+import { TermsOfServicePage } from './components/TermsOfServicePage';
 
 function MainAppContent() {
   const { activeView } = useContent();
@@ -24,8 +27,21 @@ function MainAppContent() {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
+        <main style={{ flex: 1, paddingTop: '70px' }}>
           <ServiceDetailPage />
+        </main>
+        <Footer />
+        <AdminPanel />
+      </div>
+    );
+  }
+
+  if (activeView === 'portfolio-detail') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '70px' }}>
+          <PortfolioDetailPage />
         </main>
         <Footer />
         <AdminPanel />
@@ -37,8 +53,34 @@ function MainAppContent() {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
+        <main style={{ flex: 1, paddingTop: '70px' }}>
           <BlogDetailPage />
+        </main>
+        <Footer />
+        <AdminPanel />
+      </div>
+    );
+  }
+
+  if (activeView === 'privacy-policy') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '70px' }}>
+          <PrivacyPolicyPage />
+        </main>
+        <Footer />
+        <AdminPanel />
+      </div>
+    );
+  }
+
+  if (activeView === 'terms-of-service') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '70px' }}>
+          <TermsOfServicePage />
         </main>
         <Footer />
         <AdminPanel />
@@ -49,7 +91,7 @@ function MainAppContent() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <Header />
-      <main style={{ flex: 1, paddingTop: '76px' }}>
+      <main style={{ flex: 1, paddingTop: '70px' }}>
         <Hero />
         <AboutSection />
         <ServicesSection />

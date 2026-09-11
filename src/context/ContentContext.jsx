@@ -27,12 +27,72 @@ export const ContentProvider = ({ children }) => {
     return defaultData;
   });
 
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('home');
-  const [activeView, setActiveView] = useState('home'); // 'home', 'service-detail', 'blog-detail'
-  const [activeSlug, setActiveSlug] = useState(null);
-  const [selectedService, setSelectedService] = useState(null);
-  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [isAdminOpen, setIsAdminOpen] = useState(() => {
+    const path = window.location.pathname.toLowerCase();
+    return path === '/admin' || window.location.hash === '#admin';
+  });
+
+  const [activeTab, setActiveTab] = useState('hero');
+
+  // URL Path Route Parser helper
+  const parseCurrentRoute = () => {
+    const path = window.location.pathname.toLowerCase().replace(/\/$/, '') || '/';
+    if (path === '/admin' || window.location.hash === '#admin') return { view: 'admin', slug: null };
+    if (path === '/about') return { view: 'about', slug: null };
+    if (path === '/services') return { view: 'services', slug: null };
+    if (path === '/portfolio') return { view: 'portfolio', slug: null };
+    if (path === '/process') return { view: 'process', slug: null };
+    if (path === '/reviews' || path === '/testimonials') return { view: 'reviews', slug: null };
+    if (path === '/blogs') return { view: 'blogs', slug: null };
+    if (path === '/contact') return { view: 'contact', slug: null };
+    if (path === '/privacy-policy') return { view: 'privacy-policy', slug: null };
+    if (path === '/terms-of-service') return { view: 'terms-of-service', slug: null };
+    if (path.startsWith('/services/')) return { view: 'service-detail', slug: path.replace('/services/', '') };
+    if (path.startsWith('/portfolio/')) return { view: 'portfolio-detail', slug: path.replace('/portfolio/', '') };
+    if (path.startsWith('/blogs/')) return { view: 'blog-detail', slug: path.replace('/blogs/', '') };
+    return { view: 'home', slug: null };
+  };
+
+  const initialRoute = parseCurrentRoute();
+  const [activeView, setActiveView] = useState(initialRoute.view);
+  const [activeSlug, setActiveSlug] = useState(initialRoute.slug);
+  const [selectedService, setSelectedService] = useState(() => {
+    if (initialRoute.view === 'service-detail' && initialRoute.slug) {
+      return (content.services || []).find(s => (s.slug || s.id) === initialRoute.slug) || content.services[0];
+    }
+    return null;
+  });
+  const [selectedBlog, setSelectedBlog] = useState(() => {
+    if (initialRoute.view === 'blog-detail' && initialRoute.slug) {
+      return (content.blogs || []).find(b => (b.slug || b.id) === initialRoute.slug) || content.blogs[0];
+    }
+    return null;
+  });
+
+  // Synchronize Browser History PopState (Back / Forward navigation)
+  useEffect(() => {
+    const handlePopState = () => {
+      const route = parseCurrentRoute();
+      setActiveView(route.view);
+      setActiveSlug(route.slug);
+      if (route.view === 'admin') {
+        setIsAdminOpen(true);
+      } else {
+        setIsAdminOpen(false);
+      }
+
+      if (route.view === 'service-detail') {
+        const found = (content.services || []).find(s => (s.slug || s.id) === route.slug);
+        setSelectedService(found || content.services[0]);
+      } else if (route.view === 'blog-detail') {
+        const found = (content.blogs || []).find(b => (b.slug || b.id) === route.slug);
+        setSelectedBlog(found || content.blogs[0]);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [content]);
 
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -137,16 +197,43 @@ export const ContentProvider = ({ children }) => {
     });
   };
 
-  // View Navigation
+  // View Navigation with Clean SEO URLs
   const navigateToView = (view, slug = null) => {
     setActiveView(view);
     setActiveSlug(slug);
-    if (view === 'service-detail') {
-      const found = (content.services || []).find(s => (s.slug || s.id) === slug);
-      setSelectedService(found || content.services[0]);
-    } else if (view === 'blog-detail') {
-      const found = (content.blogs || []).find(b => (b.slug || b.id) === slug);
-      setSelectedBlog(found || content.blogs[0]);
+
+    let path = '/';
+    if (view === 'admin') {
+      setIsAdminOpen(true);
+      path = '/admin';
+    } else {
+      setIsAdminOpen(false);
+      if (view === 'about') path = '/about';
+      else if (view === 'services') path = '/services';
+      else if (view === 'portfolio') path = '/portfolio';
+      else if (view === 'process') path = '/process';
+      else if (view === 'reviews') path = '/reviews';
+      else if (view === 'blogs') path = '/blogs';
+      else if (view === 'contact') path = '/contact';
+      else if (view === 'privacy-policy') path = '/privacy-policy';
+      else if (view === 'terms-of-service') path = '/terms-of-service';
+      else if (view === 'service-detail') {
+        const found = (content.services || []).find(s => (s.slug || s.id) === slug);
+        setSelectedService(found || content.services[0]);
+        path = `/services/${slug || 'details'}`;
+      } else if (view === 'portfolio-detail') {
+        path = `/portfolio/${slug || 'project'}`;
+      } else if (view === 'blog-detail') {
+        const found = (content.blogs || []).find(b => (b.slug || b.id) === slug);
+        setSelectedBlog(found || content.blogs[0]);
+        path = `/blogs/${slug || 'post'}`;
+      }
+    }
+
+    if (window.location.pathname !== path) {
+      try {
+        window.history.pushState({}, '', path);
+      } catch (e) {}
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

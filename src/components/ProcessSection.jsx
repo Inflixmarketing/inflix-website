@@ -22,16 +22,39 @@ export const ProcessSection = () => {
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
-          gap: '3rem',
+          gap: '2.5rem',
           alignItems: 'center'
         }} className="process-grid">
           
-          {/* Left Column: 4 Step Glass Cards */}
+          {/* Header & Watch Video Button */}
+          <div className="process-header-col">
+            <span className="section-category">
+              {header.category || 'Process'}
+            </span>
+
+            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>
+              {header.headline || 'Our Smooth Workflow'}
+            </h2>
+
+            <p style={{ fontSize: '1.05rem', color: '#E5E7EB', lineHeight: 1.7, marginBottom: '2rem' }}>
+              {header.paragraph || 'We follow a structured, step-by-step methodology to ensure every marketing campaign is executed seamlessly.'}
+            </p>
+
+            <button 
+              onClick={() => setIsVideoModalOpen(true)}
+              className="btn-agatha-gold"
+            >
+              <Play size={16} fill="#173765" />
+              <span>{header.videoButtonText || 'WATCH VIDEO'}</span>
+            </button>
+          </div>
+
+          {/* 4 Step Glass Cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
             gap: '1.25rem'
-          }}>
+          }} className="process-steps-col">
             {steps.map((st, idx) => (
               <div 
                 key={idx} 
@@ -53,7 +76,7 @@ export const ProcessSection = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}>
-                  <span>{st.num}</span>
+                  <span>{st.num || `0${idx + 1}.`}</span>
                   <CheckCircle2 size={18} style={{ color: '#EDB403' }} />
                 </div>
 
@@ -74,29 +97,6 @@ export const ProcessSection = () => {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Right Column: Header & Watch Video Button */}
-          <div>
-            <span className="section-category">
-              {header.category || 'Process'}
-            </span>
-
-            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>
-              {header.headline || 'Our Smooth Workflow'}
-            </h2>
-
-            <p style={{ fontSize: '1.05rem', color: '#E5E7EB', lineHeight: 1.7, marginBottom: '2rem' }}>
-              {header.paragraph || 'We follow a structured, step-by-step methodology to ensure every marketing campaign is executed seamlessly.'}
-            </p>
-
-            <button 
-              onClick={() => setIsVideoModalOpen(true)}
-              className="btn-agatha-gold"
-            >
-              <Play size={16} fill="#173765" />
-              <span>{header.videoButtonText || 'WATCH VIDEO'}</span>
-            </button>
           </div>
 
         </div>
@@ -160,7 +160,7 @@ export const ProcessSection = () => {
       <style>{`
         @media (min-width: 992px) {
           .process-grid {
-            grid-template-columns: 1.2fr 0.8fr !important;
+            grid-template-columns: 0.85fr 1.15fr !important;
           }
         }
       `}</style>
