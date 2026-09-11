@@ -89,10 +89,23 @@ export const TestimonialsSection = () => {
 
               <div style={{
                 paddingTop: '1.25rem',
-                borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.85rem'
               }}>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#ffffff' }}>{t.name}</h4>
-                <p style={{ fontSize: '0.85rem', color: primaryColor, fontWeight: 600, marginTop: '2px' }}>{t.title}</p>
+                {t.avatarUrl && (
+                  <img 
+                    src={t.avatarUrl} 
+                    alt={t.name} 
+                    style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(237, 180, 3, 0.35)' }}
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                )}
+                <div>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#ffffff' }}>{t.name}</h4>
+                  <p style={{ fontSize: '0.85rem', color: primaryColor, fontWeight: 600, marginTop: '2px' }}>{t.title}</p>
+                </div>
               </div>
             </div>
           ))}

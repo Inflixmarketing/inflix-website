@@ -3,12 +3,21 @@ import { useContent } from '../context/ContentContext';
 import { Menu, X, Settings, ChevronDown } from 'lucide-react';
 
 export const Header = () => {
-  const { content, setIsAdminOpen, isAdminOpen, activeTab, setActiveTab } = useContent();
+  const { 
+    content, 
+    setIsAdminOpen, 
+    isAdminOpen, 
+    activeTab, 
+    setActiveTab, 
+    navigateToView, 
+    selectedService 
+  } = useContent();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
 
   const brand = content.brand || {};
-  const primaryColor = brand.primaryColor || '#EDB403';
+  const services = content.services || [];
 
   const handleNavClick = (tabId, hash) => {
     setActiveTab(tabId);
@@ -18,6 +27,12 @@ export const Header = () => {
       const el = document.querySelector(hash);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleServiceSelect = (svc) => {
+    navigateToView('service-detail', svc.slug || svc.id);
+    setServicesDropdownOpen(false);
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -32,7 +47,7 @@ export const Header = () => {
       backdropFilter: 'blur(20px)',
       WebkitBackdropFilter: 'blur(20px)',
       borderBottom: '1px solid rgba(237, 180, 3, 0.2)',
-      padding: '0.9rem 0',
+      padding: '0.85rem 0',
       transition: 'all 0.3s ease'
     }}>
       <div className="container" style={{
@@ -49,7 +64,12 @@ export const Header = () => {
           textDecoration: 'none'
         }}>
           {brand.logoUrl ? (
-            <img src={brand.logoUrl} alt={brand.siteName} style={{ height: '38px', maxWidth: '160px', objectFit: 'contain' }} />
+            <img 
+              src={brand.logoUrl} 
+              alt={brand.siteName || "Inflix Marketing Solutions"} 
+              style={{ height: '38px', maxWidth: '160px', objectFit: 'contain' }}
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <div style={{
@@ -106,7 +126,7 @@ export const Header = () => {
           <a href="#home" onClick={() => handleNavClick('home', '#home')} style={navLinkStyle(activeTab === 'home', '#EDB403')}>HOME</a>
           <a href="#about" onClick={() => handleNavClick('about', '#about')} style={navLinkStyle(activeTab === 'about', '#EDB403')}>ABOUT</a>
           
-          {/* Services Dropdown */}
+          {/* Services Dynamic Dropdown */}
           <div 
             style={{ position: 'relative' }}
             onMouseEnter={() => setServicesDropdownOpen(true)}
@@ -118,7 +138,7 @@ export const Header = () => {
               style={{ ...navLinkStyle(activeTab === 'services', '#EDB403'), display: 'flex', alignItems: 'center', gap: '0.3rem' }}
             >
               <span>SERVICES</span>
-              <ChevronDown size={14} />
+              <ChevronDown size={14} style={{ transform: servicesDropdownOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }} />
             </a>
 
             {servicesDropdownOpen && (
@@ -130,18 +150,73 @@ export const Header = () => {
                 border: '1px solid rgba(237, 180, 3, 0.35)',
                 color: '#ffffff',
                 borderRadius: '12px',
-                padding: '1rem',
-                minWidth: '210px',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+                padding: '0.75rem 0.5rem',
+                minWidth: '250px',
+                maxWidth: '300px',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.7)',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '0.75rem',
+                gap: '0.25rem',
                 marginTop: '0.5rem',
-                zIndex: 200
+                zIndex: 500,
+                maxHeight: '75vh',
+                overflowY: 'auto'
               }}>
-                <a href="#services" onClick={() => handleNavClick('services', '#services')} style={dropdownItemStyle}>
-                  ALL SERVICES
+                <div style={{
+                  padding: '0.4rem 0.75rem',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  color: '#EDB403',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  borderBottom: '1px solid rgba(237, 180, 3, 0.2)',
+                  marginBottom: '0.35rem'
+                }}>
+                  Core Agency Services
+                </div>
+
+                <a 
+                  href="#services" 
+                  onClick={() => handleNavClick('services', '#services')} 
+                  style={{
+                    padding: '0.5rem 0.75rem',
+                    borderRadius: '6px',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    color: '#E5E7EB',
+                    display: 'block',
+                    transition: 'all 0.2s ease',
+                    background: 'rgba(255, 255, 255, 0.03)'
+                  }}
+                >
+                  All Services Overview →
                 </a>
+
+                {services.map((svc) => {
+                  const isActive = selectedService && (selectedService.id === svc.id || selectedService.slug === svc.slug);
+                  return (
+                    <button
+                      key={svc.id}
+                      onClick={() => handleServiceSelect(svc)}
+                      style={{
+                        padding: '0.55rem 0.75rem',
+                        borderRadius: '6px',
+                        fontSize: '0.825rem',
+                        fontWeight: isActive ? 700 : 500,
+                        color: isActive ? '#173765' : '#ffffff',
+                        backgroundColor: isActive ? '#EDB403' : 'transparent',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        display: 'block',
+                        width: '100%',
+                        border: 'none'
+                      }}
+                    >
+                      {svc.title}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -167,7 +242,8 @@ export const Header = () => {
               border: `1px solid rgba(237, 180, 3, 0.5)`,
               borderRadius: '9999px',
               fontSize: '0.75rem',
-              fontWeight: 600
+              fontWeight: 600,
+              cursor: 'pointer'
             }}
           >
             <Settings size={14} style={{ color: '#EDB403' }} />
@@ -197,8 +273,9 @@ export const Header = () => {
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: '#ffffff', padding: '0.4rem' }}
+            style={{ color: '#ffffff', padding: '0.4rem', cursor: 'pointer' }}
             className="mobile-toggle"
+            aria-label="Toggle Mobile Menu"
           >
             {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
@@ -213,11 +290,36 @@ export const Header = () => {
           padding: '1.25rem 1.5rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.85rem'
+          gap: '0.85rem',
+          maxHeight: '85vh',
+          overflowY: 'auto'
         }}>
           <a href="#home" onClick={() => handleNavClick('home', '#home')} style={mobileNavLinkStyle}>HOME</a>
           <a href="#about" onClick={() => handleNavClick('about', '#about')} style={mobileNavLinkStyle}>ABOUT</a>
-          <a href="#services" onClick={() => handleNavClick('services', '#services')} style={mobileNavLinkStyle}>SERVICES</a>
+          
+          <div style={{ padding: '0.4rem 0' }}>
+            <span style={{ fontSize: '0.75rem', color: '#EDB403', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>SERVICES</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: '0.5rem', paddingLeft: '0.75rem', borderLeft: '2px solid rgba(237, 180, 3, 0.3)' }}>
+              {services.map(svc => (
+                <button 
+                  key={svc.id} 
+                  onClick={() => handleServiceSelect(svc)}
+                  style={{
+                    color: '#E5E7EB',
+                    fontSize: '0.875rem',
+                    textAlign: 'left',
+                    background: 'none',
+                    border: 'none',
+                    padding: '0.3rem 0',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {svc.title}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <a href="#portfolio" onClick={() => handleNavClick('portfolio', '#portfolio')} style={mobileNavLinkStyle}>PORTFOLIO</a>
           <a href="#process" onClick={() => handleNavClick('process', '#process')} style={mobileNavLinkStyle}>PROCESS</a>
           <a href="#testimonials" onClick={() => handleNavClick('testimonials', '#testimonials')} style={mobileNavLinkStyle}>REVIEWS</a>
@@ -266,14 +368,6 @@ const navLinkStyle = (isActive, primaryColor) => ({
   borderBottom: isActive ? `2px solid ${primaryColor}` : '2px solid transparent',
   paddingBottom: '2px'
 });
-
-const dropdownItemStyle = {
-  fontSize: '0.8rem',
-  fontWeight: 700,
-  letterSpacing: '0.05em',
-  color: '#ffffff',
-  textTransform: 'uppercase'
-};
 
 const mobileNavLinkStyle = {
   color: '#ffffff',

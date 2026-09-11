@@ -2,6 +2,8 @@ import React from 'react';
 import { useContent } from '../context/ContentContext';
 import { Target, Compass, ArrowRight } from 'lucide-react';
 
+const FALLBACK_ABOUT_IMAGE = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80";
+
 export const AboutSection = () => {
   const { content } = useContent();
   const about = content.about || {};
@@ -20,10 +22,11 @@ export const AboutSection = () => {
           display: 'grid',
           gridTemplateColumns: '1fr',
           gap: '2.5rem',
-          marginBottom: '3.5rem'
+          marginBottom: '2rem',
+          alignItems: 'center'
         }} className="about-grid">
           
-          {/* Left Headline */}
+          {/* Left Column: Headline & Info */}
           <div>
             <span className="section-category">
               {about.category || 'About Us'}
@@ -53,9 +56,25 @@ export const AboutSection = () => {
             </a>
           </div>
 
-          {/* Right Dual Glass Cards */}
+          {/* Right Column: Image + Dual Cards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             
+            {/* About Feature Image */}
+            <div className="img-hover-container" style={{
+              borderRadius: '20px',
+              height: '260px',
+              border: '1px solid rgba(237, 180, 3, 0.25)',
+              overflow: 'hidden',
+              background: '#0B132B'
+            }}>
+              <img 
+                src={about.aboutImage || FALLBACK_ABOUT_IMAGE} 
+                alt="About Inflix Marketing"
+                onError={(e) => { e.target.src = FALLBACK_ABOUT_IMAGE; }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </div>
+
             {/* Left Box 1: Philosophy */}
             <div className="card-glass" style={{ borderLeft: `4px solid #EDB403` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>

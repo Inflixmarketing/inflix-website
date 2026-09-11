@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
 import { 
   X, 
@@ -18,15 +18,10 @@ import {
   Trash2,
   Copy,
   Eye,
-  Search,
   Upload,
-  Image as ImageIcon,
   Key,
-  Globe,
   Layers,
-  Menu,
-  Shield,
-  Check
+  Menu
 } from 'lucide-react';
 
 // Reusable Image Uploader with File Picker, URL input, Replace, Delete & Live Preview
@@ -60,7 +55,12 @@ const ImageUploader = ({ label, value, onChange, placeholder = "Paste Image URL 
             justifyContent: 'center',
             padding: '0.5rem'
           }}>
-            <img src={value} alt="Preview" style={{ maxHeight: '140px', maxWidth: '100%', objectFit: 'contain' }} />
+            <img 
+              src={value} 
+              alt="Preview" 
+              style={{ maxHeight: '140px', maxWidth: '100%', objectFit: 'contain' }} 
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
           </div>
         )}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -144,22 +144,17 @@ export const AdminPanel = () => {
     addTestimonial,
     updateTestimonial,
     deleteTestimonial,
-    toggleTestimonialVisibility,
     addFaq,
     updateFaq,
     deleteFaq,
     addBlog,
     updateBlog,
-    deleteBlog,
-    toggleBlogStatus,
-    addMediaAsset,
-    deleteMediaAsset
+    deleteBlog
   } = useContent();
 
-  // Default active tab is 'hero' (Hero Section) as requested
+  // Active tab state (Default: 'hero')
   const [activeTab, setActiveTab] = useState('hero');
   const [saveNotification, setSaveNotification] = useState(false);
-  const [localContent, setLocalContent] = useState(content);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Auth Modal State
@@ -173,13 +168,6 @@ export const AdminPanel = () => {
   const [oldPassInput, setOldPassInput] = useState('');
   const [newPassInput, setNewPassInput] = useState('');
   const [passChangeStatus, setPassChangeStatus] = useState('');
-
-  // Media Library Search State
-  const [mediaSearchQuery, setMediaSearchQuery] = useState('');
-
-  useEffect(() => {
-    setLocalContent(content);
-  }, [content]);
 
   if (!isAdminOpen) return null;
 
@@ -205,17 +193,17 @@ export const AdminPanel = () => {
   };
 
   const handleSaveAll = () => {
-    saveContent(localContent);
+    saveContent(content);
     setSaveNotification(true);
     setTimeout(() => setSaveNotification(false), 3000);
   };
 
-  const updateLocalSection = (sectionKey, updatedSection) => {
+  const updateSectionState = (sectionKey, updatedSectionData) => {
     const updated = {
-      ...localContent,
-      [sectionKey]: updatedSection
+      ...content,
+      [sectionKey]: updatedSectionData
     };
-    setLocalContent(updated);
+    saveContent(updated);
   };
 
   /* ==========================================================================
@@ -233,11 +221,11 @@ export const AdminPanel = () => {
             <Lock size={32} style={{ color: '#EDB403' }} />
           </div>
 
-          <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.75rem', fontWeight: 400, color: '#ffffff', marginBottom: '0.35rem' }}>
+          <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.6rem', fontWeight: 400, color: '#ffffff', marginBottom: '0.35rem' }}>
             Inflix Marketing Solution
           </h2>
-          <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: '1.75rem' }}>
-            Website Management System Authentication
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1.75rem' }}>
+            Website Management System
           </p>
 
           <form onSubmit={handleLoginSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -321,80 +309,79 @@ export const AdminPanel = () => {
   }
 
   /* ==========================================================================
-     2. FULL CMS DASHBOARD WORKSPACE
+     2. FULL CMS DASHBOARD WORKSPACE (Media Library & SEO Completely Removed)
      ========================================================================== */
   const sidebarNavItems = [
-    { id: 'logo', label: 'Logo & Brand Identity', icon: Palette },
     { id: 'hero', label: 'Hero Section', icon: Layout },
+    { id: 'logo', label: 'Logo & Brand Identity', icon: Palette },
     { id: 'about', label: 'About Section', icon: FileText },
-    { id: 'services', label: `Services (${localContent.services?.length || 0})`, icon: Briefcase },
-    { id: 'portfolio', label: `Portfolio (${localContent.portfolio?.length || 0})`, icon: Layers },
-    { id: 'clients', label: `Clients (${localContent.clients?.length || 0})`, icon: Users },
-    { id: 'testimonials', label: `Testimonials (${localContent.testimonials?.length || 0})`, icon: MessageSquare },
-    { id: 'faqs', label: `FAQs (${localContent.faqs?.length || 0})`, icon: HelpCircle },
-    { id: 'blogs', label: `Blogs (${localContent.blogs?.length || 0})`, icon: FileText },
-    { id: 'media', label: `Media Library (${localContent.mediaLibrary?.length || 0})`, icon: ImageIcon },
-    { id: 'seo', label: 'SEO & Meta Settings', icon: Globe },
+    { id: 'services', label: `Services (${content.services?.length || 0})`, icon: Briefcase },
+    { id: 'portfolio', label: `Portfolio (${content.portfolio?.length || 0})`, icon: Layers },
+    { id: 'clients', label: `Clients (${content.clients?.length || 0})`, icon: Users },
+    { id: 'testimonials', label: `Testimonials (${content.testimonials?.length || 0})`, icon: MessageSquare },
+    { id: 'faqs', label: `FAQs (${content.faqs?.length || 0})`, icon: HelpCircle },
+    { id: 'blogs', label: `Blogs (${content.blogs?.length || 0})`, icon: FileText },
     { id: 'settings', label: 'Security & Settings', icon: Key }
   ];
 
   const handleTabSelect = (tabId) => {
     setActiveTab(tabId);
-    setMobileSidebarOpen(false); // Automatically closes drawer on mobile selection
+    setMobileSidebarOpen(false); // Closes menu drawer automatically
   };
 
   return (
     <div style={modalOverlayStyle}>
       <div style={dashboardContainerStyle}>
         
-        {/* Top Navbar */}
+        {/* Fixed Top Header Navbar */}
         <div style={topNavbarStyle}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
             <button 
               onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)} 
               className="mobile-sidebar-toggle"
-              style={{ color: '#ffffff', display: 'flex', alignItems: 'center', padding: '0.35rem' }}
+              style={{ color: '#ffffff', display: 'flex', alignItems: 'center', padding: '0.35rem', cursor: 'pointer' }}
+              aria-label="Toggle Navigation Drawer"
             >
               <Menu size={22} />
             </button>
 
             <div style={headerLogoSquareStyle}>
-              <Palette size={20} style={{ color: '#173765' }} />
+              <Palette size={18} style={{ color: '#173765' }} />
             </div>
 
             <div>
-              <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.25rem', fontWeight: 400, color: '#ffffff', lineHeight: 1 }}>
+              <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.1rem', fontWeight: 400, color: '#ffffff', lineHeight: 1, margin: 0 }}>
                 Inflix Marketing Solution
               </h2>
-              <span style={{ fontSize: '0.65rem', color: '#EDB403', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+              <span style={{ fontSize: '0.55rem', color: '#EDB403', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginTop: '2px' }}>
                 Website Management System
               </span>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             {saveNotification && (
-              <span style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
-                <CheckCircle size={15} /> SAVED LIVE!
+              <span style={{ fontSize: '0.75rem', color: '#10b981', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
+                <CheckCircle size={14} /> SAVED!
               </span>
             )}
 
-            <button onClick={handleSaveAll} className="btn-agatha-gold" style={{ padding: '0.55rem 1.4rem', fontSize: '0.785rem' }}>
-              <Save size={15} /> SAVE ALL CHANGES
+            <button onClick={handleSaveAll} className="btn-agatha-gold" style={{ padding: '0.45rem 0.95rem', fontSize: '0.75rem' }}>
+              <Save size={14} /> SAVE ALL
             </button>
 
             <button onClick={logout} style={logoutIconButtonStyle} title="Lock Admin Session">
-              <LogOut size={16} />
+              <LogOut size={15} />
             </button>
 
             <button onClick={() => setIsAdminOpen(false)} style={closeIconButtonStyle}>
-              <X size={20} />
+              <X size={18} />
             </button>
           </div>
         </div>
 
-        {/* Dashboard Main Workspace (Sidebar Drawer + Content Area) */}
-        <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative' }}>
+        {/* Dashboard Main Workspace Layout */}
+        <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative', width: '100%', height: 'calc(100vh - 65px)' }}>
           
           {/* Mobile Overlay Background */}
           {mobileSidebarOpen && (
@@ -404,7 +391,7 @@ export const AdminPanel = () => {
             />
           )}
 
-          {/* Left Sidebar Drawer */}
+          {/* Left Sidebar Drawer (Starts strictly below 65px header) */}
           <aside className={`admin-sidebar-drawer ${mobileSidebarOpen ? 'open' : ''}`} style={sidebarContainerStyle}>
             {sidebarNavItems.map((tab) => {
               const Icon = tab.icon;
@@ -439,7 +426,8 @@ export const AdminPanel = () => {
                   fontSize: '0.75rem',
                   fontWeight: 600,
                   padding: '0.5rem',
-                  width: '100%'
+                  width: '100%',
+                  cursor: 'pointer'
                 }}
               >
                 <RefreshCw size={14} /> Reset System Defaults
@@ -447,29 +435,86 @@ export const AdminPanel = () => {
             </div>
           </aside>
 
-          {/* Right Main Content Scrollable Workspace */}
+          {/* Right Main Content Area (Starts strictly below 65px header) */}
           <main style={mainContentAreaStyle}>
             
-            {/* 1. BRAND & LOGO MANAGEMENT */}
+            {/* 1. HERO SECTION (Default Tab) */}
+            {activeTab === 'hero' && (
+              <div>
+                <h2 style={tabHeaderTitleStyle}>Hero Section CMS</h2>
+
+                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                    <div>
+                      <label style={adminLabelStyle}>TOP OUTLINE PILL TEXT</label>
+                      <input 
+                        type="text" 
+                        value={content.hero?.capsuleOutline || ''} 
+                        onChange={(e) => updateSectionState('hero', { ...content.hero, capsuleOutline: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={adminLabelStyle}>BOTTOM SOLID PILL TEXT</label>
+                      <input 
+                        type="text" 
+                        value={content.hero?.capsuleSolid || ''} 
+                        onChange={(e) => updateSectionState('hero', { ...content.hero, capsuleSolid: e.target.value })}
+                        style={adminInputStyle}
+                      />
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>MAIN TITLE HEADLINE</label>
+                    <input 
+                      type="text" 
+                      value={content.hero?.titleMain || ''} 
+                      onChange={(e) => updateSectionState('hero', { ...content.hero, titleMain: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={adminLabelStyle}>SUBHEADING DESCRIPTION</label>
+                    <textarea 
+                      rows={3} 
+                      value={content.hero?.description || ''} 
+                      onChange={(e) => updateSectionState('hero', { ...content.hero, description: e.target.value })}
+                      style={adminInputStyle}
+                    />
+                  </div>
+
+                  <ImageUploader 
+                    label="Hero Background Image (Optional)"
+                    value={content.hero?.heroBgImage || ''}
+                    onChange={(url) => updateSectionState('hero', { ...content.hero, heroBgImage: url })}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 2. LOGO & BRAND IDENTITY */}
             {activeTab === 'logo' && (
               <div>
-                <h2 style={tabHeaderTitleStyle}>Logo & Brand Identity Management</h2>
+                <h2 style={tabHeaderTitleStyle}>Logo & Brand Identity</h2>
                 
                 <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
                   <ImageUploader 
                     label="Website Header & Footer Logo Image"
-                    value={localContent.brand?.logoUrl || ''}
-                    onChange={(url) => updateLocalSection('brand', { ...localContent.brand, logoUrl: url })}
+                    value={content.brand?.logoUrl || ''}
+                    onChange={(url) => updateSectionState('brand', { ...content.brand, logoUrl: url })}
                     placeholder="Paste Logo URL or Upload File"
                   />
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
                     <div>
                       <label style={adminLabelStyle}>SITE NAME</label>
                       <input 
                         type="text" 
-                        value={localContent.brand?.siteName || ''} 
-                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, siteName: e.target.value })}
+                        value={content.brand?.siteName || ''} 
+                        onChange={(e) => updateSectionState('brand', { ...content.brand, siteName: e.target.value })}
                         style={adminInputStyle}
                       />
                     </div>
@@ -477,8 +522,8 @@ export const AdminPanel = () => {
                       <label style={adminLabelStyle}>TAGLINE / SLOGAN</label>
                       <input 
                         type="text" 
-                        value={localContent.brand?.tagline || ''} 
-                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, tagline: e.target.value })}
+                        value={content.brand?.tagline || ''} 
+                        onChange={(e) => updateSectionState('brand', { ...content.brand, tagline: e.target.value })}
                         style={adminInputStyle}
                       />
                     </div>
@@ -494,8 +539,8 @@ export const AdminPanel = () => {
                       <label style={adminLabelStyle}>PRIMARY COLOR (GOLD)</label>
                       <input 
                         type="color" 
-                        value={localContent.brand?.primaryColor || '#EDB403'} 
-                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, primaryColor: e.target.value })}
+                        value={content.brand?.primaryColor || '#EDB403'} 
+                        onChange={(e) => updateSectionState('brand', { ...content.brand, primaryColor: e.target.value })}
                         style={{ ...adminInputStyle, height: '42px', padding: '0.2rem' }}
                       />
                     </div>
@@ -503,8 +548,8 @@ export const AdminPanel = () => {
                       <label style={adminLabelStyle}>SECONDARY COLOR (NAVY)</label>
                       <input 
                         type="color" 
-                        value={localContent.brand?.secondaryColor || '#173765'} 
-                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, secondaryColor: e.target.value })}
+                        value={content.brand?.secondaryColor || '#173765'} 
+                        onChange={(e) => updateSectionState('brand', { ...content.brand, secondaryColor: e.target.value })}
                         style={{ ...adminInputStyle, height: '42px', padding: '0.2rem' }}
                       />
                     </div>
@@ -512,8 +557,8 @@ export const AdminPanel = () => {
                       <label style={adminLabelStyle}>CONTACT EMAIL</label>
                       <input 
                         type="text" 
-                        value={localContent.brand?.contactEmail || ''} 
-                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, contactEmail: e.target.value })}
+                        value={content.brand?.contactEmail || ''} 
+                        onChange={(e) => updateSectionState('brand', { ...content.brand, contactEmail: e.target.value })}
                         style={adminInputStyle}
                       />
                     </div>
@@ -521,69 +566,12 @@ export const AdminPanel = () => {
                       <label style={adminLabelStyle}>CONTACT PHONE</label>
                       <input 
                         type="text" 
-                        value={localContent.brand?.contactPhone || ''} 
-                        onChange={(e) => updateLocalSection('brand', { ...localContent.brand, contactPhone: e.target.value })}
+                        value={content.brand?.contactPhone || ''} 
+                        onChange={(e) => updateSectionState('brand', { ...content.brand, contactPhone: e.target.value })}
                         style={adminInputStyle}
                       />
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* 2. HERO SECTION */}
-            {activeTab === 'hero' && (
-              <div>
-                <h2 style={tabHeaderTitleStyle}>Hero Section CMS</h2>
-
-                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
-                    <div>
-                      <label style={adminLabelStyle}>TOP OUTLINE PILL TEXT</label>
-                      <input 
-                        type="text" 
-                        value={localContent.hero?.capsuleOutline || ''} 
-                        onChange={(e) => updateLocalSection('hero', { ...localContent.hero, capsuleOutline: e.target.value })}
-                        style={adminInputStyle}
-                      />
-                    </div>
-
-                    <div>
-                      <label style={adminLabelStyle}>BOTTOM SOLID PILL TEXT</label>
-                      <input 
-                        type="text" 
-                        value={localContent.hero?.capsuleSolid || ''} 
-                        onChange={(e) => updateLocalSection('hero', { ...localContent.hero, capsuleSolid: e.target.value })}
-                        style={adminInputStyle}
-                      />
-                    </div>
-                  </div>
-
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <label style={adminLabelStyle}>MAIN TITLE HEADLINE</label>
-                    <input 
-                      type="text" 
-                      value={localContent.hero?.titleMain || ''} 
-                      onChange={(e) => updateLocalSection('hero', { ...localContent.hero, titleMain: e.target.value })}
-                      style={adminInputStyle}
-                    />
-                  </div>
-
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <label style={adminLabelStyle}>SUBHEADING DESCRIPTION</label>
-                    <textarea 
-                      rows={3} 
-                      value={localContent.hero?.description || ''} 
-                      onChange={(e) => updateLocalSection('hero', { ...localContent.hero, description: e.target.value })}
-                      style={adminInputStyle}
-                    />
-                  </div>
-
-                  <ImageUploader 
-                    label="Hero Background Image (Optional Overlay)"
-                    value={localContent.hero?.heroBgImage || ''}
-                    onChange={(url) => updateLocalSection('hero', { ...localContent.hero, heroBgImage: url })}
-                  />
                 </div>
               </div>
             )}
@@ -596,17 +584,17 @@ export const AdminPanel = () => {
                 <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
                   <ImageUploader 
                     label="About Section Feature Image"
-                    value={localContent.about?.aboutImage || ''}
-                    onChange={(url) => updateLocalSection('about', { ...localContent.about, aboutImage: url })}
+                    value={content.about?.aboutImage || ''}
+                    onChange={(url) => updateSectionState('about', { ...content.about, aboutImage: url })}
                   />
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
                     <div>
                       <label style={adminLabelStyle}>CATEGORY LABEL</label>
                       <input 
                         type="text" 
-                        value={localContent.about?.category || ''} 
-                        onChange={(e) => updateLocalSection('about', { ...localContent.about, category: e.target.value })}
+                        value={content.about?.category || ''} 
+                        onChange={(e) => updateSectionState('about', { ...content.about, category: e.target.value })}
                         style={adminInputStyle}
                       />
                     </div>
@@ -615,8 +603,8 @@ export const AdminPanel = () => {
                       <label style={adminLabelStyle}>MAIN HEADLINE</label>
                       <input 
                         type="text" 
-                        value={localContent.about?.headline || ''} 
-                        onChange={(e) => updateLocalSection('about', { ...localContent.about, headline: e.target.value })}
+                        value={content.about?.headline || ''} 
+                        onChange={(e) => updateSectionState('about', { ...content.about, headline: e.target.value })}
                         style={adminInputStyle}
                       />
                     </div>
@@ -626,8 +614,8 @@ export const AdminPanel = () => {
                     <label style={adminLabelStyle}>HIGHLIGHTED TEXT</label>
                     <textarea 
                       rows={2} 
-                      value={localContent.about?.highlight || ''} 
-                      onChange={(e) => updateLocalSection('about', { ...localContent.about, highlight: e.target.value })}
+                      value={content.about?.highlight || ''} 
+                      onChange={(e) => updateSectionState('about', { ...content.about, highlight: e.target.value })}
                       style={adminInputStyle}
                     />
                   </div>
@@ -636,8 +624,8 @@ export const AdminPanel = () => {
                     <label style={adminLabelStyle}>BODY PARAGRAPH</label>
                     <textarea 
                       rows={3} 
-                      value={localContent.about?.body || ''} 
-                      onChange={(e) => updateLocalSection('about', { ...localContent.about, body: e.target.value })}
+                      value={content.about?.body || ''} 
+                      onChange={(e) => updateSectionState('about', { ...content.about, body: e.target.value })}
                       style={adminInputStyle}
                     />
                   </div>
@@ -649,14 +637,14 @@ export const AdminPanel = () => {
             {activeTab === 'services' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h2 style={tabHeaderTitleStyle}>Services Management ({localContent.services?.length || 0})</h2>
+                  <h2 style={tabHeaderTitleStyle}>Services Management ({content.services?.length || 0})</h2>
                   <button onClick={() => addService({ title: 'New Growth Service' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add New Service
                   </button>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(localContent.services || []).map((serv, index) => (
+                  {(content.services || []).map((serv, index) => (
                     <div key={serv.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>#{index + 1}: {serv.title}</div>
@@ -676,7 +664,7 @@ export const AdminPanel = () => {
                         onChange={(url) => updateService(index, { imageUrl: url })}
                       />
 
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
                         <div>
                           <label style={adminLabelStyle}>SERVICE TITLE</label>
                           <input 
@@ -706,14 +694,14 @@ export const AdminPanel = () => {
             {activeTab === 'portfolio' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h2 style={tabHeaderTitleStyle}>Portfolio Project Manager ({localContent.portfolio?.length || 0})</h2>
+                  <h2 style={tabHeaderTitleStyle}>Portfolio Project Manager ({content.portfolio?.length || 0})</h2>
                   <button onClick={() => addPortfolio({ title: 'New Portfolio Project' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add Portfolio Item
                   </button>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(localContent.portfolio || []).map((port, index) => (
+                  {(content.portfolio || []).map((port, index) => (
                     <div key={port.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>{port.category}: {port.title}</div>
@@ -739,7 +727,7 @@ export const AdminPanel = () => {
                         onChange={(url) => updatePortfolio(index, { imageUrl: url })}
                       />
 
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
                         <div>
                           <label style={adminLabelStyle}>PROJECT TITLE</label>
                           <input 
@@ -769,14 +757,14 @@ export const AdminPanel = () => {
             {activeTab === 'clients' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h2 style={tabHeaderTitleStyle}>Client Brands Manager ({localContent.clients?.length || 0})</h2>
+                  <h2 style={tabHeaderTitleStyle}>Client Brands Manager ({content.clients?.length || 0})</h2>
                   <button onClick={() => addClient({ name: 'New Client Brand' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add Client Card
                   </button>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(localContent.clients || []).map((cli, index) => (
+                  {(content.clients || []).map((cli, index) => (
                     <div key={cli.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>Brand: {cli.name}</div>
@@ -791,7 +779,7 @@ export const AdminPanel = () => {
                         onChange={(url) => updateClient(index, { logoUrl: url })}
                       />
 
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
                         <div>
                           <label style={adminLabelStyle}>BRAND NAME</label>
                           <input 
@@ -821,14 +809,14 @@ export const AdminPanel = () => {
             {activeTab === 'testimonials' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h2 style={tabHeaderTitleStyle}>Client Reviews & Testimonials ({localContent.testimonials?.length || 0})</h2>
+                  <h2 style={tabHeaderTitleStyle}>Client Reviews & Testimonials ({content.testimonials?.length || 0})</h2>
                   <button onClick={() => addTestimonial({ name: 'New Reviewer' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add Testimonial
                   </button>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(localContent.testimonials || []).map((t, index) => (
+                  {(content.testimonials || []).map((t, index) => (
                     <div key={t.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>{t.name} ({t.title})</div>
@@ -843,7 +831,7 @@ export const AdminPanel = () => {
                         onChange={(url) => updateTestimonial(index, { avatarUrl: url })}
                       />
 
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
                         <div>
                           <label style={adminLabelStyle}>NAME</label>
                           <input 
@@ -883,14 +871,14 @@ export const AdminPanel = () => {
             {activeTab === 'faqs' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h2 style={tabHeaderTitleStyle}>FAQs Manager ({localContent.faqs?.length || 0})</h2>
+                  <h2 style={tabHeaderTitleStyle}>FAQs Manager ({content.faqs?.length || 0})</h2>
                   <button onClick={() => addFaq({ question: 'New Question?' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add FAQ Item
                   </button>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(localContent.faqs || []).map((f, index) => (
+                  {(content.faqs || []).map((f, index) => (
                     <div key={f.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>FAQ #{index + 1}</div>
@@ -928,14 +916,14 @@ export const AdminPanel = () => {
             {activeTab === 'blogs' && (
               <div>
                 <div style={tabHeaderRowStyle}>
-                  <h2 style={tabHeaderTitleStyle}>Blog Posts Manager ({localContent.blogs?.length || 0})</h2>
+                  <h2 style={tabHeaderTitleStyle}>Blog Posts Manager ({content.blogs?.length || 0})</h2>
                   <button onClick={() => addBlog({ title: 'New Marketing Article' })} style={addButtonHeaderStyle}>
                     <Plus size={16} /> Add New Blog Post
                   </button>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {(localContent.blogs || []).map((b, index) => (
+                  {(content.blogs || []).map((b, index) => (
                     <div key={b.id || index} style={itemCardContainerStyle}>
                       <div style={itemCardHeaderRowStyle}>
                         <div style={{ fontWeight: 600, color: '#EDB403' }}>{b.title}</div>
@@ -950,7 +938,7 @@ export const AdminPanel = () => {
                         onChange={(url) => updateBlog(index, { imageUrl: url })}
                       />
 
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
                         <div>
                           <label style={adminLabelStyle}>ARTICLE TITLE</label>
                           <input 
@@ -986,138 +974,7 @@ export const AdminPanel = () => {
               </div>
             )}
 
-            {/* 10. MEDIA LIBRARY */}
-            {activeTab === 'media' && (
-              <div>
-                <h2 style={tabHeaderTitleStyle}>Media Asset Library</h2>
-                
-                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
-                  <ImageUploader 
-                    label="Upload New Media Asset to Library"
-                    value=""
-                    onChange={(url) => {
-                      if (url) addMediaAsset({ name: `Asset-${Date.now()}`, url });
-                    }}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* 11. SEO & META SETTINGS */}
-            {activeTab === 'seo' && (
-              <div>
-                <h2 style={tabHeaderTitleStyle}>SEO & Meta Settings</h2>
-
-                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
-                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
-                    Google Search Engine Meta
-                  </h3>
-
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <label style={adminLabelStyle}>META TITLE</label>
-                    <input 
-                      type="text" 
-                      value={localContent.seoSettings?.metaTitle || ''} 
-                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, metaTitle: e.target.value })}
-                      style={adminInputStyle}
-                      placeholder="e.g. Inflix Marketing Solutions | Performance Digital Agency"
-                    />
-                  </div>
-
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <label style={adminLabelStyle}>META DESCRIPTION</label>
-                    <textarea 
-                      rows={3} 
-                      value={localContent.seoSettings?.metaDescription || ''} 
-                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, metaDescription: e.target.value })}
-                      style={adminInputStyle}
-                      placeholder="Summary describing your business for search results."
-                    />
-                  </div>
-
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <label style={adminLabelStyle}>KEYWORDS (COMMA SEPARATED)</label>
-                    <input 
-                      type="text" 
-                      value={localContent.seoSettings?.keywords || ''} 
-                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, keywords: e.target.value })}
-                      style={adminInputStyle}
-                      placeholder="digital marketing, performance ads, SEO, branding"
-                    />
-                  </div>
-                </div>
-
-                <div className="card-glass" style={{ marginBottom: '1.5rem' }}>
-                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', color: '#ffffff', marginBottom: '1rem' }}>
-                    Social Sharing Cards (Open Graph & Twitter)
-                  </h3>
-
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <label style={adminLabelStyle}>OPEN GRAPH TITLE</label>
-                    <input 
-                      type="text" 
-                      value={localContent.seoSettings?.ogTitle || ''} 
-                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, ogTitle: e.target.value })}
-                      style={adminInputStyle}
-                    />
-                  </div>
-
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <label style={adminLabelStyle}>OPEN GRAPH DESCRIPTION</label>
-                    <textarea 
-                      rows={2} 
-                      value={localContent.seoSettings?.ogDescription || ''} 
-                      onChange={(e) => updateLocalSection('seoSettings', { ...localContent.seoSettings, ogDescription: e.target.value })}
-                      style={adminInputStyle}
-                    />
-                  </div>
-
-                  <ImageUploader 
-                    label="Open Graph Share Image (Facebook / WhatsApp / LinkedIn)"
-                    value={localContent.seoSettings?.ogImage || ''}
-                    onChange={(url) => updateLocalSection('seoSettings', { ...localContent.seoSettings, ogImage: url })}
-                  />
-
-                  <ImageUploader 
-                    label="Twitter Card Image"
-                    value={localContent.seoSettings?.twitterImage || ''}
-                    onChange={(url) => updateLocalSection('seoSettings', { ...localContent.seoSettings, twitterImage: url })}
-                  />
-
-                  <ImageUploader 
-                    label="Browser Favicon Icon (.png / .ico)"
-                    value={localContent.seoSettings?.faviconUrl || ''}
-                    onChange={(url) => updateLocalSection('seoSettings', { ...localContent.seoSettings, faviconUrl: url })}
-                  />
-                </div>
-
-                {/* Live Preview Card */}
-                <div className="card-glass">
-                  <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.1rem', color: '#EDB403', marginBottom: '0.75rem' }}>
-                    Live Search Result Preview
-                  </h3>
-                  <div style={{
-                    background: '#0B132B',
-                    padding: '1.25rem',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(237, 180, 3, 0.2)'
-                  }}>
-                    <div style={{ fontSize: '0.8rem', color: '#10b981', marginBottom: '0.2rem' }}>
-                      https://inflixmarketing.in
-                    </div>
-                    <div style={{ fontSize: '1.15rem', color: '#60a5fa', fontWeight: 600, marginBottom: '0.35rem', cursor: 'pointer' }}>
-                      {localContent.seoSettings?.metaTitle || 'Inflix Marketing Solutions'}
-                    </div>
-                    <div style={{ fontSize: '0.875rem', color: '#cbd5e1', lineHeight: 1.5 }}>
-                      {localContent.seoSettings?.metaDescription || 'We help ambitious brands scale faster through data-driven performance marketing...'}
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            )}
-
-            {/* 12. SECURITY & SETTINGS */}
+            {/* 10. SECURITY & SETTINGS */}
             {activeTab === 'settings' && (
               <div>
                 <h2 style={tabHeaderTitleStyle}>Security & Password Settings</h2>
@@ -1193,7 +1050,7 @@ const modalOverlayStyle = {
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundColor: 'rgba(11, 19, 43, 0.95)',
+  backgroundColor: 'rgba(11, 19, 43, 0.96)',
   backdropFilter: 'blur(16px)',
   zIndex: 3000,
   display: 'flex',
@@ -1227,18 +1084,17 @@ const lockIconCircleStyle = {
 };
 
 const closeIconButtonStyle = {
-  position: 'absolute',
-  top: '1.25rem',
-  right: '1.25rem',
   color: '#ffffff',
   background: 'rgba(255, 255, 255, 0.08)',
   borderRadius: '50%',
-  width: '36px',
-  height: '36px',
+  width: '32px',
+  height: '32px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  border: 'none',
+  flexShrink: 0
 };
 
 const logoutIconButtonStyle = {
@@ -1246,12 +1102,13 @@ const logoutIconButtonStyle = {
   background: 'rgba(239, 68, 68, 0.2)',
   border: '1px solid rgba(239, 68, 68, 0.4)',
   borderRadius: '8px',
-  width: '36px',
-  height: '36px',
+  width: '32px',
+  height: '32px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  flexShrink: 0
 };
 
 const authInputStyle = {
@@ -1279,22 +1136,25 @@ const topNavbarStyle = {
   height: '65px',
   background: '#173765',
   borderBottom: '1px solid rgba(237, 180, 3, 0.2)',
-  padding: '0 1.25rem',
+  padding: '0 1rem',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  flexShrink: 0
+  flexShrink: 0,
+  zIndex: 100,
+  position: 'relative'
 };
 
 const headerLogoSquareStyle = {
-  width: '36px',
-  height: '36px',
+  width: '32px',
+  height: '32px',
   borderRadius: '8px',
   background: '#EDB403',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: '#173765'
+  color: '#173765',
+  flexShrink: 0
 };
 
 const sidebarContainerStyle = {
@@ -1305,28 +1165,31 @@ const sidebarContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: '0.4rem',
-  overflowY: 'auto'
+  overflowY: 'auto',
+  height: '100%'
 };
 
 const sidebarNavButtonStyle = {
   display: 'flex',
   alignItems: 'center',
   gap: '0.75rem',
-  padding: '0.7rem 0.85rem',
+  padding: '0.65rem 0.85rem',
   borderRadius: '8px',
   fontSize: '0.825rem',
   textAlign: 'left',
   cursor: 'pointer',
   transition: 'all 0.2s ease',
-  width: '100%'
+  width: '100%',
+  border: 'none'
 };
 
 const mainContentAreaStyle = {
   flex: 1,
-  padding: '2rem',
+  padding: '1.75rem 1.5rem',
   overflowY: 'auto',
   boxSizing: 'border-box',
-  width: '100%'
+  width: '100%',
+  height: '100%'
 };
 
 const tabHeaderTitleStyle = {

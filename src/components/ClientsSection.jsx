@@ -57,9 +57,19 @@ export const ClientsSection = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: '#EDB403',
-                    border: '1px solid rgba(237, 180, 3, 0.35)'
+                    border: '1px solid rgba(237, 180, 3, 0.35)',
+                    overflow: 'hidden'
                   }}>
-                    <Building2 size={20} />
+                    {cli.logoUrl ? (
+                      <img 
+                        src={cli.logoUrl} 
+                        alt={cli.name} 
+                        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                      />
+                    ) : (
+                      <Building2 size={20} />
+                    )}
                   </div>
                   <div>
                     <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', fontWeight: 400, color: '#ffffff', lineHeight: 1.2 }}>

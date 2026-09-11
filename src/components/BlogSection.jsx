@@ -58,6 +58,7 @@ export const BlogSection = () => {
                   <img 
                     src={b.imageUrl || "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=800&q=80"} 
                     alt={b.title} 
+                    onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=800&q=80"; }}
                   />
                 </div>
 

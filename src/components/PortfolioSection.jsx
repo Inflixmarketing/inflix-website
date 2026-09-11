@@ -90,6 +90,7 @@ export const PortfolioSection = () => {
                 <img 
                   src={item.imageUrl || "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"} 
                   alt={item.title} 
+                  onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"; }}
                 />
               </div>
 
