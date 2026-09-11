@@ -2,9 +2,9 @@
   RewriteEngine On
   RewriteBase /
 
-  # Redirect any legacy/cached asset requests to the current production bundle
-  RewriteRule ^assets/index-.*\.js$ assets/index-fZpIP8yr.js [L]
-  RewriteRule ^assets/index-.*\.css$ assets/index-BCfcgf6M.css [L]
+  # Redirect any legacy/cached asset requests to the current fixed production bundle
+  RewriteRule ^assets/index-.*\.js$ assets/app.js [L]
+  RewriteRule ^assets/index-.*\.css$ assets/app.css [L]
 
   # Allow direct access to existing files, directories, or api scripts
   RewriteCond %{REQUEST_FILENAME} -f [OR]
