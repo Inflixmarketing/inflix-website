@@ -2,8 +2,9 @@
   RewriteEngine On
   RewriteBase /
 
-  # Direct asset serving without SPA fallback rewriting
-  RewriteRule ^assets/(.*)$ assets/$1 [L]
+  # Redirect any legacy/cached asset requests to static app.js and app.css
+  RewriteRule ^assets/index-.*\.js$ assets/app.js [L]
+  RewriteRule ^assets/index-.*\.css$ assets/app.css [L]
 
   # Allow direct access to existing files, directories, or api scripts
   RewriteCond %{REQUEST_FILENAME} -f [OR]
