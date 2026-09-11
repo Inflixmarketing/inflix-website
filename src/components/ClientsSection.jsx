@@ -51,23 +51,23 @@ export const ClientsSection = () => {
                   marginBottom: '1rem'
                 }}>
                   <div style={{
-                    width: '40px',
-                    height: '40px',
+                    width: '42px',
+                    height: '42px',
                     borderRadius: '10px',
-                    background: 'rgba(237, 180, 3, 0.12)',
+                    background: 'rgba(103, 82, 236, 0.18)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: primaryColor,
-                    border: '1px solid rgba(237, 180, 3, 0.25)'
+                    color: '#a394ff',
+                    border: '1px solid rgba(103, 82, 236, 0.35)'
                   }}>
                     <Building2 size={20} />
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', lineHeight: 1.2 }}>
+                    <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', fontWeight: 400, color: '#ffffff', lineHeight: 1.2 }}>
                       {cli.name}
                     </h3>
-                    <span style={{ fontSize: '0.75rem', color: primaryColor, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#a394ff', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       {cli.category}
                     </span>
                   </div>

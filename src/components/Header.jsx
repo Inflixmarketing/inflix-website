@@ -28,11 +28,11 @@ export const Header = () => {
       right: 0,
       width: '100%',
       zIndex: 1000,
-      backgroundColor: 'rgba(9, 13, 22, 0.92)',
+      backgroundColor: 'rgba(2, 1, 12, 0.88)',
       backdropFilter: 'blur(20px)',
       WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-      padding: '0.85rem 0',
+      borderBottom: '1px solid rgba(103, 82, 236, 0.18)',
+      padding: '0.9rem 0',
       transition: 'all 0.3s ease'
     }}>
       <div className="container" style={{
@@ -53,44 +53,44 @@ export const Header = () => {
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <div style={{
-                width: '36px',
-                height: '36px',
+                width: '38px',
+                height: '38px',
                 borderRadius: '10px',
-                background: primaryColor,
+                background: 'linear-gradient(135deg, #6752ec 0%, #a394ff 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#090d16',
-                boxShadow: `0 4px 20px rgba(237, 180, 3, 0.35)`
+                color: '#ffffff',
+                boxShadow: `0 4px 20px rgba(103, 82, 236, 0.4)`
               }}>
-                <svg width="20" height="20" viewBox="0 0 100 100" fill="none">
-                  <rect x="15" y="35" width="16" height="50" rx="4" fill="#090d16" />
-                  <circle cx="23" cy="20" r="8" fill="#090d16" />
-                  <path d="M40 85 L75 20 L85 20 L85 30 L50 85 Z" fill="#090d16" />
-                  <path d="M45 20 L80 85 L70 85 L35 20 Z" fill="#ffffff" />
+                <svg width="22" height="22" viewBox="0 0 100 100" fill="none">
+                  <rect x="15" y="35" width="16" height="50" rx="4" fill="#ffffff" />
+                  <circle cx="23" cy="20" r="8" fill="#ffffff" />
+                  <path d="M40 85 L75 20 L85 20 L85 30 L50 85 Z" fill="#ffffff" />
+                  <path d="M45 20 L80 85 L70 85 L35 20 Z" fill="#02010c" />
                 </svg>
               </div>
               <div>
                 <span style={{
-                  fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : 'sans-serif',
-                  fontSize: '1.4rem',
-                  fontWeight: 800,
+                  fontFamily: "'Ancola', 'Tenor Sans', serif",
+                  fontSize: '1.45rem',
+                  fontWeight: 400,
                   color: '#ffffff',
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '0.04em',
                   lineHeight: 1
                 }}>
-                  Inflix
+                  Agatha
                 </span>
                 <span style={{
                   display: 'block',
                   fontSize: '0.55rem',
-                  fontWeight: 700,
-                  color: primaryColor,
-                  letterSpacing: '0.18em',
+                  fontWeight: 600,
+                  color: '#a394ff',
+                  letterSpacing: '0.2em',
                   textTransform: 'uppercase',
                   marginTop: '2px'
                 }}>
-                  MARKETING SOLUTIONS
+                  CREATIVE AGENCY
                 </span>
               </div>
             </div>
@@ -103,8 +103,8 @@ export const Header = () => {
           gap: '2.25rem',
           alignItems: 'center'
         }} className="desktop-nav">
-          <a href="#home" onClick={() => handleNavClick('home', '#home')} style={navLinkStyle(activeTab === 'home', primaryColor)}>HOME</a>
-          <a href="#about" onClick={() => handleNavClick('about', '#about')} style={navLinkStyle(activeTab === 'about', primaryColor)}>ABOUT</a>
+          <a href="#home" onClick={() => handleNavClick('home', '#home')} style={navLinkStyle(activeTab === 'home', '#a394ff')}>HOME</a>
+          <a href="#about" onClick={() => handleNavClick('about', '#about')} style={navLinkStyle(activeTab === 'about', '#a394ff')}>ABOUT</a>
           
           {/* Services Dropdown */}
           <div 
@@ -115,7 +115,7 @@ export const Header = () => {
             <a 
               href="#services" 
               onClick={() => handleNavClick('services', '#services')} 
-              style={{ ...navLinkStyle(activeTab === 'services', primaryColor), display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+              style={{ ...navLinkStyle(activeTab === 'services', '#a394ff'), display: 'flex', alignItems: 'center', gap: '0.3rem' }}
             >
               <span>SERVICES</span>
               <ChevronDown size={14} />
@@ -126,13 +126,13 @@ export const Header = () => {
                 position: 'absolute',
                 top: '100%',
                 left: 0,
-                backgroundColor: '#0f172a',
-                border: '1px solid rgba(237, 180, 3, 0.25)',
+                backgroundColor: '#0c0a1d',
+                border: '1px solid rgba(103, 82, 236, 0.3)',
                 color: '#ffffff',
                 borderRadius: '12px',
                 padding: '1rem',
                 minWidth: '210px',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.75rem',
@@ -146,10 +146,10 @@ export const Header = () => {
             )}
           </div>
 
-          <a href="#portfolio" onClick={() => handleNavClick('portfolio', '#portfolio')} style={navLinkStyle(activeTab === 'portfolio', primaryColor)}>PORTFOLIO</a>
-          <a href="#process" onClick={() => handleNavClick('process', '#process')} style={navLinkStyle(activeTab === 'process', primaryColor)}>PROCESS</a>
-          <a href="#testimonials" onClick={() => handleNavClick('testimonials', '#testimonials')} style={navLinkStyle(activeTab === 'testimonials', primaryColor)}>REVIEWS</a>
-          <a href="#contact" onClick={() => handleNavClick('contact', '#contact')} style={navLinkStyle(activeTab === 'contact', primaryColor)}>CONTACT</a>
+          <a href="#portfolio" onClick={() => handleNavClick('portfolio', '#portfolio')} style={navLinkStyle(activeTab === 'portfolio', '#a394ff')}>PORTFOLIO</a>
+          <a href="#process" onClick={() => handleNavClick('process', '#process')} style={navLinkStyle(activeTab === 'process', '#a394ff')}>PROCESS</a>
+          <a href="#testimonials" onClick={() => handleNavClick('testimonials', '#testimonials')} style={navLinkStyle(activeTab === 'testimonials', '#a394ff')}>REVIEWS</a>
+          <a href="#contact" onClick={() => handleNavClick('contact', '#contact')} style={navLinkStyle(activeTab === 'contact', '#a394ff')}>CONTACT</a>
         </nav>
 
         {/* Header Action Buttons */}
@@ -164,21 +164,21 @@ export const Header = () => {
               padding: '0.45rem 0.85rem',
               background: 'rgba(255, 255, 255, 0.05)',
               color: '#ffffff',
-              border: `1px solid ${primaryColor}`,
+              border: `1px solid rgba(103, 82, 236, 0.5)`,
               borderRadius: '9999px',
               fontSize: '0.75rem',
-              fontWeight: 700
+              fontWeight: 600
             }}
           >
-            <Settings size={14} style={{ color: primaryColor }} />
+            <Settings size={14} style={{ color: '#a394ff' }} />
             <span>Admin</span>
           </button>
 
           {/* Desktop Only CTA (Hidden on Mobile view to avoid clutter) */}
           <a 
             href="#contact" 
-            className="btn-agatha-gold desktop-cta"
-            style={{ padding: '0.65rem 1.4rem', fontSize: '0.8rem' }}
+            className="btn-agatha-purple desktop-cta"
+            style={{ padding: '0.65rem 1.6rem', fontSize: '0.8rem' }}
           >
             <span>GET STARTED →</span>
           </a>
@@ -197,8 +197,8 @@ export const Header = () => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div style={{
-          backgroundColor: '#090d16',
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          backgroundColor: '#02010c',
+          borderTop: '1px solid rgba(103, 82, 236, 0.2)',
           padding: '1.25rem 1.5rem',
           display: 'flex',
           flexDirection: 'column',
@@ -216,14 +216,14 @@ export const Header = () => {
             <a 
               href="#contact" 
               onClick={() => setMobileMenuOpen(false)}
-              className="btn-agatha-gold"
+              className="btn-agatha-purple"
               style={{ width: '100%' }}
             >
               LET'S TALK →
             </a>
             <button 
               onClick={() => { setIsAdminOpen(true); setMobileMenuOpen(false); }}
-              className="btn-agatha-navy"
+              className="btn-agatha-outline"
               style={{ width: '100%' }}
             >
               OPEN ADMIN PANEL

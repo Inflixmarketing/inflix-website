@@ -24,7 +24,7 @@ const iconMap = {
 };
 
 export const ServicesSection = () => {
-  const { content, setSelectedService } = useContent();
+  const { content, setSelectedService, navigateToView } = useContent();
   const header = content.servicesHeader || {};
   const services = content.services || [];
   const brand = content.brand || {};
@@ -78,27 +78,28 @@ export const ServicesSection = () => {
                   minHeight: '270px',
                   cursor: 'pointer'
                 }}
-                onClick={() => setSelectedService(svc)}
+                onClick={() => navigateToView('service-detail', svc.slug || svc.id)}
               >
                 <div>
                   <div style={{
-                    width: '52px',
-                    height: '52px',
-                    borderRadius: '12px',
-                    background: 'rgba(237, 180, 3, 0.12)',
+                    width: '54px',
+                    height: '54px',
+                    borderRadius: '14px',
+                    background: 'rgba(103, 82, 236, 0.18)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: primaryColor,
+                    color: '#a394ff',
                     marginBottom: '1.5rem',
-                    border: '1px solid rgba(237, 180, 3, 0.25)'
+                    border: '1px solid rgba(103, 82, 236, 0.35)'
                   }}>
                     <IconComponent size={26} strokeWidth={1.75} />
                   </div>
 
                   <h3 style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 700,
+                    fontFamily: "'Ancola', 'Tenor Sans', serif",
+                    fontSize: '1.3rem',
+                    fontWeight: 400,
                     marginBottom: '0.75rem',
                     color: '#ffffff'
                   }}>
@@ -119,13 +120,13 @@ export const ServicesSection = () => {
                   alignItems: 'center',
                   gap: '0.4rem',
                   fontSize: '0.8rem',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   letterSpacing: '0.05em',
-                  color: primaryColor,
+                  color: '#a394ff',
                   marginTop: '1.5rem',
                   textTransform: 'uppercase'
                 }}>
-                  <span>View Breakdown</span>
+                  <span>View Details</span>
                   <ArrowRight size={14} />
                 </div>
               </div>

@@ -20,11 +20,11 @@ export const Hero = () => {
         position: 'absolute',
         top: '5%',
         right: '10%',
-        width: '400px',
-        height: '400px',
-        background: `radial-gradient(circle, rgba(237, 180, 3, 0.15) 0%, transparent 70%)`,
+        width: '500px',
+        height: '500px',
+        background: `radial-gradient(circle, rgba(103, 82, 236, 0.25) 0%, transparent 70%)`,
         pointerEvents: 'none',
-        filter: 'blur(40px)'
+        filter: 'blur(50px)'
       }} />
 
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
@@ -42,21 +42,21 @@ export const Hero = () => {
             {/* Top Category Badge Pill */}
             <div style={{ display: 'inline-flex', alignItems: 'center' }}>
               <span className="section-category">
-                <Sparkles size={14} style={{ color: primaryColor }} />
-                <span>Driven by Strategy. Powered by Creativity.</span>
+                <Sparkles size={14} style={{ color: '#a394ff' }} />
+                <span>Creative Portfolio & Agency</span>
               </span>
             </div>
 
             {/* Hero Main Headline */}
             <h1 style={{
-              fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : "'Syne', sans-serif",
-              fontSize: 'clamp(2.2rem, 5.8vw, 4.5rem)',
-              fontWeight: 800,
-              lineHeight: 1.12,
+              fontFamily: "'Ancola', 'Tenor Sans', serif",
+              fontSize: 'clamp(2.5rem, 6vw, 4.8rem)',
+              fontWeight: 400,
+              lineHeight: 1.1,
               color: '#ffffff',
-              letterSpacing: '-0.03em'
+              letterSpacing: '0.01em'
             }}>
-              Next-Gen <span className="text-gold-gradient">Digital Marketing</span> & Creative Agency
+              Creative Portfolio <br /> & <span className="text-purple-gradient">Digital Agency</span>
             </h1>
 
             {/* Description Paragraph */}
@@ -66,17 +66,17 @@ export const Hero = () => {
               lineHeight: 1.7,
               maxWidth: '640px'
             }}>
-              {hero.description || 'We help ambitious brands scale faster through data-driven performance marketing, high-converting content, and strategic brand positioning.'}
+              {hero.description || 'We craft high-impact brand identities, converting digital experiences, and strategic marketing campaigns that elevate ambitious companies.'}
             </p>
 
             {/* Primary & Secondary Action Buttons */}
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', paddingTop: '0.5rem' }} className="hero-btn-group">
-              <a href="#contact" className="btn-agatha-gold">
-                <span>Explore Our Services</span>
+              <a href="#contact" className="btn-agatha-purple">
+                <span>GET STARTED NOW</span>
                 <ArrowUpRight size={18} />
               </a>
-              <a href="#portfolio" className="btn-agatha-navy">
-                <span>View Recent Work</span>
+              <a href="#portfolio" className="btn-agatha-outline">
+                <span>VIEW PORTFOLIO</span>
               </a>
             </div>
 
@@ -86,22 +86,22 @@ export const Hero = () => {
               alignItems: 'center',
               gap: '2rem',
               paddingTop: '1.5rem',
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              borderTop: '1px solid rgba(103, 82, 236, 0.2)',
               flexWrap: 'wrap'
             }}>
               <div>
-                <span style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', display: 'block', lineHeight: 1 }}>+340%</span>
-                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '4px', display: 'block' }}>Avg. ROAS Growth</span>
+                <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', color: '#ffffff', display: 'block', lineHeight: 1 }}>+340%</span>
+                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>Avg. ROAS Growth</span>
               </div>
-              <div style={{ width: '1px', height: '30px', background: 'rgba(255,255,255,0.1)' }} />
+              <div style={{ width: '1px', height: '30px', background: 'rgba(103, 82, 236, 0.3)' }} />
               <div>
-                <span style={{ fontSize: '1.5rem', fontWeight: 800, color: primaryColor, display: 'block', lineHeight: 1 }}>4.9 / 5</span>
-                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '4px', display: 'block' }}>Client Satisfaction</span>
+                <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', color: '#a394ff', display: 'block', lineHeight: 1 }}>4.9 / 5</span>
+                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>Client Satisfaction</span>
               </div>
-              <div style={{ width: '1px', height: '30px', background: 'rgba(255,255,255,0.1)' }} />
+              <div style={{ width: '1px', height: '30px', background: 'rgba(103, 82, 236, 0.3)' }} />
               <div>
-                <span style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', display: 'block', lineHeight: 1 }}>100+</span>
-                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '4px', display: 'block' }}>Campaigns Launched</span>
+                <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', color: '#ffffff', display: 'block', lineHeight: 1 }}>100+</span>
+                <span style={{ fontSize: '0.785rem', color: '#94a3b8', marginTop: '6px', display: 'block' }}>Projects Delivered</span>
               </div>
             </div>
 

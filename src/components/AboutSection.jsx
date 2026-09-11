@@ -10,10 +10,10 @@ export const AboutSection = () => {
 
   return (
     <section id="about" className="section-padding" style={{
-      background: 'rgba(15, 23, 42, 0.4)',
+      background: 'rgba(12, 10, 29, 0.6)',
       position: 'relative',
-      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+      borderTop: '1px solid rgba(103, 82, 236, 0.15)',
+      borderBottom: '1px solid rgba(103, 82, 236, 0.15)'
     }}>
       <div className="container">
         
@@ -28,59 +28,59 @@ export const AboutSection = () => {
           {/* Left Headline */}
           <div>
             <span className="section-category">
-              {about.category || 'About Us'}
+              {about.category || 'About Agatha'}
             </span>
 
             <h2 className="section-title" style={{ marginTop: '0.75rem' }}>
-              {about.headline || 'We Use Our Experience To Get Clients Results'}
+              {about.headline || 'We Use Experience To Create Iconic Digital Solutions'}
             </h2>
 
             <p style={{
               fontSize: '1.1rem',
-              fontWeight: 600,
-              color: primaryColor,
+              fontWeight: 500,
+              color: '#a394ff',
               lineHeight: 1.6,
               marginBottom: '1.25rem'
             }}>
-              {about.highlight || 'We Are A Digital Agency That Specializes In Web Design, Branding Identity, And Social Media Management.'}
+              {about.highlight || 'We Are A Creative Digital Agency Specializing In Web Design, Brand Identity, & High-Growth Strategy.'}
             </p>
 
             <p style={{ fontSize: '1rem', color: '#cbd5e1', lineHeight: 1.7, marginBottom: '2rem' }}>
-              {about.body || 'At Inflix Marketing Solutions, we turn complex digital marketing challenges into clear growth strategies.'}
+              {about.body || 'At Agatha, we translate complex creative and marketing challenges into elegant, high-converting digital products.'}
             </p>
 
-            <a href="#services" className="btn-agatha-gold">
+            <a href="#services" className="btn-agatha-purple">
               <span>EXPLORE SERVICES</span>
               <ArrowRight size={16} />
             </a>
           </div>
 
-          {/* Right Dual Glass Cards & Image */}
+          {/* Right Dual Glass Cards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             
             {/* Left Box 1: Philosophy */}
-            <div className="card-glass" style={{ borderLeft: `4px solid ${primaryColor}` }}>
+            <div className="card-glass" style={{ borderLeft: `4px solid #6752ec` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                <Compass size={22} style={{ color: primaryColor }} />
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffffff' }}>
-                  {about.philosophyTitle || 'Our Philosophy'}
+                <Compass size={22} style={{ color: '#a394ff' }} />
+                <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.3rem', color: '#ffffff' }}>
+                  {about.philosophyTitle || 'Our Creative Philosophy'}
                 </h3>
               </div>
               <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.65 }}>
-                {about.philosophy || 'We believe marketing should be transparent, data-led, and obsessively focused on ROI.'}
+                {about.philosophy || 'We believe design and performance marketing should be seamless, data-driven, and focused on tangible business ROI.'}
               </p>
             </div>
 
             {/* Left Box 2: Goals */}
-            <div className="card-glass" style={{ borderLeft: `4px solid #ffffff` }}>
+            <div className="card-glass" style={{ borderLeft: `4px solid #a394ff` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                <Target size={22} style={{ color: '#ffffff' }} />
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffffff' }}>
-                  {about.goalsTitle || 'Our Goals'}
+                <Target size={22} style={{ color: '#a394ff' }} />
+                <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.3rem', color: '#ffffff' }}>
+                  {about.goalsTitle || 'Our Mission & Vision'}
                 </h3>
               </div>
               <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.65 }}>
-                {about.goals || 'Our goal is to empower ambitious brands to scale seamlessly by providing high-impact digital strategies.'}
+                {about.goals || 'Our mission is to empower visionaries with world-class digital tools and marketing strategies that scale effortlessly.'}
               </p>
             </div>
 

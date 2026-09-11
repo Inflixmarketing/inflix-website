@@ -9,14 +9,15 @@ export const Footer = () => {
 
   return (
     <footer id="contact" style={{
-      backgroundColor: '#0b0c10',
+      backgroundColor: '#02010c',
       color: '#ffffff',
-      position: 'relative'
+      position: 'relative',
+      borderTop: '1px solid rgba(103, 82, 236, 0.2)'
     }}>
       <div className="container" style={{ paddingTop: '4rem', paddingBottom: '3rem' }}>
         
         {/* Agatha CTA Banner */}
-        <div className="card-dark-grid footer-cta-banner" style={{
+        <div style={{
           padding: '3rem 2.5rem',
           display: 'flex',
           flexWrap: 'wrap',
@@ -24,7 +25,9 @@ export const Footer = () => {
           justifyContent: 'space-between',
           gap: '2rem',
           marginBottom: '4rem',
-          borderRadius: '20px'
+          borderRadius: '20px',
+          background: 'rgba(14, 11, 33, 0.85)',
+          border: '1px solid rgba(103, 82, 236, 0.3)'
         }}>
           <div style={{ maxWidth: '650px' }}>
             <h2 style={{
@@ -32,22 +35,22 @@ export const Footer = () => {
               fontWeight: 400,
               color: '#ffffff',
               lineHeight: 1.25,
-              fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : 'sans-serif'
+              fontFamily: "'Ancola', 'Tenor Sans', serif"
             }}>
-              {cta.headline || "Have A Project In Mind? Let's Start Working Together!"}
+              {cta.headline || "Have A Creative Project In Mind? Let's Build It Together!"}
             </h2>
           </div>
 
           {/* Right Circular CTA Button */}
           <a 
-            href={`mailto:${brand.contactEmail || 'contact@inflixmarketing.com'}`}
+            href={`mailto:${brand.contactEmail || 'contact@agathaagency.com'}`}
             style={{
               width: '140px',
               height: '140px',
               borderRadius: '50%',
-              background: '#ffffff',
-              color: '#000000',
-              fontWeight: 700,
+              background: 'linear-gradient(135deg, #6752ec 0%, #a394ff 100%)',
+              color: '#ffffff',
+              fontWeight: 600,
               fontSize: '0.8rem',
               letterSpacing: '0.08em',
               display: 'flex',
@@ -55,14 +58,14 @@ export const Footer = () => {
               justifyContent: 'center',
               textAlign: 'center',
               textTransform: 'uppercase',
-              boxShadow: '0 15px 40px rgba(255, 255, 255, 0.2)',
+              boxShadow: '0 15px 40px rgba(103, 82, 236, 0.4)',
               transition: 'transform 0.3s ease, background-color 0.3s ease',
               textDecoration: 'none',
               flexShrink: 0
             }}
             className="circle-cta-hover"
           >
-            <span>{cta.buttonText || 'CONTACT US'}</span>
+            <span>{cta.buttonText || 'GET IN TOUCH'}</span>
           </a>
         </div>
 
@@ -76,13 +79,13 @@ export const Footer = () => {
           {/* Column 1: Brand Info */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <span style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
-                Inflix
+              <span style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.6rem', color: '#ffffff', letterSpacing: '0.04em' }}>
+                Agatha
               </span>
             </div>
 
             <p style={{ fontSize: '0.875rem', color: '#94a3b8', lineHeight: 1.65, marginBottom: '1.25rem' }}>
-              Inflix Marketing Solutions is a performance digital marketing agency specializing in paid acquisition, brand identity, web experiences, and social growth.
+              Agatha Creative Portfolio & Digital Agency specializing in brand identity, high-converting digital products, and strategic media acquisition.
             </p>
 
             <div style={{ display: 'flex', gap: '0.65rem' }}>
@@ -96,7 +99,7 @@ export const Footer = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: '#ffffff',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                  border: '1px solid rgba(103, 82, 236, 0.2)'
                 }}>
                   <Icon size={15} />
                 </a>
@@ -106,13 +109,13 @@ export const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '1.25rem', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.05rem', fontWeight: 400, marginBottom: '1.25rem', color: '#ffffff', letterSpacing: '0.05em' }}>
               Quick Links
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#94a3b8' }}>
               <li><a href="#home" onClick={() => setActiveTab('home')}>Home</a></li>
-              <li><a href="#about" onClick={() => setActiveTab('about')}>About Us</a></li>
-              <li><a href="#services" onClick={() => setActiveTab('services')}>Services</a></li>
+              <li><a href="#about" onClick={() => setActiveTab('about')}>About Agatha</a></li>
+              <li><a href="#services" onClick={() => setActiveTab('services')}>Our Services</a></li>
               <li><a href="#portfolio" onClick={() => setActiveTab('portfolio')}>Portfolio</a></li>
               <li><a href="#process" onClick={() => setActiveTab('process')}>Our Process</a></li>
             </ul>
@@ -120,35 +123,35 @@ export const Footer = () => {
 
           {/* Column 3: Core Services */}
           <div>
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '1.25rem', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.05rem', fontWeight: 400, marginBottom: '1.25rem', color: '#ffffff', letterSpacing: '0.05em' }}>
               Core Services
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#94a3b8' }}>
-              <li>Performance Marketing</li>
-              <li>Branding Identity</li>
+              <li>Brand Identity Design</li>
               <li>Web Development</li>
-              <li>Social Media Management</li>
-              <li>Video Creation & Reels</li>
+              <li>UI/UX Experience Design</li>
+              <li>Performance Marketing</li>
+              <li>Creative Video Production</li>
             </ul>
           </div>
 
           {/* Column 4: Contact Info */}
           <div>
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '1.25rem', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <h4 style={{ fontFamily: "'Tenor Sans', serif", fontSize: '1.05rem', fontWeight: 400, marginBottom: '1.25rem', color: '#ffffff', letterSpacing: '0.05em' }}>
               Contact Info
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.875rem', color: '#94a3b8' }}>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                <Mail size={16} style={{ color: brand.primaryColor || '#edb403' }} />
-                <span>{brand.contactEmail || 'contact@inflixmarketing.com'}</span>
+                <Mail size={16} style={{ color: '#a394ff' }} />
+                <span>{brand.contactEmail || 'contact@agathaagency.com'}</span>
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                <Phone size={16} style={{ color: brand.primaryColor || '#edb403' }} />
-                <span>{brand.contactPhone || '+91 98765 43210'}</span>
+                <Phone size={16} style={{ color: '#a394ff' }} />
+                <span>{brand.contactPhone || '+1 800 555 0199'}</span>
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                <MapPin size={16} style={{ color: brand.primaryColor || '#edb403' }} />
-                <span>{brand.location || 'Hyderabad, India'}</span>
+                <MapPin size={16} style={{ color: '#a394ff' }} />
+                <span>{brand.location || 'New York, USA'}</span>
               </li>
             </ul>
           </div>
@@ -157,7 +160,7 @@ export const Footer = () => {
         {/* Copyright */}
         <div style={{
           paddingTop: '1.5rem',
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          borderTop: '1px solid rgba(103, 82, 236, 0.15)',
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-between',
@@ -167,7 +170,7 @@ export const Footer = () => {
           color: '#64748b'
         }}>
           <div>
-            © {new Date().getFullYear()} {brand.siteName || 'Inflix Marketing Solutions'}. All Rights Reserved.
+            © {new Date().getFullYear()} Agatha Creative Agency. All Rights Reserved.
           </div>
           <div style={{ display: 'flex', gap: '1.25rem' }}>
             <a href="#">Privacy Policy</a>
@@ -180,7 +183,7 @@ export const Footer = () => {
       <style>{`
         .circle-cta-hover:hover {
           transform: scale(1.08);
-          background: var(--color-primary) !important;
+          background: #7b68f5 !important;
         }
       `}</style>
     </footer>

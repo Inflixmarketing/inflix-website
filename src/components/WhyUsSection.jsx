@@ -12,9 +12,10 @@ export const WhyUsSection = () => {
 
   return (
     <section className="section-padding" style={{
-      background: brand.surfaceBg || '#111c30',
-      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+      background: 'rgba(12, 10, 29, 0.6)',
+      position: 'relative',
+      borderTop: '1px solid rgba(103, 82, 236, 0.15)',
+      borderBottom: '1px solid rgba(103, 82, 236, 0.15)'
     }}>
       <div className="container">
         
@@ -49,21 +50,20 @@ export const WhyUsSection = () => {
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: '1.5rem',
-                    padding: '1.75rem',
-                    background: `linear-gradient(135deg, rgba(23, 38, 66, 0.8) 0%, rgba(10, 17, 30, 0.9) 100%)`
+                    padding: '1.75rem'
                   }}
                 >
                   <div style={{
                     fontSize: '1.5rem',
-                    fontWeight: 900,
-                    color: brand.accentColor || '#edb403',
-                    fontFamily: brand.headingFont ? `'${brand.headingFont}', sans-serif` : 'sans-serif',
+                    fontWeight: 700,
+                    color: '#a394ff',
+                    fontFamily: "'Ancola', 'Tenor Sans', serif",
                     minWidth: '50px'
                   }}>
                     {pt.num}
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.5rem', color: '#ffffff' }}>
+                    <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.2rem', fontWeight: 400, marginBottom: '0.5rem', color: '#ffffff' }}>
                       {pt.title}
                     </h3>
                     <p style={{ fontSize: '0.925rem', color: '#94a3b8', lineHeight: 1.6 }}>

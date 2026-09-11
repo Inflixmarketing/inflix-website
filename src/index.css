@@ -1,27 +1,55 @@
-/* Ultra-Premium Glassmorphism & High-Converting Design System - Inflix Marketing Solutions */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Tenor+Sans&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap');
+/* ==========================================================================
+   CUSTOM FONT INTEGRATION - ANCOLA (REGULAR & ITALIC)
+   Bundled via Vite src/assets/fonts and fallback public/fonts
+   ========================================================================== */
+
+/* Ancola Regular (Supports all weights 100 - 900) */
+@font-face {
+  font-family: 'Ancola';
+  src: url('./assets/fonts/ancola-regular.ttf') format('truetype'),
+       url('./assets/fonts/ancola-regular.otf') format('opentype'),
+       url('/fonts/ancola-regular.ttf') format('truetype'),
+       url('/fonts/ancola-regular.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ancola Italic (Supports all weights 100 - 900) */
+@font-face {
+  font-family: 'Ancola';
+  src: url('./assets/fonts/ancola-italic.ttf') format('truetype'),
+       url('./assets/fonts/ancola-italic.otf') format('opentype'),
+       url('/fonts/ancola-italic.ttf') format('truetype'),
+       url('/fonts/ancola-italic.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 :root {
-  --color-primary: #edb403;
-  --color-primary-glow: rgba(237, 180, 3, 0.35);
-  --color-secondary: #0f172a;
+  --color-primary: #6752ec;
+  --color-primary-hover: #7b68f5;
+  --color-primary-glow: rgba(103, 82, 236, 0.4);
+  --color-secondary: #f4f0ea;
   --color-accent: #edb403;
-  --color-bg-dark: #090d16;
-  --color-bg-surface: #0f172a;
-  --color-card-bg: rgba(15, 23, 42, 0.65);
+  --color-bg-dark: #02010c;
+  --color-bg-surface: #0c0a1d;
+  --color-card-bg: rgba(14, 11, 33, 0.75);
   --color-glass-bg: rgba(255, 255, 255, 0.03);
-  --color-glass-border: rgba(237, 180, 3, 0.2);
+  --color-glass-border: rgba(103, 82, 236, 0.25);
   --color-heading: #ffffff;
   --color-body: #cbd5e1;
   --color-muted: #94a3b8;
   
-  --font-heading: 'Syne', 'Plus Jakarta Sans', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Ancola', 'Tenor Sans', serif, Georgia;
+  --font-body: 'Poppins', sans-serif;
   
-  --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 28px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-pill: 9999px;
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -51,20 +79,20 @@ body {
 
 /* Background Grid & Gradient Glows */
 .agatha-grid-bg {
-  background-color: #090d16;
+  background-color: #02010c;
   background-image: 
-    radial-gradient(circle at 15% 20%, rgba(237, 180, 3, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 85% 60%, rgba(23, 55, 101, 0.4) 0%, transparent 50%),
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    radial-gradient(circle at 15% 20%, rgba(103, 82, 236, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 85% 60%, rgba(14, 11, 33, 0.8) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .font-heading, .section-title {
   font-family: var(--font-heading);
   line-height: 1.2;
   color: var(--color-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
   word-wrap: break-word;
 }
 
@@ -95,62 +123,117 @@ button {
 }
 
 .section-category {
-  color: var(--color-primary);
-  font-size: 0.85rem;
-  font-weight: 800;
-  margin-bottom: 0.6rem;
+  color: #a394ff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  background: rgba(237, 180, 3, 0.1);
-  border: 1px solid rgba(237, 180, 3, 0.25);
-  padding: 0.35rem 0.9rem;
+  letter-spacing: 0.15em;
+  background: rgba(103, 82, 236, 0.12);
+  border: 1px solid rgba(103, 82, 236, 0.3);
+  padding: 0.4rem 1rem;
   border-radius: var(--radius-pill);
 }
 
 .section-title {
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  font-weight: 800;
+  font-size: clamp(2.2rem, 4.5vw, 3.75rem);
+  font-weight: 400;
   margin-bottom: 1.25rem;
   color: #ffffff;
   font-family: var(--font-heading);
   line-height: 1.15;
+  letter-spacing: 0.01em;
 }
 
 /* Gradient Text Highlight */
-.text-gold-gradient {
-  background: linear-gradient(135deg, #fff 20%, #edb403 100%);
+.text-purple-gradient {
+  background: linear-gradient(135deg, #ffffff 30%, #a394ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Premium Buttons */
+/* Agatha Buttons */
+.btn-agatha-purple {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.95rem 2.4rem;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-normal);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 25px rgba(103, 82, 236, 0.4);
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-agatha-purple:hover {
+  background: var(--color-primary-hover);
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(103, 82, 236, 0.6);
+}
+
 .btn-agatha-gold {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
   background: var(--color-primary);
-  color: #090d16;
-  font-weight: 800;
+  color: #ffffff;
+  font-weight: 600;
   font-size: 0.875rem;
-  padding: 0.9rem 2.2rem;
+  padding: 0.95rem 2.4rem;
   border-radius: var(--radius-pill);
   transition: var(--transition-normal);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  box-shadow: 0 8px 25px rgba(237, 180, 3, 0.35);
+  box-shadow: 0 8px 25px rgba(103, 82, 236, 0.4);
   text-align: center;
   max-width: 100%;
 }
 
 .btn-agatha-gold:hover {
-  background: #ffffff;
-  color: #090d16;
+  background: var(--color-primary-hover);
+  color: #ffffff;
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 35px rgba(103, 82, 236, 0.6);
+}
+
+.btn-agatha-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.95rem 2.4rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  transition: var(--transition-normal);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-agatha-outline:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(103, 82, 236, 0.4);
 }
 
 .btn-agatha-navy {
@@ -158,16 +241,16 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   color: #ffffff;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.875rem;
-  padding: 0.9rem 2.2rem;
+  padding: 0.95rem 2.4rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(10px);
   transition: var(--transition-normal);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   text-align: center;
   max-width: 100%;
@@ -175,17 +258,17 @@ button {
 
 .btn-agatha-navy:hover {
   background: var(--color-primary);
-  color: #090d16;
+  color: #ffffff;
   border-color: var(--color-primary);
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(237, 180, 3, 0.3);
+  box-shadow: 0 12px 30px rgba(103, 82, 236, 0.4);
 }
 
 /* Glassmorphism Card Style */
 .card-glass {
-  background: rgba(15, 23, 42, 0.65);
+  background: rgba(14, 11, 33, 0.75);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(103, 82, 236, 0.2);
   border-radius: var(--radius-md);
   padding: 2.25rem;
   transition: var(--transition-normal);
@@ -200,15 +283,15 @@ button {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(237, 180, 3, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(103, 82, 236, 0.6), transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .card-glass:hover {
   transform: translateY(-6px);
-  border-color: rgba(237, 180, 3, 0.4);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(103, 82, 236, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .card-glass:hover::before {
@@ -244,11 +327,75 @@ button {
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: 2rem !important;
+    font-size: 2.1rem !important;
   }
-  .btn-agatha-gold, .btn-agatha-navy {
+  .btn-agatha-purple, .btn-agatha-outline, .btn-agatha-gold, .btn-agatha-navy {
     width: 100% !important;
-    padding: 0.8rem 1.5rem !important;
+    padding: 0.85rem 1.5rem !important;
     font-size: 0.8rem !important;
   }
 }
+
+/* ==========================================================================
+   MOBILE UX & ADMIN PANEL RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Minimum Touch Target Sizes (44px) */
+button, input, select, textarea, a.btn-agatha-purple, a.btn-agatha-outline, .touch-target {
+  min-height: 44px;
+}
+
+/* Responsive Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #02010c;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(103, 82, 236, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(103, 82, 236, 0.7);
+}
+
+/* Admin Mobile Sidebar & Overlay */
+.admin-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+@media (max-width: 1024px) {
+  .admin-sidebar-drawer {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+  .admin-sidebar-drawer.open {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile Responsive Table Wrapper */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive Image Containers */
+img {
+  max-width: 100%;
+  height: auto;
+}
+

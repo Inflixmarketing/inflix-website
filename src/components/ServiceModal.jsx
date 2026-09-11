@@ -25,15 +25,15 @@ export const ServiceModal = () => {
       overflowY: 'auto'
     }}>
       <div style={{
-        background: `linear-gradient(145deg, rgba(17, 28, 48, 0.98) 0%, rgba(10, 17, 30, 0.98) 100%)`,
-        border: `1px solid rgba(237, 180, 3, 0.3)`,
+        background: '#0c0a1d',
+        border: '1px solid rgba(103, 82, 236, 0.35)',
         borderRadius: '24px',
         maxWidth: '850px',
         width: '100%',
         maxHeight: '90vh',
         overflowY: 'auto',
         position: 'relative',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)'
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.9)'
       }}>
         {/* Close Button */}
         <button 
@@ -59,23 +59,23 @@ export const ServiceModal = () => {
 
         {/* Modal Hero Header Banner */}
         <div style={{
-          background: `linear-gradient(135deg, ${brand.primaryColor || '#173765'} 0%, rgba(237, 180, 3, 0.25) 100%)`,
+          background: 'linear-gradient(135deg, rgba(103, 82, 236, 0.25) 0%, rgba(12, 10, 29, 0.95) 100%)',
           padding: '3rem 2.5rem 2.5rem 2.5rem',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+          borderBottom: '1px solid rgba(103, 82, 236, 0.2)'
         }}>
           <span style={{
             fontSize: '0.825rem',
-            fontWeight: 700,
+            fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.1em',
-            color: brand.accentColor || '#edb403',
+            color: '#a394ff',
             marginBottom: '0.5rem',
             display: 'block'
           }}>
-            INFLIX SERVICE BREAKDOWN
+            AGATHA SERVICE DETAILS
           </span>
 
-          <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: 800, color: '#ffffff', marginBottom: '0.75rem' }}>
+          <h2 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: 400, color: '#ffffff', marginBottom: '0.75rem' }}>
             {selectedService.heroTitle || selectedService.title}
           </h2>
 
@@ -87,7 +87,7 @@ export const ServiceModal = () => {
         {/* Modal Body Content */}
         <div style={{ padding: '2.5rem' }}>
           
-          <h3 style={{ fontSize: '1.35rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem' }}>
+          <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.35rem', fontWeight: 400, color: '#ffffff', marginBottom: '1rem' }}>
             {selectedService.overviewTitle || 'Overview & Strategy'}
           </h3>
 
@@ -99,9 +99,10 @@ export const ServiceModal = () => {
           {selectedService.deliverables && selectedService.deliverables.length > 0 && (
             <div>
               <h4 style={{
+                fontFamily: "'Ancola', 'Tenor Sans', serif",
                 fontSize: '1.1rem',
-                fontWeight: 700,
-                color: brand.accentColor || '#edb403',
+                fontWeight: 400,
+                color: '#a394ff',
                 marginBottom: '1.25rem',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em'
@@ -118,14 +119,14 @@ export const ServiceModal = () => {
                 {selectedService.deliverables.map((item, i) => (
                   <div key={i} style={{
                     background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    border: '1px solid rgba(103, 82, 236, 0.2)',
                     borderRadius: '12px',
                     padding: '1rem 1.25rem',
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: '0.75rem'
                   }}>
-                    <CheckCircle2 size={20} style={{ color: brand.accentColor || '#edb403', shrink: 0, marginTop: '2px' }} />
+                    <CheckCircle2 size={20} style={{ color: '#6752ec', shrink: 0, marginTop: '2px' }} />
                     <span style={{ fontSize: '0.925rem', color: '#ffffff', lineHeight: 1.5 }}>
                       {item}
                     </span>
@@ -143,17 +144,17 @@ export const ServiceModal = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingTop: '2rem',
-            borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+            borderTop: '1px solid rgba(103, 82, 236, 0.2)'
           }}>
             <div>
               <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Ready to implement this service?</div>
-              <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff' }}>Request A Customized Growth Proposal</div>
+              <div style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.1rem', fontWeight: 400, color: '#ffffff' }}>Request A Customized Growth Proposal</div>
             </div>
 
             <a 
               href="#contact" 
               onClick={() => setSelectedService(null)} 
-              className="btn-primary"
+              className="btn-agatha-purple"
               style={{ padding: '0.85rem 1.8rem' }}
             >
               <span>Get Started Now →</span>

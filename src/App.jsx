@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContentProvider } from './context/ContentContext';
+import { ContentProvider, useContent } from './context/ContentContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
@@ -14,32 +14,68 @@ import { BlogSection } from './components/BlogSection';
 import { Footer } from './components/Footer';
 import { ServiceModal } from './components/ServiceModal';
 import { AdminPanel } from './components/AdminPanel';
+import { ServiceDetailPage } from './components/ServiceDetailPage';
+import { BlogDetailPage } from './components/BlogDetailPage';
+
+function MainAppContent() {
+  const { activeView } = useContent();
+
+  if (activeView === 'service-detail') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <ServiceDetailPage />
+        </main>
+        <Footer />
+        <AdminPanel />
+      </div>
+    );
+  }
+
+  if (activeView === 'blog-detail') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <Header />
+        <main style={{ flex: 1, paddingTop: '76px' }}>
+          <BlogDetailPage />
+        </main>
+        <Footer />
+        <AdminPanel />
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      <Header />
+      <main style={{ flex: 1, paddingTop: '76px' }}>
+        <Hero />
+        <AboutSection />
+        <ServicesSection />
+        <WhyUsSection />
+        <PortfolioSection />
+        <ClientsSection />
+        <ProcessSection />
+        <TestimonialsSection />
+        <FaqSection />
+        <BlogSection />
+      </main>
+      <Footer />
+
+      {/* Dynamic Service Breakdown Modal */}
+      <ServiceModal />
+
+      {/* Live SaaS Admin Panel Dashboard */}
+      <AdminPanel />
+    </div>
+  );
+}
 
 export function App() {
   return (
     <ContentProvider>
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '76px' }}>
-          <Hero />
-          <AboutSection />
-          <ServicesSection />
-          <WhyUsSection />
-          <PortfolioSection />
-          <ClientsSection />
-          <ProcessSection />
-          <TestimonialsSection />
-          <FaqSection />
-          <BlogSection />
-        </main>
-        <Footer />
-
-        {/* Dynamic Service Breakdown Modal */}
-        <ServiceModal />
-
-        {/* Live Admin Panel Dashboard */}
-        <AdminPanel />
-      </div>
+      <MainAppContent />
     </ContentProvider>
   );
 }

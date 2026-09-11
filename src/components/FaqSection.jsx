@@ -74,9 +74,10 @@ export const FaqSection = () => {
                     gap: '1rem'
                   }}>
                     <h3 style={{
-                      fontSize: '1.15rem',
-                      fontWeight: 700,
-                      color: isOpen ? primaryColor : '#ffffff',
+                      fontFamily: "'Ancola', 'Tenor Sans', serif",
+                      fontSize: '1.2rem',
+                      fontWeight: 400,
+                      color: isOpen ? '#a394ff' : '#ffffff',
                       lineHeight: 1.35
                     }}>
                       {faq.question}

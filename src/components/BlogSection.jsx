@@ -3,7 +3,7 @@ import { useContent } from '../context/ContentContext';
 import { Calendar, ArrowRight, BookOpen } from 'lucide-react';
 
 export const BlogSection = () => {
-  const { content } = useContent();
+  const { content, navigateToView } = useContent();
   const header = content.blogHeader || {};
   const blogs = content.blogs || [];
   const brand = content.brand || {};
@@ -50,8 +50,9 @@ export const BlogSection = () => {
             <article key={b.id} className="card-glass" style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}>
+              justifyContent: 'space-between',
+              cursor: 'pointer'
+            }} onClick={() => navigateToView('blog-detail', b.slug || b.id)}>
               <div>
                 <div className="img-hover-container" style={{ borderRadius: '12px', height: '200px', marginBottom: '1.5rem' }}>
                   <img 
@@ -83,7 +84,7 @@ export const BlogSection = () => {
                   </span>
                 </div>
 
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.85rem', lineHeight: 1.35 }}>
+                <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.3rem', fontWeight: 400, color: '#ffffff', marginBottom: '0.85rem', lineHeight: 1.35 }}>
                   {b.title}
                 </h3>
 
