@@ -9,6 +9,7 @@ export const Header = () => {
     isAdminOpen, 
     activeTab, 
     setActiveTab, 
+    activeView,
     navigateToView, 
     selectedService 
   } = useContent();
@@ -16,17 +17,13 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
 
-  const brand = content.brand || {};
-  const services = content.services || [];
+  const brand = content?.brand || {};
+  const services = content?.services || [];
 
-  const handleNavClick = (tabId, hash) => {
-    setActiveTab(tabId);
+  const handleNavClick = (viewName) => {
+    navigateToView(viewName);
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   const handleServiceSelect = (svc) => {
