@@ -20,6 +20,12 @@ import { BlogDetailPage } from './components/BlogDetailPage';
 function MainAppContent() {
   const { activeView } = useContent();
 
+  const isAdminRoute = activeView === 'admin' || window.location.pathname.startsWith('/admin') || window.location.hash === '#admin';
+
+  if (isAdminRoute) {
+    return <AdminPanel />;
+  }
+
   if (activeView === 'service-detail') {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -28,7 +34,7 @@ function MainAppContent() {
           <ServiceDetailPage />
         </main>
         <Footer />
-        <AdminPanel />
+        <ServiceModal />
       </div>
     );
   }
@@ -41,7 +47,7 @@ function MainAppContent() {
           <BlogDetailPage />
         </main>
         <Footer />
-        <AdminPanel />
+        <ServiceModal />
       </div>
     );
   }
@@ -65,9 +71,6 @@ function MainAppContent() {
 
       {/* Dynamic Service Breakdown Modal */}
       <ServiceModal />
-
-      {/* Live SaaS Admin Panel Dashboard */}
-      <AdminPanel />
     </div>
   );
 }

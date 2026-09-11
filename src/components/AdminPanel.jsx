@@ -123,6 +123,7 @@ export const AdminPanel = () => {
     resetToDefaults, 
     isAdminOpen, 
     setIsAdminOpen,
+    navigateToView,
     isAuthenticated,
     login,
     logout,
@@ -151,6 +152,22 @@ export const AdminPanel = () => {
     updateBlog,
     deleteBlog
   } = useContent();
+
+  const handleCloseAdminPanel = () => {
+    setIsAdminOpen(false);
+    if (window.location.pathname.startsWith('/admin') || window.location.hash === '#admin') {
+      window.history.pushState({}, '', '/');
+      navigateToView('home');
+    }
+  };
+
+  const handleLogoutAdmin = () => {
+    logout();
+    if (window.location.pathname.startsWith('/admin') || window.location.hash === '#admin') {
+      window.history.pushState({}, '', '/');
+      navigateToView('home');
+    }
+  };
 
   // Active tab state (Default: 'hero')
   const [activeTab, setActiveTab] = useState('hero');
@@ -213,7 +230,7 @@ export const AdminPanel = () => {
     return (
       <div style={modalOverlayStyle}>
         <div style={authModalCardStyle}>
-          <button onClick={() => setIsAdminOpen(false)} style={closeIconButtonStyle}>
+          <button onClick={handleCloseAdminPanel} style={closeIconButtonStyle}>
             <X size={20} />
           </button>
 
@@ -370,11 +387,11 @@ export const AdminPanel = () => {
               <Save size={14} /> <span style={{ whiteSpace: 'nowrap' }}>SAVE ALL</span>
             </button>
 
-            <button onClick={logout} style={logoutIconButtonStyle} title="Lock Admin Session">
+            <button onClick={handleLogoutAdmin} style={logoutIconButtonStyle} title="Lock Admin Session">
               <LogOut size={15} />
             </button>
 
-            <button onClick={() => setIsAdminOpen(false)} style={closeIconButtonStyle}>
+            <button onClick={handleCloseAdminPanel} style={closeIconButtonStyle}>
               <X size={18} />
             </button>
           </div>

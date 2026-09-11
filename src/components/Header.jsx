@@ -229,27 +229,6 @@ export const Header = () => {
 
         {/* Header Action Buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {/* Admin Panel Trigger */}
-          <button 
-            onClick={() => setIsAdminOpen(!isAdminOpen)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              padding: '0.45rem 0.85rem',
-              background: 'rgba(237, 180, 3, 0.1)',
-              color: '#ffffff',
-              border: `1px solid rgba(237, 180, 3, 0.5)`,
-              borderRadius: '9999px',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              cursor: 'pointer'
-            }}
-          >
-            <Settings size={14} style={{ color: '#EDB403' }} />
-            <span>Admin</span>
-          </button>
-
           {/* Desktop Only CTA - Inflix Gold Pill Button */}
           <a 
             href="#contact" 
@@ -334,13 +313,6 @@ export const Header = () => {
             >
               LET'S TALK →
             </a>
-            <button 
-              onClick={() => { setIsAdminOpen(true); setMobileMenuOpen(false); }}
-              className="btn-agatha-outline"
-              style={{ width: '100%' }}
-            >
-              OPEN ADMIN PANEL
-            </button>
           </div>
         </div>
       )}

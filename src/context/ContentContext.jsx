@@ -27,12 +27,33 @@ export const ContentProvider = ({ children }) => {
     return defaultData;
   });
 
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(() => {
+    return window.location.pathname.startsWith('/admin') || window.location.hash === '#admin';
+  });
   const [activeTab, setActiveTab] = useState('home');
-  const [activeView, setActiveView] = useState('home'); // 'home', 'service-detail', 'blog-detail'
+  const [activeView, setActiveView] = useState(() => {
+    if (window.location.pathname.startsWith('/admin') || window.location.hash === '#admin') {
+      return 'admin';
+    }
+    return 'home';
+  });
   const [activeSlug, setActiveSlug] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
+
+  // Sync /admin URL route changes
+  useEffect(() => {
+    const syncRoute = () => {
+      const isAdminRoute = window.location.pathname.startsWith('/admin') || window.location.hash === '#admin';
+      if (isAdminRoute) {
+        setIsAdminOpen(true);
+        setActiveView('admin');
+      }
+    };
+    syncRoute();
+    window.addEventListener('popstate', syncRoute);
+    return () => window.removeEventListener('popstate', syncRoute);
+  }, []);
 
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -133,12 +154,21 @@ export const ContentProvider = ({ children }) => {
   const navigateToView = (view, slug = null) => {
     setActiveView(view);
     setActiveSlug(slug);
-    if (view === 'service-detail') {
+    if (view === 'admin') {
+      setIsAdminOpen(true);
+      if (!window.location.pathname.startsWith('/admin')) {
+        window.history.pushState({}, '', '/admin');
+      }
+    } else if (view === 'service-detail') {
       const found = (content.services || []).find(s => (s.slug || s.id) === slug);
       setSelectedService(found || content.services[0]);
     } else if (view === 'blog-detail') {
       const found = (content.blogs || []).find(b => (b.slug || b.id) === slug);
       setSelectedBlog(found || content.blogs[0]);
+    } else if (view === 'home') {
+      if (window.location.pathname.startsWith('/admin')) {
+        window.history.pushState({}, '', '/');
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
