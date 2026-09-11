@@ -163,11 +163,72 @@ function MainAppContent() {
   );
 }
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('App Runtime Error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          minHeight: '100vh',
+          backgroundColor: '#0F172A',
+          color: '#ffffff',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '2rem',
+          textAlign: 'center',
+          fontFamily: "'Poppins', sans-serif"
+        }}>
+          <h1 style={{ color: '#EDB403', fontSize: '2rem', marginBottom: '1rem' }}>
+            Inflix Marketing Solutions
+          </h1>
+          <p style={{ color: '#94A3B8', marginBottom: '1.5rem', maxWidth: '500px' }}>
+            Something went wrong while rendering the site content. Please refresh the page or reset content cache.
+          </p>
+          <button
+            onClick={() => {
+              localStorage.clear();
+              window.location.reload();
+            }}
+            style={{
+              padding: '12px 28px',
+              backgroundColor: '#EDB403',
+              color: '#0F172A',
+              fontWeight: '700',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer'
+            }}
+          >
+            Clear Cache & Reload Site
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export function App() {
   return (
-    <ContentProvider>
-      <MainAppContent />
-    </ContentProvider>
+    <ErrorBoundary>
+      <ContentProvider>
+        <MainAppContent />
+      </ContentProvider>
+    </ErrorBoundary>
   );
 }
 

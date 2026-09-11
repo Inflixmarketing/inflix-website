@@ -9,17 +9,19 @@ export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
+      if (saved && saved !== 'null' && saved !== 'undefined') {
         const parsed = JSON.parse(saved);
-        return {
-          ...defaultData,
-          ...parsed,
-          brand: { ...defaultData.brand, ...(parsed.brand || {}) },
-          hero: { ...defaultData.hero, ...(parsed.hero || {}) },
-          about: { ...defaultData.about, ...(parsed.about || {}) },
-          companyInfo: { ...defaultData.companyInfo, ...(parsed.companyInfo || {}) },
-          seoSettings: { ...defaultData.seoSettings, ...(parsed.seoSettings || {}) }
-        };
+        if (parsed && typeof parsed === 'object') {
+          return {
+            ...defaultData,
+            ...parsed,
+            brand: { ...defaultData.brand, ...(parsed?.brand || {}) },
+            hero: { ...defaultData.hero, ...(parsed?.hero || {}) },
+            about: { ...defaultData.about, ...(parsed?.about || {}) },
+            companyInfo: { ...defaultData.companyInfo, ...(parsed?.companyInfo || {}) },
+            seoSettings: { ...defaultData.seoSettings, ...(parsed?.seoSettings || {}) }
+          };
+        }
       }
     } catch (e) {
       console.error('Error loading saved content', e);
@@ -108,15 +110,15 @@ export const ContentProvider = ({ children }) => {
         throw new Error('No remote API');
       })
       .then(remoteData => {
-        if (remoteData && !remoteData.error && remoteData.status !== 'default') {
+        if (remoteData && typeof remoteData === 'object' && !remoteData.error && remoteData.status !== 'default') {
           setContent(prev => {
             const merged = {
               ...defaultData,
-              ...prev,
+              ...(prev || {}),
               ...remoteData,
-              brand: { ...defaultData.brand, ...(prev.brand || {}), ...(remoteData.brand || {}) },
-              hero: { ...defaultData.hero, ...(prev.hero || {}), ...(remoteData.hero || {}) },
-              about: { ...defaultData.about, ...(prev.about || {}), ...(remoteData.about || {}) }
+              brand: { ...defaultData.brand, ...(prev?.brand || {}), ...(remoteData?.brand || {}) },
+              hero: { ...defaultData.hero, ...(prev?.hero || {}), ...(remoteData?.hero || {}) },
+              about: { ...defaultData.about, ...(prev?.about || {}), ...(remoteData?.about || {}) }
             };
             try {
               localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(merged));
