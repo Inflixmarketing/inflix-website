@@ -1,0 +1,447 @@
+{
+  "brand": {
+    "primaryColor": "#edb403",
+    "secondaryColor": "#173765",
+    "accentColor": "#edb403",
+    "darkBg": "#0b0c10",
+    "surfaceBg": "#173765",
+    "cardBg": "#12151c",
+    "headingFont": "Ancola",
+    "bodyFont": "Avenir Next Condensed",
+    "siteName": "Inflix Marketing Solutions",
+    "tagline": "Driven by Strategy. Powered by Creativity.",
+    "contactEmail": "contact@inflixmarketing.com",
+    "contactPhone": "+91 98765 43210",
+    "location": "Hyderabad, India",
+    "logoUrl": ""
+  },
+  "hero": {
+    "capsuleOutline": "Driven by Strategy",
+    "displayHighlight": "Creative",
+    "titleMain": "Portfolio & Performance",
+    "titleSub": "Digital Agency",
+    "capsuleSolid": "Powered by Creativity",
+    "description": "We help ambitious brands scale faster through data-driven performance marketing, high-converting content, and strategic brand positioning.",
+    "primaryCta": "LET'S TALK →",
+    "secondaryCta": "EXPLORE SERVICES",
+    "heroBgImage": ""
+  },
+  "about": {
+    "category": "About Us",
+    "headline": "We Use Our Experience To Get Clients Results",
+    "highlight": "We Are A Creative Agency That Specializes In Web Design, Branding Identity, And Social Media Management. Our Experienced Team Works Closely With Clients To Deliver Customized Solutions That Meet Their Specific Needs.",
+    "body": "At Inflix Marketing Solutions, we turn complex digital marketing challenges into clear growth strategies. From high-converting web experiences to targeted social media campaigns, we engineer every touchpoint to capture attention and convert visitors into loyal customers.",
+    "philosophyTitle": "Our Philosophy",
+    "philosophy": "We believe marketing should be transparent, data-led, and obsessively focused on ROI—combining bold creativity with actionable metrics to deliver sustained business growth.",
+    "goalsTitle": "Our Goals",
+    "goals": "Our goal is to empower ambitious brands to scale seamlessly by providing high-impact digital strategies, driving qualified traffic, and maximizing overall campaign conversion rates.",
+    "aboutImage": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
+  },
+  "whyUs": {
+    "category": "Why Us ?",
+    "headline": "Because We Are The Best Creative Agency!",
+    "paragraph": "At Inflix Marketing Solutions, we combine data-backed strategies with compelling storytelling to maximize your marketing investment. We focus on building scalable growth channels tailored to your brand’s specific needs.",
+    "points": [
+      {
+        "id": "1",
+        "num": "01.",
+        "title": "More Innovation",
+        "desc": "We deploy modern performance marketing tactics and creative content formats that keep your brand ahead of market trends."
+      },
+      {
+        "id": "2",
+        "num": "02.",
+        "title": "Proven Expertise",
+        "desc": "Our team has a track record of driving revenue growth and qualified leads across diverse industries, from healthcare to tech."
+      },
+      {
+        "id": "3",
+        "num": "03.",
+        "title": "Strategic Vision",
+        "desc": "Every campaign is backed by thorough market research and conversion-focused planning to ensure measurable, long-term ROI."
+      }
+    ]
+  },
+  "servicesHeader": {
+    "category": "Services",
+    "headline": "What Services We Offer You ?",
+    "paragraph": "At Inflix Marketing Solutions, we deliver end-to-end performance marketing and strategic digital management. We build customized, multi-channel growth systems that lower customer acquisition costs."
+  },
+  "services": [
+    {
+      "id": "branding-identity",
+      "title": "Branding Identity",
+      "shortDesc": "We craft distinct brand logos, style guides, and positioning frameworks that build instant marketplace authority and client trust.",
+      "heroTitle": "Branding Identity Services",
+      "heroSub": "Build a powerful, memorable, and unique brand visual identity that captivates your ideal audience and establishes immediate market trust.",
+      "overviewTitle": "Strategic Brand Building That Sets You Apart",
+      "overviewContent": "Your brand is more than just a logo—it's the total experience your customers have with your business. At Inflix Marketing Solutions, we craft cohesive brand identities that communicate your company's values, authority, and unique selling propositions clearly.",
+      "imageUrl": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "Brand Strategy & Positioning: Defining target audience and messaging",
+        "Logo Design & Identity System: Primary and secondary logo marks",
+        "Visual Style Guidelines: Color palettes, typography, and icon rules",
+        "Brand Touchpoints: Business cards, social headers, and collateral"
+      ]
+    },
+    {
+      "id": "web-development",
+      "title": "Web Development",
+      "shortDesc": "High-converting, responsive websites engineered for ultra-fast loading speeds, smooth user journeys, and seamless lead capture.",
+      "heroTitle": "Web Development & Design",
+      "heroSub": "High-performing, fast-loading, and responsive websites engineered to convert casual visitors into paying customers.",
+      "overviewTitle": "Custom Digital Solutions Built For Scalable Growth",
+      "overviewContent": "A company's website is its primary digital storefront. We build modern, secure, and mobile-responsive websites designed around seamless user journeys and conversion optimization.",
+      "imageUrl": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "Custom Responsive Web Design: Perfect across mobile and desktop",
+        "Speed & Performance Optimization: Lightning-fast page loads",
+        "SEO-Friendly Architecture: Optimized technical layout for Google",
+        "Conversion Rate Optimization (CRO): High-impact CTAs and forms"
+      ]
+    },
+    {
+      "id": "ui-ux-design",
+      "title": "UI/UX Design",
+      "shortDesc": "User-centric interfaces and wireframes designed to guide visitors intuitively through your marketing funnel to boost conversion rates.",
+      "heroTitle": "UI/UX Design Services",
+      "heroSub": "Intuitive, aesthetic, and user-centric web and mobile interfaces that deliver seamless digital experiences.",
+      "overviewTitle": "User Experience Strategy That Boosts Engagement",
+      "overviewContent": "Great design goes beyond aesthetics—it solves user friction. Our UI/UX design process focuses on understanding consumer behavior to build intuitive navigation flows that guide users effortlessly toward conversion.",
+      "imageUrl": "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "User Research & Wireframing: User journey mapping and structural layouts",
+        "Interactive Prototyping: Clickable high-fidelity product prototypes",
+        "Interface Design (UI): Sleek visual systems aligned with brand identity",
+        "Usability Testing: Layout refinement based on behavior analytics"
+      ]
+    },
+    {
+      "id": "graphic-design",
+      "title": "Graphic Design",
+      "shortDesc": "High-impact visual creatives, promotional banners, and social assets crafted to capture attention across all digital touchpoints.",
+      "heroTitle": "Graphic Design Services",
+      "heroSub": "Eye-catching visual assets and promotional designs crafted to capture attention across all physical and digital channels.",
+      "overviewTitle": "Creative Visual Storytelling For Modern Brands",
+      "overviewContent": "In a visually crowded digital landscape, high-quality graphics are essential to cut through the noise. We produce compelling designs for advertising campaigns, social channels, and marketing materials.",
+      "imageUrl": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "Ad Campaign Creatives: High-converting banners for Meta & Google",
+        "Social Media Graphics: Engaging post templates and story layouts",
+        "Marketing Collateral: Professional brochures, flyers, and pitch decks",
+        "Print & Packaging Design: Packaging assets and corporate prints"
+      ]
+    },
+    {
+      "id": "performance-marketing",
+      "title": "Performance Marketing",
+      "shortDesc": "Data-driven Meta, Google, and PPC campaigns structured specifically to target high-intent clients and scale return on ad spend (ROAS).",
+      "heroTitle": "Performance Marketing & PPC",
+      "heroSub": "Data-driven ad campaigns designed to generate high-quality leads, lower acquisition costs, and maximize ROAS.",
+      "overviewTitle": "Scalable Customer Acquisition Engines",
+      "overviewContent": "Stop wasting budget on vanity metrics. Our performance marketing strategies leverage precision audience targeting, A/B ad testing, and real-time optimization across Meta, Google, and LinkedIn to generate predictable business growth.",
+      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "Meta Ads (Facebook & Instagram): Precision lead gen & retargeting",
+        "Google Search & PPC Ads: Capturing high-intent customer queries",
+        "Funnel Building & Analytics: Full-funnel tracking setup and CAC tracking",
+        "Ad Creative & Copy Testing: Continuous visual hook & copy optimization"
+      ]
+    },
+    {
+      "id": "video-creation-reels",
+      "title": "Video Creation & Reels",
+      "shortDesc": "Engaging short-form video content, ad creatives, and promotional reels built to boost organic reach and drive active engagement.",
+      "heroTitle": "Video Creation & Motion Media",
+      "heroSub": "Dynamic short-form video production, ad creatives, and promotional reels built to maximize audience engagement.",
+      "overviewTitle": "High-Impact Video Content That Drives Conversions",
+      "overviewContent": "Video content is currently the highest-performing media type across all social platforms. We script, edit, and produce high-converting short-form reels, product showcases, and brand videos designed to keep viewers engaged.",
+      "imageUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "Short-Form Reels & Shorts: Dynamic 15–60s edits for IG, Shorts, TikTok",
+        "Performance Video Ads: Direct response video ads engineered for sales",
+        "Motion Graphics & Animations: Eye-catching transitions and text effects",
+        "Scriptwriting & Production: Strategic messaging and audio balancing"
+      ]
+    },
+    {
+      "id": "copywriting-content",
+      "title": "Copywriting & Content",
+      "shortDesc": "Persuasive website copy, ad scripts, and strategic messaging that communicate your brand value and drive viewers to take action.",
+      "heroTitle": "Copywriting & Content Strategy",
+      "heroSub": "Persuasive ad copy, website content, and marketing scripts that turn audience interest into sales transactions.",
+      "overviewTitle": "Words That Sell And Build Marketplace Authority",
+      "overviewContent": "Great design gets attention, but compelling copywriting closes the sale. We write clear, action-oriented messaging that resonates with your target audience and communicates your unique market value clearly.",
+      "imageUrl": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "Sales & Landing Page Copy: Direct response messaging built for leads",
+        "Ad Copywriting: High-hook copy for Meta and Google search ads",
+        "SEO Blog & Article Content: Value-driven posts ranking on Google",
+        "Email Marketing Copy: High-converting nurture and sales sequences"
+      ]
+    },
+    {
+      "id": "social-media-management",
+      "title": "Social Media Management",
+      "shortDesc": "End-to-end account management, content calendar planning, and audience engagement strategies tailored to establish industry authority.",
+      "heroTitle": "Social Media & Digital Marketing",
+      "heroSub": "Comprehensive social media growth management, SEO, and multi-channel marketing campaigns that scale your digital footprint.",
+      "overviewTitle": "Full-Funnel Digital Growth & Online Management",
+      "overviewContent": "Establish market leadership with a structured digital marketing campaign. We manage your complete online presence—combining organic social media growth, SEO optimization, and audience engagement strategies.",
+      "imageUrl": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80",
+      "deliverables": [
+        "Social Media Management: Content calendars, posting, and profile optimization",
+        "Search Engine Optimization (SEO): Technical, on-page, and off-page SEO",
+        "Audience Engagement & Community: Active management for loyal followers",
+        "Monthly Performance Reports: Comprehensive analytics on ROI and traffic"
+      ]
+    }
+  ],
+  "portfolioHeader": {
+    "category": "Portfolio",
+    "headline": "Check Out Our Latest Projects",
+    "paragraph": "Explore how we combine strategy, design, and performance marketing to deliver measurable growth, strong brand identities, and high-converting digital assets."
+  },
+  "portfolio": [
+    {
+      "id": "p1",
+      "category": "Website",
+      "title": "Prayel - Website Redesign",
+      "desc": "Redesigned landing page user flows with fast loading speeds, increasing lead conversion rate from 2.1% to 6.8%.",
+      "imageUrl": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p2",
+      "category": "UI/UX Design",
+      "title": "Astro - Mobile Apps Design",
+      "desc": "Produced sleek wireframes and mobile user experiences for a fast-scaling tech application.",
+      "imageUrl": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p3",
+      "category": "Graphic Design",
+      "title": "Volex - Logo Branding Design",
+      "desc": "Crafted comprehensive visual guidelines, logo identity, and market messaging for a luxury brand.",
+      "imageUrl": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p4",
+      "category": "Graphic Design",
+      "title": "Eagent - Mockup Design",
+      "desc": "Structured eco-packaging design and product photography assets that expanded brand reach.",
+      "imageUrl": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p5",
+      "category": "Brand Strategy",
+      "title": "Damour Perfumes - Premium Packaging",
+      "desc": "Crafted luxurious visual branding, high-converting product assets, and Meta ad creatives.",
+      "imageUrl": "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "p6",
+      "category": "Performance Marketing",
+      "title": "E-Commerce Brand – Paid Ads ROAS",
+      "desc": "Scaled paid ad campaigns on Meta & Google with precise retargeting funnels, driving a 4.2x ROAS increase.",
+      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "clientsHeader": {
+    "category": "Our Clients",
+    "headline": "Our Clients Are Leading Companies And Brands",
+    "paragraph": "We partner with visionary founders, clinics, and businesses to accelerate digital market authority and patient/customer acquisitions."
+  },
+  "clients": [
+    {
+      "id": "c1",
+      "name": "24 Frames Photography",
+      "category": "Branding & Event Marketing",
+      "desc": "Delivered high-impact digital marketing strategies, targeted ads, and social media branding to drive booking inquiries and event leads.",
+      "logoUrl": ""
+    },
+    {
+      "id": "c2",
+      "name": "Dr. Shweta PMU Clinic",
+      "category": "Medical & Local SEO",
+      "desc": "Built a premium digital presence with local SEO optimization, patient lead generation, and social media brand positioning.",
+      "logoUrl": ""
+    },
+    {
+      "id": "c3",
+      "name": "Mahathi Eco Tech",
+      "category": "B2B Performance & Web",
+      "desc": "Executed B2B lead generation campaigns, strategic web experience, and performance branding for sustainable tech solutions.",
+      "logoUrl": ""
+    },
+    {
+      "id": "c4",
+      "name": "Dr. Jaya's Exult Clinic",
+      "category": "Healthcare Social & Video",
+      "desc": "Accelerated patient growth and brand authority through targeted social media marketing, aesthetic video reels, and local ads.",
+      "logoUrl": ""
+    },
+    {
+      "id": "c5",
+      "name": "Sri Suryodaya",
+      "category": "Performance & Business Growth",
+      "desc": "Enhanced brand visibility and customer reach with performance marketing, local business optimization, and brand positioning.",
+      "logoUrl": ""
+    },
+    {
+      "id": "c6",
+      "name": "Dharani Agri Life",
+      "category": "Branding & Digital Marketing",
+      "desc": "Developed a cohesive brand identity and targeted lead generation campaigns to build market authority in the agricultural sector.",
+      "logoUrl": ""
+    },
+    {
+      "id": "c7",
+      "name": "Damour Perfumes",
+      "category": "Graphic Design & E-Commerce",
+      "desc": "Crafted luxurious visual branding, high-converting product photography assets, and Meta ad creatives for high-end fragrances.",
+      "logoUrl": ""
+    },
+    {
+      "id": "c8",
+      "name": "Ron Rehabilitation Center",
+      "category": "Web Development & Local SEO",
+      "desc": "Designed an empathetic, accessible responsive website combined with local SEO optimizations to drive patient inquiries.",
+      "logoUrl": ""
+    }
+  ],
+  "processHeader": {
+    "category": "Process",
+    "headline": "Our Smooth Workflow",
+    "paragraph": "We follow a structured, step-by-step methodology to ensure every marketing campaign is executed seamlessly, optimized in real-time, and built to achieve maximum profitability.",
+    "videoButtonText": "WATCH VIDEO"
+  },
+  "process": [
+    {
+      "num": "01.",
+      "title": "Discovery And Planning",
+      "desc": "We analyze your business goals, target audience, and competitive landscape to build a customized growth blueprint."
+    },
+    {
+      "num": "02.",
+      "title": "Analytics And Measurement",
+      "desc": "Our team crafts high-converting ad copy, visual assets, and strategic marketing materials aligned with your brand identity."
+    },
+    {
+      "num": "03.",
+      "title": "Product Development",
+      "desc": "We deploy multi-channel ad campaigns across Meta, Google, and social platforms with precise targeting."
+    },
+    {
+      "num": "04.",
+      "title": "Delivery And Launch",
+      "desc": "We track performance metrics constantly, refining campaign tactics to maximize lead quality and lower acquisition costs."
+    }
+  ],
+  "ctaBanner": {
+    "headline": "Have A Project In Mind? Let's Start Working Together!",
+    "buttonText": "CONTACT US"
+  },
+  "testimonialsHeader": {
+    "category": "Testimonials",
+    "headline": "What Our Clients Say About Inflix",
+    "rating": "4.9",
+    "ctaText": "VIEW ALL →"
+  },
+  "testimonials": [
+    {
+      "id": "t1",
+      "quote": "Inflix Marketing Solutions completely transformed our digital presence. Their targeted ad campaigns and creative reels brought a massive influx of high-quality patient inquiries to our clinic.",
+      "rating": 5,
+      "name": "Dr. Jaya",
+      "title": "Founder, Dr. Jaya's Exult Clinic"
+    },
+    {
+      "id": "t2",
+      "quote": "Working with Inflix was a game-changer for 24 Frames Photography. They structured our social media marketing and brand positioning, directly helping us secure premium event bookings.",
+      "rating": 5,
+      "name": "Representative / Team Lead",
+      "title": "Founder, 24 Frames Photography"
+    },
+    {
+      "id": "t3",
+      "quote": "Inflix Marketing Solutions delivered exceptional results for our clinic. Their strategic focus on local SEO and social media campaigns significantly boosted our brand trust and walk-in consults.",
+      "rating": 5,
+      "name": "Dr. Shweta",
+      "title": "Founder, Dr. Shweta PMU Clinic"
+    },
+    {
+      "id": "t4",
+      "quote": "The team at Inflix understands how to translate technical offerings into clear B2B marketing strategies. Their performance campaigns helped us generate consistent, high-value leads.",
+      "rating": 5,
+      "name": "Management Team",
+      "title": "Director, Mahathi Eco Tech"
+    },
+    {
+      "id": "t5",
+      "quote": "Our brand visibility grew remarkably within just a few months of partnering with Inflix. Their data-driven ad strategy and creative content executed our growth vision perfectly.",
+      "rating": 5,
+      "name": "Management Team",
+      "title": "Founder, Sri Suryodaya"
+    }
+  ],
+  "faqHeader": {
+    "category": "FAQs",
+    "headline": "Frequently Asked Questions",
+    "paragraph": "Have questions about working with us? Here are answers to common questions about our services, campaign strategies, and client onboarding process.",
+    "ctaText": "VIEW ALL →"
+  },
+  "faqs": [
+    {
+      "id": "faq1",
+      "question": "How does Inflix Marketing Solutions help grow my business?",
+      "answer": "We build data-driven digital marketing systems tailored to your business, utilizing performance ads, conversion rate optimization, and brand positioning to drive consistent leads and scale revenue."
+    },
+    {
+      "id": "faq2",
+      "question": "How long does it take to see results from marketing campaigns?",
+      "answer": "Paid advertising campaigns often generate immediate traffic and leads within days of launch, while SEO and brand positioning build sustained organic growth over 3 to 6 months."
+    },
+    {
+      "id": "faq3",
+      "question": "What industries do you specialize in?",
+      "answer": "We work with a diverse range of clients, including healthcare and specialized clinics, B2B enterprises, professional service providers, local businesses, and creative photography studios."
+    },
+    {
+      "id": "faq4",
+      "question": "What services are included in your growth packages?",
+      "answer": "Our packages are customized based on your business needs, offering performance ad management (Meta/Google), social media strategy, web development, SEO, graphic design, and video production."
+    }
+  ],
+  "blogHeader": {
+    "category": "Our Blog",
+    "headline": "Read Our Latest Blogs & Insights",
+    "paragraph": "Stay updated with proven marketing strategies, digital trends, and actionable insights. Learn how to optimize your ad spend, build brand authority, and turn online engagement into measurable business growth.",
+    "ctaText": "VIEW ALL →"
+  },
+  "blogs": [
+    {
+      "id": "b1",
+      "title": "How to Build a Digital Marketing Strategy That Guarantees ROI",
+      "date": "March 1, 2026",
+      "category": "Performance Strategy",
+      "excerpt": "Discover the 5 core pillars of data-driven advertising and lead generation tactics that turn click traffic into profitable customer revenue.",
+      "imageUrl": "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "b2",
+      "title": "Short-Form Video & Reels: The Secret Hook to Lowering CAC in 2026",
+      "date": "February 24, 2026",
+      "category": "Social Growth",
+      "excerpt": "Why aesthetic short videos and strategic storytelling are outperform traditional display ads across Meta & Instagram.",
+      "imageUrl": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "b3",
+      "title": "Local SEO vs Paid Ads: Which Growth Channel Fits Your Clinic?",
+      "date": "February 18, 2026",
+      "category": "SEO & Growth",
+      "excerpt": "A deep dive comparison for healthcare practices and local businesses aiming for consistent patient consults.",
+      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+    }
+  ]
+}

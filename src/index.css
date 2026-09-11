@@ -1,0 +1,415 @@
+/* Modern CSS Design System - Inflix Marketing Solutions (Full Mobile Responsiveness) */
+
+@font-face {
+  font-family: 'Ancola';
+  src: local('Outfit'), local('Syne'), local('Tenor Sans');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --color-primary: #edb403;
+  --color-secondary: #173765;
+  --color-accent: #edb403;
+  --color-dark-bg: #0b0c10;
+  --color-surface: #173765;
+  --color-card-dark: #12151c;
+  --color-card-light: #f1f5f9;
+  --color-text-main: #f0f4f8;
+  --color-text-muted: #94a3b8;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --font-heading: 'Ancola', 'Outfit', 'Syne', sans-serif;
+  --font-body: 'Poppins', 'Inter', sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-dark-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Agatha Grid Lines Background Overlay */
+.agatha-grid-bg {
+  background-color: #0b0c10;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+/* Container & Sections */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-padding {
+  padding: 5rem 0;
+}
+
+.section-category {
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 3.25rem);
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #ffffff;
+  font-family: var(--font-heading);
+}
+
+/* Agatha Gold Button (#edb403) */
+.btn-agatha-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--color-primary);
+  color: #0c1421;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-normal);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(237, 180, 3, 0.3);
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-agatha-gold:hover {
+  background: #ffffff;
+  color: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+}
+
+/* Agatha White Button */
+.btn-agatha-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: #ffffff;
+  color: #0c1421;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-normal);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-agatha-white:hover {
+  background: var(--color-primary);
+  color: #0c1421;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(237, 180, 3, 0.4);
+}
+
+/* Agatha Navy Button (#173765) */
+.btn-agatha-navy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--color-secondary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: var(--transition-normal);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-agatha-navy:hover {
+  background: var(--color-primary);
+  color: #0c1421;
+  transform: translateY(-2px);
+}
+
+/* Circular Arrow Icon Button */
+.circle-arrow-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(237, 180, 3, 0.3);
+  transition: var(--transition-normal);
+  flex-shrink: 0;
+}
+
+.circle-arrow-btn:hover {
+  transform: scale(1.08) rotate(45deg);
+  background: #ffffff;
+}
+
+/* Outlined Capsule Pill */
+.capsule-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.8rem;
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  font-style: italic;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4.5vw, 3.5rem);
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1;
+  max-width: 100%;
+}
+
+/* Solid Gold Capsule Pill */
+.capsule-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 2rem;
+  background: var(--color-primary);
+  border-radius: var(--radius-pill);
+  font-style: italic;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4.5vw, 3.5rem);
+  font-weight: 400;
+  color: #0c1421;
+  box-shadow: 0 10px 30px rgba(237, 180, 3, 0.35);
+  line-height: 1;
+  max-width: 100%;
+}
+
+/* Card Styles */
+.card-dark-grid {
+  background: #0d0f14;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  border: 1px solid rgba(237, 180, 3, 0.25);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  transition: var(--transition-normal);
+  color: #ffffff;
+}
+
+.card-dark-grid:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.card-light-gray {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  transition: var(--transition-normal);
+  border: 1px solid #e2e8f0;
+}
+
+.card-light-gray:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  border-color: var(--color-secondary);
+}
+
+.card-glass {
+  background: var(--color-card-dark);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  transition: var(--transition-normal);
+}
+
+.card-glass:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.img-hover-container {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+.img-hover-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.img-hover-container:hover img {
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   Comprehensive Mobile & Tablet Media Queries (< 992px & < 768px & < 480px)
+   ========================================================================== */
+
+@media (max-width: 991px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+  
+  .section-padding {
+    padding: 3.5rem 0;
+  }
+
+  .grid-2col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .section-padding {
+    padding: 3rem 0;
+  }
+
+  .section-title {
+    font-size: 1.85rem !important;
+    line-height: 1.25;
+  }
+
+  .capsule-outline {
+    font-size: 1.5rem !important;
+    padding: 0.4rem 1.2rem !important;
+    margin-right: 0 !important;
+  }
+
+  .capsule-solid {
+    font-size: 1.5rem !important;
+    padding: 0.4rem 1.25rem !important;
+  }
+
+  .circle-arrow-btn {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .card-dark-grid, .card-light-gray, .card-glass {
+    padding: 1.35rem !important;
+  }
+
+  .btn-agatha-gold, .btn-agatha-white, .btn-agatha-navy {
+    padding: 0.75rem 1.4rem !important;
+    font-size: 0.8rem !important;
+    width: 100% !important;
+  }
+
+  /* Footer Agatha CTA Banner Mobile Adjustments */
+  .footer-cta-banner {
+    padding: 2rem 1.25rem !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+
+  .footer-cta-banner .circle-cta-hover {
+    width: 130px !important;
+    height: 130px !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.6rem !important;
+  }
+
+  .capsule-outline, .capsule-solid {
+    font-size: 1.2rem !important;
+    padding: 0.35rem 1rem !important;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-dark-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
