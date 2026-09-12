@@ -1,115 +1,78 @@
 import React from 'react';
 import { ContentProvider, useContent } from './context/ContentContext';
 import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { AboutSection } from './components/AboutSection';
-import { ServicesSection } from './components/ServicesSection';
-import { WhyUsSection } from './components/WhyUsSection';
-import { PortfolioSection } from './components/PortfolioSection';
-import { ClientsSection } from './components/ClientsSection';
-import { ProcessSection } from './components/ProcessSection';
-import { TestimonialsSection } from './components/TestimonialsSection';
-import { FaqSection } from './components/FaqSection';
-import { BlogSection } from './components/BlogSection';
 import { Footer } from './components/Footer';
-import { ServiceModal } from './components/ServiceModal';
-import { AdminPanel } from './components/AdminPanel';
+import { HomePage } from './components/HomePage';
+import { AboutPage } from './components/AboutPage';
+import { ServicesPage } from './components/ServicesPage';
 import { ServiceDetailPage } from './components/ServiceDetailPage';
-import { BlogDetailPage } from './components/BlogDetailPage';
+import { PortfolioPage } from './components/PortfolioPage';
 import { PortfolioDetailPage } from './components/PortfolioDetailPage';
+import { ProcessPage } from './components/ProcessPage';
+import { ReviewsPage } from './components/ReviewsPage';
+import { BlogsPage } from './components/BlogsPage';
+import { BlogDetailPage } from './components/BlogDetailPage';
+import { ContactPage } from './components/ContactPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
+import { AdminDashboard } from './components/AdminDashboard';
+import { ContactModal } from './components/ContactModal';
+import { FloatingCta } from './components/FloatingCta';
 
 function MainAppContent() {
   const { activeView } = useContent();
 
-  if (activeView === 'service-detail') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '70px' }}>
-          <ServiceDetailPage />
-        </main>
-        <Footer />
-        <AdminPanel />
-      </div>
-    );
+  // Standalone Admin Dashboard (Completely unmounts website DOM to prevent background scroll)
+  if (activeView === 'admin') {
+    return <AdminDashboard />;
   }
 
-  if (activeView === 'portfolio-detail') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '70px' }}>
-          <PortfolioDetailPage />
-        </main>
-        <Footer />
-        <AdminPanel />
-      </div>
-    );
-  }
-
-  if (activeView === 'blog-detail') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '70px' }}>
-          <BlogDetailPage />
-        </main>
-        <Footer />
-        <AdminPanel />
-      </div>
-    );
-  }
-
-  if (activeView === 'privacy-policy') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '70px' }}>
-          <PrivacyPolicyPage />
-        </main>
-        <Footer />
-        <AdminPanel />
-      </div>
-    );
-  }
-
-  if (activeView === 'terms-of-service') {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Header />
-        <main style={{ flex: 1, paddingTop: '70px' }}>
-          <TermsOfServicePage />
-        </main>
-        <Footer />
-        <AdminPanel />
-      </div>
-    );
-  }
+  // Render Page Content based on Active SEO Route
+  const renderPageComponent = () => {
+    switch (activeView) {
+      case 'about':
+        return <AboutPage />;
+      case 'services':
+        return <ServicesPage />;
+      case 'service-detail':
+        return <ServiceDetailPage />;
+      case 'portfolio':
+        return <PortfolioPage />;
+      case 'portfolio-detail':
+        return <PortfolioDetailPage />;
+      case 'process':
+        return <ProcessPage />;
+      case 'reviews':
+        return <ReviewsPage />;
+      case 'blogs':
+        return <BlogsPage />;
+      case 'blog-detail':
+        return <BlogDetailPage />;
+      case 'contact':
+        return <ContactPage />;
+      case 'privacy-policy':
+        return <PrivacyPolicyPage />;
+      case 'terms-of-service':
+        return <TermsOfServicePage />;
+      case 'home':
+      default:
+        return <HomePage />;
+    }
+  };
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <Header />
-      <main style={{ flex: 1, paddingTop: '70px' }}>
-        <Hero />
-        <AboutSection />
-        <ServicesSection />
-        <WhyUsSection />
-        <PortfolioSection />
-        <ClientsSection />
-        <ProcessSection />
-        <TestimonialsSection />
-        <FaqSection />
-        <BlogSection />
+      <main style={{ flex: 1, paddingTop: '75px' }}>
+        {renderPageComponent()}
       </main>
       <Footer />
 
-      {/* Dynamic Service Breakdown Modal */}
-      <ServiceModal />
+      {/* Unified Lead Contact Modal */}
+      <ContactModal />
 
-      {/* Live SaaS Admin Panel Dashboard */}
-      <AdminPanel />
+      {/* Persistent Floating Action CTA (Call, WhatsApp, Form) */}
+      <FloatingCta />
     </div>
   );
 }

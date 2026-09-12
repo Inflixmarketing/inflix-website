@@ -120,7 +120,7 @@ const ImageUploader = ({ label, value, onChange, placeholder = "Paste Image URL 
   );
 };
 
-export const AdminPanel = () => {
+export const AdminPanel = ({ isStandalone = false, onExit = null }) => {
   const { 
     content, 
     saveContent,
@@ -132,6 +132,7 @@ export const AdminPanel = () => {
     logout,
     changePassword,
     forgotPasswordReset,
+    navigateToView,
     // CRUD Operators
     addService,
     updateService,
@@ -173,7 +174,13 @@ export const AdminPanel = () => {
   const [newPassInput, setNewPassInput] = useState('');
   const [passChangeStatus, setPassChangeStatus] = useState('');
 
-  if (!isAdminOpen) return null;
+  const handleExit = () => {
+    setIsAdminOpen(false);
+    if (onExit) onExit();
+    else navigateToView('home');
+  };
+
+  if (!isAdminOpen && !isStandalone) return null;
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -381,7 +388,7 @@ export const AdminPanel = () => {
               <LogOut size={15} />
             </button>
 
-            <button onClick={() => setIsAdminOpen(false)} style={closeIconButtonStyle}>
+            <button onClick={handleExit} style={closeIconButtonStyle} title="Return to Website">
               <X size={18} />
             </button>
           </div>

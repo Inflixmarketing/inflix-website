@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useContent } from '../context/ContentContext';
-import { Play, X, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export const ProcessSection = () => {
   const { content } = useContent();
   const header = content.processHeader || {};
   const steps = content.process || [];
 
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-
   return (
-    <section id="process" className="section-padding" style={{
+    <section className="section-padding" style={{
       background: 'rgba(23, 55, 101, 0.25)',
       position: 'relative',
       borderTop: '1px solid rgba(237, 180, 3, 0.15)',
@@ -26,7 +24,7 @@ export const ProcessSection = () => {
           alignItems: 'center'
         }} className="process-grid">
           
-          {/* Header & Watch Video Button */}
+          {/* Header */}
           <div className="process-header-col">
             <span className="section-category">
               {header.category || 'Process'}
@@ -36,17 +34,9 @@ export const ProcessSection = () => {
               {header.headline || 'Our Smooth Workflow'}
             </h2>
 
-            <p style={{ fontSize: '1.05rem', color: '#E5E7EB', lineHeight: 1.7, marginBottom: '2rem' }}>
+            <p style={{ fontSize: '1.05rem', color: '#E5E7EB', lineHeight: 1.7 }}>
               {header.paragraph || 'We follow a structured, step-by-step methodology to ensure every marketing campaign is executed seamlessly.'}
             </p>
-
-            <button 
-              onClick={() => setIsVideoModalOpen(true)}
-              className="btn-agatha-gold"
-            >
-              <Play size={16} fill="#173765" />
-              <span>{header.videoButtonText || 'WATCH VIDEO'}</span>
-            </button>
           </div>
 
           {/* 4 Step Glass Cards */}
@@ -102,60 +92,6 @@ export const ProcessSection = () => {
         </div>
 
       </div>
-
-      {/* Video Modal */}
-      {isVideoModalOpen && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(11, 19, 43, 0.95)',
-          backdropFilter: 'blur(16px)',
-          zIndex: 2000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1.25rem'
-        }}>
-          <div style={{
-            background: '#173765',
-            border: '1px solid rgba(237, 180, 3, 0.35)',
-            color: '#ffffff',
-            borderRadius: '20px',
-            maxWidth: '600px',
-            width: '100%',
-            padding: '2.25rem',
-            position: 'relative',
-            textAlign: 'center'
-          }}>
-            <button 
-              onClick={() => setIsVideoModalOpen(false)}
-              style={{
-                position: 'absolute',
-                top: '1.25rem',
-                right: '1.25rem',
-                color: '#ffffff',
-                padding: '0.4rem'
-              }}
-            >
-              <X size={24} />
-            </button>
-
-            <h3 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.8rem', fontWeight: 400, marginBottom: '1rem', color: '#ffffff' }}>
-              Inflix Workflow Overview
-            </h3>
-            <p style={{ color: '#E5E7EB', lineHeight: 1.65, marginBottom: '2rem', fontSize: '0.95rem' }}>
-              Watch how our team conducts discovery research, develops high-converting brand identity assets, deploys performance campaigns, and optimizes CAC continuously.
-            </p>
-
-            <button onClick={() => setIsVideoModalOpen(false)} className="btn-agatha-gold">
-              Close Showcase
-            </button>
-          </div>
-        </div>
-      )}
 
       <style>{`
         @media (min-width: 992px) {

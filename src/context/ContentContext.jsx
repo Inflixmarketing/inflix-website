@@ -34,6 +34,23 @@ export const ContentProvider = ({ children }) => {
 
   const [activeTab, setActiveTab] = useState('hero');
 
+  // Contact Modal State
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [contactPresetService, setContactPresetService] = useState('');
+
+  const openContactModal = (serviceTitle = '') => {
+    if (serviceTitle && typeof serviceTitle === 'string') {
+      setContactPresetService(serviceTitle);
+    } else {
+      setContactPresetService('');
+    }
+    setIsContactModalOpen(true);
+  };
+
+  const closeContactModal = () => {
+    setIsContactModalOpen(false);
+  };
+
   // URL Path Route Parser helper
   const parseCurrentRoute = () => {
     const path = window.location.pathname.toLowerCase().replace(/\/$/, '') || '/';
@@ -567,6 +584,10 @@ export const ContentProvider = ({ children }) => {
       activeView,
       setActiveView,
       activeSlug,
+      isContactModalOpen,
+      contactPresetService,
+      openContactModal,
+      closeContactModal,
       selectedService,
       setSelectedService,
       selectedBlog,

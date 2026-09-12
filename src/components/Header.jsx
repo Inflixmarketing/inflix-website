@@ -5,10 +5,10 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 export const Header = () => {
   const { 
     content, 
-    activeTab, 
-    setActiveTab, 
+    activeView, 
     navigateToView, 
-    selectedService 
+    selectedService,
+    openContactModal
   } = useContent();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,15 +18,10 @@ export const Header = () => {
   const brand = content.brand || {};
   const services = content.services || [];
 
-  const handleNavClick = (view, hash) => {
-    setActiveTab(view);
+  const handleNavClick = (view) => {
     navigateToView(view);
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   const handleServiceSelect = (svc) => {
@@ -56,7 +51,7 @@ export const Header = () => {
         justifyContent: 'space-between',
         gap: '1rem'
       }}>
-        {/* Brand Logo with Enhanced Contrast */}
+        {/* Brand Logo */}
         <a 
           href="/" 
           onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} 
@@ -131,10 +126,10 @@ export const Header = () => {
           gap: '2rem',
           alignItems: 'center'
         }} className="desktop-nav">
-          <a href="/" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} style={navLinkStyle(activeTab === 'home', '#EDB403')}>HOME</a>
-          <a href="/about" onClick={(e) => { e.preventDefault(); handleNavClick('about', '#about'); }} style={navLinkStyle(activeTab === 'about', '#EDB403')}>ABOUT</a>
+          <a href="/" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} style={navLinkStyle(activeView === 'home', '#EDB403')}>HOME</a>
+          <a href="/about" onClick={(e) => { e.preventDefault(); handleNavClick('about'); }} style={navLinkStyle(activeView === 'about', '#EDB403')}>ABOUT</a>
           
-          {/* Services Dynamic Dropdown */}
+          {/* Services Dynamic Dropdown - ONLY actual services from CMS */}
           <div 
             style={{ position: 'relative' }}
             onMouseEnter={() => setServicesDropdownOpen(true)}
@@ -142,8 +137,8 @@ export const Header = () => {
           >
             <a 
               href="/services" 
-              onClick={(e) => { e.preventDefault(); handleNavClick('services', '#services'); }} 
-              style={{ ...navLinkStyle(activeTab === 'services' || activeTab === 'service-detail', '#EDB403'), display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+              onClick={(e) => { e.preventDefault(); handleNavClick('services'); }} 
+              style={{ ...navLinkStyle(activeView === 'services' || activeView === 'service-detail', '#EDB403'), display: 'flex', alignItems: 'center', gap: '0.3rem' }}
             >
               <span>SERVICES</span>
               <ChevronDown size={14} style={{ transform: servicesDropdownOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }} />
@@ -183,23 +178,6 @@ export const Header = () => {
                   Core Agency Services
                 </div>
 
-                <a 
-                  href="/services" 
-                  onClick={(e) => { e.preventDefault(); handleNavClick('services', '#services'); }} 
-                  style={{
-                    padding: '0.5rem 0.75rem',
-                    borderRadius: '6px',
-                    fontSize: '0.8rem',
-                    fontWeight: 600,
-                    color: '#E5E7EB',
-                    display: 'block',
-                    transition: 'all 0.2s ease',
-                    background: 'rgba(255, 255, 255, 0.05)'
-                  }}
-                >
-                  All Services Overview →
-                </a>
-
                 {services.map((svc) => {
                   const isActive = selectedService && (selectedService.id === svc.id || selectedService.slug === svc.slug);
                   return (
@@ -229,19 +207,17 @@ export const Header = () => {
             )}
           </div>
 
-          <a href="/portfolio" onClick={(e) => { e.preventDefault(); handleNavClick('portfolio', '#portfolio'); }} style={navLinkStyle(activeTab === 'portfolio', '#EDB403')}>PORTFOLIO</a>
-          <a href="/process" onClick={(e) => { e.preventDefault(); handleNavClick('process', '#process'); }} style={navLinkStyle(activeTab === 'process', '#process')}>PROCESS</a>
-          <a href="/reviews" onClick={(e) => { e.preventDefault(); handleNavClick('reviews', '#testimonials'); }} style={navLinkStyle(activeTab === 'reviews', '#testimonials')}>REVIEWS</a>
-          <a href="/blogs" onClick={(e) => { e.preventDefault(); handleNavClick('blogs', '#blogs'); }} style={navLinkStyle(activeTab === 'blogs', '#blogs')}>BLOGS</a>
-          <a href="/contact" onClick={(e) => { e.preventDefault(); handleNavClick('contact', '#contact'); }} style={navLinkStyle(activeTab === 'contact', '#contact')}>CONTACT</a>
+          <a href="/portfolio" onClick={(e) => { e.preventDefault(); handleNavClick('portfolio'); }} style={navLinkStyle(activeView === 'portfolio' || activeView === 'portfolio-detail', '#EDB403')}>PORTFOLIO</a>
+          <a href="/process" onClick={(e) => { e.preventDefault(); handleNavClick('process'); }} style={navLinkStyle(activeView === 'process', '#EDB403')}>PROCESS</a>
+          <a href="/reviews" onClick={(e) => { e.preventDefault(); handleNavClick('reviews'); }} style={navLinkStyle(activeView === 'reviews', '#EDB403')}>REVIEWS</a>
+          <a href="/blogs" onClick={(e) => { e.preventDefault(); handleNavClick('blogs' || activeView === 'blog-detail', '#EDB403')}>BLOGS</a>
+          <a href="/contact" onClick={(e) => { e.preventDefault(); handleNavClick('contact'); }} style={navLinkStyle(activeView === 'contact', '#EDB403')}>CONTACT</a>
         </nav>
 
-        {/* Header Action Buttons (Admin Button Removed completely from public view) */}
+        {/* Header Action Buttons (Admin Button Removed completely) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {/* Desktop Only CTA - Inflix Gold Pill Button */}
-          <a 
-            href="/contact" 
-            onClick={(e) => { e.preventDefault(); handleNavClick('contact', '#contact'); }}
+          <button 
+            onClick={openContactModal}
             className="desktop-cta"
             style={{
               padding: '0.65rem 1.6rem',
@@ -253,16 +229,18 @@ export const Header = () => {
               color: '#173765',
               borderRadius: '9999px',
               transition: 'all 0.3s ease',
-              boxShadow: '0 4px 20px rgba(237, 180, 3, 0.35)'
+              boxShadow: '0 4px 20px rgba(237, 180, 3, 0.35)',
+              border: 'none',
+              cursor: 'pointer'
             }}
           >
             <span>LET'S TALK →</span>
-          </a>
+          </button>
 
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: '#ffffff', padding: '0.4rem', cursor: 'pointer' }}
+            style={{ color: '#ffffff', padding: '0.4rem', cursor: 'pointer', background: 'none', border: 'none' }}
             className="mobile-toggle"
             aria-label="Toggle Mobile Menu"
           >
@@ -284,7 +262,7 @@ export const Header = () => {
           overflowY: 'auto'
         }}>
           <a href="/" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} style={mobileNavLinkStyle}>HOME</a>
-          <a href="/about" onClick={(e) => { e.preventDefault(); handleNavClick('about', '#about'); }} style={mobileNavLinkStyle}>ABOUT</a>
+          <a href="/about" onClick={(e) => { e.preventDefault(); handleNavClick('about'); }} style={mobileNavLinkStyle}>ABOUT</a>
           
           {/* Mobile Services Accordion */}
           <div style={{ padding: '0.4rem 0' }}>
@@ -318,13 +296,6 @@ export const Header = () => {
                 borderLeft: '2px solid rgba(237, 180, 3, 0.35)',
                 animation: 'heroFadeUp 0.3s ease forwards'
               }}>
-                <a 
-                  href="/services" 
-                  onClick={(e) => { e.preventDefault(); handleNavClick('services', '#services'); }}
-                  style={{ color: '#EDB403', fontSize: '0.85rem', fontWeight: 700, padding: '0.25rem 0' }}
-                >
-                  All Services Overview →
-                </a>
                 {services.map(svc => (
                   <button 
                     key={svc.id} 
@@ -346,21 +317,20 @@ export const Header = () => {
             )}
           </div>
 
-          <a href="/portfolio" onClick={(e) => { e.preventDefault(); handleNavClick('portfolio', '#portfolio'); }} style={mobileNavLinkStyle}>PORTFOLIO</a>
-          <a href="/process" onClick={(e) => { e.preventDefault(); handleNavClick('process', '#process'); }} style={mobileNavLinkStyle}>PROCESS</a>
-          <a href="/reviews" onClick={(e) => { e.preventDefault(); handleNavClick('reviews', '#testimonials'); }} style={mobileNavLinkStyle}>REVIEWS</a>
-          <a href="/blogs" onClick={(e) => { e.preventDefault(); handleNavClick('blogs', '#blogs'); }} style={mobileNavLinkStyle}>BLOGS</a>
-          <a href="/contact" onClick={(e) => { e.preventDefault(); handleNavClick('contact', '#contact'); }} style={mobileNavLinkStyle}>CONTACT</a>
+          <a href="/portfolio" onClick={(e) => { e.preventDefault(); handleNavClick('portfolio'); }} style={mobileNavLinkStyle}>PORTFOLIO</a>
+          <a href="/process" onClick={(e) => { e.preventDefault(); handleNavClick('process'); }} style={mobileNavLinkStyle}>PROCESS</a>
+          <a href="/reviews" onClick={(e) => { e.preventDefault(); handleNavClick('reviews'); }} style={mobileNavLinkStyle}>REVIEWS</a>
+          <a href="/blogs" onClick={(e) => { e.preventDefault(); handleNavClick('blogs'); }} style={mobileNavLinkStyle}>BLOGS</a>
+          <a href="/contact" onClick={(e) => { e.preventDefault(); handleNavClick('contact'); }} style={mobileNavLinkStyle}>CONTACT</a>
           
           <div style={{ paddingTop: '0.75rem' }}>
-            <a 
-              href="/contact" 
-              onClick={(e) => { e.preventDefault(); handleNavClick('contact', '#contact'); }}
+            <button 
+              onClick={() => { setMobileMenuOpen(false); openContactModal(); }}
               className="btn-agatha-gold"
-              style={{ width: '100%' }}
+              style={{ width: '100%', justifyContent: 'center' }}
             >
               LET'S TALK →
-            </a>
+            </button>
           </div>
         </div>
       )}
@@ -386,7 +356,8 @@ const navLinkStyle = (isActive, primaryColor) => ({
   letterSpacing: '0.05em',
   transition: 'all 0.2s ease',
   borderBottom: isActive ? `2px solid ${primaryColor}` : '2px solid transparent',
-  paddingBottom: '2px'
+  paddingBottom: '2px',
+  textDecoration: 'none'
 });
 
 const mobileNavLinkStyle = {
@@ -394,5 +365,6 @@ const mobileNavLinkStyle = {
   fontSize: '0.95rem',
   fontWeight: 600,
   padding: '0.4rem 0',
-  borderBottom: '1px solid rgba(255,255,255,0.05)'
+  borderBottom: '1px solid rgba(255,255,255,0.05)',
+  textDecoration: 'none'
 };

@@ -3,7 +3,7 @@ import { useContent } from '../context/ContentContext';
 import { Mail, Phone, MapPin, Instagram, Facebook, Linkedin, Twitter, Youtube, MessageCircle, Lock } from 'lucide-react';
 
 export const Footer = () => {
-  const { content, navigateToView } = useContent();
+  const { content, navigateToView, openContactModal } = useContent();
   const brand = content.brand || {};
   const cta = content.ctaBanner || {};
   const socialLinks = brand.socialLinks || {};
@@ -19,7 +19,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer id="contact" style={{
+    <footer style={{
       backgroundColor: '#0B132B',
       color: '#ffffff',
       position: 'relative',
@@ -53,8 +53,8 @@ export const Footer = () => {
           </div>
 
           {/* Right Circular CTA Button */}
-          <a 
-            href={`mailto:${brand.contactEmail || 'contact@inflixmarketing.com'}`}
+          <button 
+            onClick={openContactModal}
             style={{
               width: '140px',
               height: '140px',
@@ -71,13 +71,14 @@ export const Footer = () => {
               textTransform: 'uppercase',
               boxShadow: '0 15px 40px rgba(237, 180, 3, 0.4)',
               transition: 'transform 0.3s ease, background-color 0.3s ease',
-              textDecoration: 'none',
+              border: 'none',
+              cursor: 'pointer',
               flexShrink: 0
             }}
             className="circle-cta-hover"
           >
             <span>{cta.buttonText || 'CONTACT US'}</span>
-          </a>
+          </button>
         </div>
 
         {/* Footer Navigation Columns */}
@@ -149,13 +150,15 @@ export const Footer = () => {
             <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.05rem', fontWeight: 400, marginBottom: '1.25rem', color: '#ffffff', letterSpacing: '0.05em' }}>
               Quick Links
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#E5E7EB' }}>
-              <li><a href="/" onClick={(e) => { e.preventDefault(); navigateToView('home'); }}>Home</a></li>
-              <li><a href="/about" onClick={(e) => { e.preventDefault(); navigateToView('about'); }}>About Us</a></li>
-              <li><a href="/services" onClick={(e) => { e.preventDefault(); navigateToView('services'); }}>Services</a></li>
-              <li><a href="/portfolio" onClick={(e) => { e.preventDefault(); navigateToView('portfolio'); }}>Portfolio</a></li>
-              <li><a href="/process" onClick={(e) => { e.preventDefault(); navigateToView('process'); }}>Process</a></li>
-              <li><a href="/blogs" onClick={(e) => { e.preventDefault(); navigateToView('blogs'); }}>Blogs & Insights</a></li>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#E5E7EB', padding: 0 }}>
+              <li><a href="/" onClick={(e) => { e.preventDefault(); navigateToView('home'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>Home</a></li>
+              <li><a href="/about" onClick={(e) => { e.preventDefault(); navigateToView('about'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>About Us</a></li>
+              <li><a href="/services" onClick={(e) => { e.preventDefault(); navigateToView('services'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>Services</a></li>
+              <li><a href="/portfolio" onClick={(e) => { e.preventDefault(); navigateToView('portfolio'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>Portfolio</a></li>
+              <li><a href="/process" onClick={(e) => { e.preventDefault(); navigateToView('process'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>Process</a></li>
+              <li><a href="/reviews" onClick={(e) => { e.preventDefault(); navigateToView('reviews'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>Reviews</a></li>
+              <li><a href="/blogs" onClick={(e) => { e.preventDefault(); navigateToView('blogs'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>Blogs & Insights</a></li>
+              <li><a href="/contact" onClick={(e) => { e.preventDefault(); navigateToView('contact'); }} style={{ color: '#E5E7EB', textDecoration: 'none' }}>Contact Us</a></li>
             </ul>
           </div>
 
@@ -164,7 +167,7 @@ export const Footer = () => {
             <h4 style={{ fontFamily: "'Ancola', 'Tenor Sans', serif", fontSize: '1.05rem', fontWeight: 400, marginBottom: '1.25rem', color: '#ffffff', letterSpacing: '0.05em' }}>
               Core Services
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#E5E7EB' }}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.875rem', color: '#E5E7EB', padding: 0 }}>
               <li>Performance Marketing & Paid Ads</li>
               <li>Branding Identity & Design</li>
               <li>Web Development & SEO</li>
@@ -178,7 +181,7 @@ export const Footer = () => {
             <h4 style={{ fontFamily: "'Tenor Sans', serif", fontSize: '1.05rem', fontWeight: 400, marginBottom: '1.25rem', color: '#ffffff', letterSpacing: '0.05em' }}>
               Contact Info
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.875rem', color: '#E5E7EB' }}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.875rem', color: '#E5E7EB', padding: 0 }}>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                 <Mail size={16} style={{ color: '#EDB403' }} />
                 <span>{brand.contactEmail || 'contact@inflixmarketing.com'}</span>
@@ -211,12 +214,12 @@ export const Footer = () => {
             © {new Date().getFullYear()} Inflix Marketing Solutions. All Rights Reserved.
           </div>
           <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-            <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigateToView('privacy-policy'); }}>Privacy Policy</a>
-            <a href="/terms-of-service" onClick={(e) => { e.preventDefault(); navigateToView('terms-of-service'); }}>Terms of Service</a>
+            <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigateToView('privacy-policy'); }} style={{ color: '#94a3b8', textDecoration: 'none' }}>Privacy Policy</a>
+            <a href="/terms-of-service" onClick={(e) => { e.preventDefault(); navigateToView('terms-of-service'); }} style={{ color: '#94a3b8', textDecoration: 'none' }}>Terms of Service</a>
             <a 
               href="/admin" 
               onClick={(e) => { e.preventDefault(); navigateToView('admin'); }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: '#EDB403' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: '#EDB403', textDecoration: 'none' }}
             >
               <Lock size={12} /> Admin Portal
             </a>
